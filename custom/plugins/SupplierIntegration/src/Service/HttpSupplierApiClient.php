@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
-namespace SupplierIntegration\\Service;
-use Symfony\\Contracts\\HttpClient\\HttpClientInterface;
+namespace SupplierIntegration\Service;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 class HttpSupplierApiClient implements SupplierApiClientInterface
 {
     public function __construct(private readonly HttpClientInterface $httpClient) {}
