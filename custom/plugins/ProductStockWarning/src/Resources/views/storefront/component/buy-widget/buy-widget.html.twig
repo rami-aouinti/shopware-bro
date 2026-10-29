@@ -1,0 +1,16 @@
+{% sw_extends '@Storefront/storefront/component/buy-widget/buy-widget.html.twig' %}
+
+{% block buy_widget_buy_form %}
+    {{ parent() }}
+
+    {% set stockThreshold = config('ProductStockWarning.config.stockThreshold')|default(5) %}
+    {% set availableStock = product.stock|default(0) %}
+
+    {% if availableStock > 0 and availableStock <= stockThreshold %}
+        <p class="product-stock-warning alert alert-warning mt-3"
+           role="status"
+           data-product-stock-warning="true">
+            {{ 'productStockWarning.message'|trans({'%stock%': availableStock})|sw_sanitize }}
+        </p>
+    {% endif %}
+{% endblock %}

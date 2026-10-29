@@ -1,0 +1,32 @@
+name: SW-103 stock warning validation
+
+on:
+  push:
+    branches:
+      - feature/SW-103-product-stock-warning
+    paths:
+      - 'custom/plugins/ProductStockWarning/**'
+      - '.github/workflows/sw-103-validation.yml'
+  pull_request:
+    paths:
+      - 'custom/plugins/ProductStockWarning/**'
+      - '.github/workflows/sw-103-validation.yml'
+
+jobs:
+  validate-stock-warning:
+    name: Validate ProductStockWarning plugin
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: dom
+          coverage: none
+
+      - name: Validate plugin implementation
+        working-directory: custom/plugins/ProductStockWarning
+        run: php tests/validate-stock-warning.php

@@ -1,0 +1,22 @@
+{
+  "name": "rami/product-stock-warning",
+  "description": "Displays a configurable low-stock warning on Shopware product detail pages.",
+  "type": "shopware-platform-plugin",
+  "version": "1.0.0",
+  "license": "MIT",
+  "require": {
+    "shopware/core": "~6.7.13"
+  },
+  "extra": {
+    "shopware-plugin-class": "ProductStockWarning\\ProductStockWarning",
+    "label": {
+      "en-GB": "Product Stock Warning",
+      "de-DE": "Lagerbestand-Warnung"
+    }
+  },
+  "autoload": {
+    "psr-4": {
+      "ProductStockWarning\\": "src/"
+    }
+  }
+}
