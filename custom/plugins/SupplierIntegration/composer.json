@@ -1,24 +1,19 @@
 {
-    "name": "rami/supplier-integration",
-    "description": "Supplier integration, asynchronous imports and product offer search for Shopware 6.",
-    "type": "shopware-platform-plugin",
-    "license": "MIT",
-    "autoload": {
-        "psr-4": {
-            "SupplierIntegration\\": "src/"
-        }
-    },
-    "extra": {
-        "shopware": {
-            "pluginName": "SupplierIntegration",
-            "label": {
-                "en-GB": "Supplier Integration",
-                "de-DE": "Lieferantenintegration"
-            },
-            "description": {
-                "en-GB": "Supplier API integration and offer intelligence",
-                "de-DE": "Lieferanten-API-Integration und Angebotsübersicht"
-            }
-        }
+  "name": "rami/supplier-integration",
+  "description": "Supplier integration, asynchronous imports and product offer search for Shopware 6.",
+  "type": "shopware-platform-plugin",
+  "version": "1.0.0",
+  "license": "MIT",
+  "extra": {
+    "shopware-plugin-class": "SupplierIntegration\\SupplierIntegration",
+    "label": {
+      "en-GB": "Supplier Integration",
+      "de-DE": "Lieferantenintegration"
     }
+  },
+  "autoload": {
+    "psr-4": {
+      "SupplierIntegration\\": "src/"
+    }
+  }
 }
