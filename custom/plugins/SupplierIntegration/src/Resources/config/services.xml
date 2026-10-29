@@ -4,6 +4,8 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
         <defaults autowire="true" autoconfigure="true" public="false" />
+        <service id="SupplierIntegration\Command\StartSupplierSyncCommand" />
+        <service id="SupplierIntegration\Command\ReindexSupplierOffersCommand" />
         <service id="SupplierIntegration\Storefront\Controller\SupplierOffersController" public="true">
             <tag name="controller.service_arguments" />
         </service>
