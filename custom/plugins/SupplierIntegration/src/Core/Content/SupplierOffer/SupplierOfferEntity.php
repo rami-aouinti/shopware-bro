@@ -1,7 +1,7 @@
 <?php declare(strict_types=1);
-namespace SupplierIntegration\\Core\\Content\\SupplierOffer;
-use Shopware\\Core\\Framework\\DataAbstractionLayer\\Entity;
-use SupplierIntegration\\Core\\Content\\Supplier\\SupplierEntity;
+namespace SupplierIntegration\Core\Content\SupplierOffer;
+use Shopware\Core\Framework\DataAbstractionLayer\Entity;
+use SupplierIntegration\Core\Content\Supplier\SupplierEntity;
 class SupplierOfferEntity extends Entity
 {
     protected string $supplierId = '';
