@@ -1,7 +1,7 @@
 <?php declare(strict_types=1);
-namespace SupplierIntegration\\Core\\Content\\SupplierSyncError;
-use Shopware\\Core\\Framework\\DataAbstractionLayer\\Entity;
-use SupplierIntegration\\Core\\Content\\SupplierSyncRun\\SupplierSyncRunEntity;
+namespace SupplierIntegration\Core\Content\SupplierSyncError;
+use Shopware\Core\Framework\DataAbstractionLayer\Entity;
+use SupplierIntegration\Core\Content\SupplierSyncRun\SupplierSyncRunEntity;
 class SupplierSyncErrorEntity extends Entity
 {
     protected string $syncRunId = '';
