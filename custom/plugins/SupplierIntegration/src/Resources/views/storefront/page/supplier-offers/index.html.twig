@@ -1,0 +1,88 @@
+{% sw_extends '@Storefront/storefront/base.html.twig' %}
+
+{% block base_content %}
+    <div class="container py-5 supplier-offers-page">
+        <div class="row mb-4 align-items-end">
+            <div class="col-lg-8">
+                <span class="badge bg-info text-dark mb-2">Demo API data</span>
+                <h1>Supplier Offers</h1>
+                <p class="text-muted mb-0">
+                    Fictional offers from {{ supplier.name|default('Demo Supplier') }}.
+                    These records are for local development and are not live supplier prices.
+                </p>
+            </div>
+            <div class="col-lg-4 text-lg-end mt-3 mt-lg-0">
+                <span class="badge bg-secondary">{{ totalOffers }} offers</span>
+            </div>
+        </div>
+
+        <form method="get" action="{{ path('frontend.supplier_integration.offers') }}" class="card card-body mb-4">
+            <div class="row g-3 align-items-end">
+                <div class="col-md-5">
+                    <label class="form-label" for="supplier-offers-q">Search offers</label>
+                    <input class="form-control" id="supplier-offers-q" name="q" value="{{ filters.q }}" placeholder="Name, SKU, brand...">
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label" for="supplier-offers-category">Category</label>
+                    <select class="form-select" id="supplier-offers-category" name="category">
+                        <option value="">All categories</option>
+                        {% for category in categories %}
+                            <option value="{{ category }}" {% if filters.category == category %}selected{% endif %}>{{ category }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label" for="supplier-offers-availability">Availability</label>
+                    <select class="form-select" id="supplier-offers-availability" name="availability">
+                        <option value="all" {% if filters.availability == 'all' %}selected{% endif %}>All offers</option>
+                        <option value="available" {% if filters.availability == 'available' %}selected{% endif %}>In stock</option>
+                        <option value="unavailable" {% if filters.availability == 'unavailable' %}selected{% endif %}>Out of stock</option>
+                    </select>
+                </div>
+                <div class="col-md-1 d-grid">
+                    <button class="btn btn-primary" type="submit">Go</button>
+                </div>
+            </div>
+        </form>
+
+        {% if offers is empty %}
+            <div class="alert alert-warning">No offers match your filters. Try another search.</div>
+        {% else %}
+            <div class="row g-3">
+                {% for offer in offers %}
+                    <div class="col-sm-6 col-xl-4">
+                        <article class="card h-100 shadow-sm">
+                            <div class="card-body d-flex flex-column">
+                                <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
+                                    <span class="badge bg-light text-dark">{{ offer.category }}</span>
+                                    {% if offer.availableQuantity <= 0 %}
+                                        <span class="badge bg-danger">Out of stock</span>
+                                    {% elseif offer.availableQuantity <= 5 %}
+                                        <span class="badge bg-warning text-dark">Low stock · {{ offer.availableQuantity }}</span>
+                                    {% else %}
+                                        <span class="badge bg-success">In stock · {{ offer.availableQuantity }}</span>
+                                    {% endif %}
+                                </div>
+                                <h2 class="h5">{{ offer.name }}</h2>
+                                <p class="text-muted small">{{ offer.brand }} · SKU {{ offer.sku }}</p>
+                                <p>{{ offer.description }}</p>
+                                <div class="mt-auto pt-3 border-top">
+                                    <div class="d-flex justify-content-between mb-1">
+                                        <span class="text-muted">Supplier purchase price</span>
+                                        <strong>{{ offer.purchasePrice|number_format(2, ',', '.') }} {{ offer.currency }}</strong>
+                                    </div>
+                                    <div class="d-flex justify-content-between">
+                                        <span class="text-muted">Delivery estimate</span>
+                                        <span>{{ offer.deliveryDays }} day(s)</span>
+                                    </div>
+                                    <div class="small text-muted mt-2">External ID: {{ offer.externalProductId }}</div>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        <p class="small text-muted mt-4">Training demo only: the current page reads bundled fixture data. The next implementation stage will import offers through the DAL and Messenger, then use the search index.</p>
+    </div>
+{% endblock %}
