@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
-namespace SupplierIntegration\\Core\\Content\\SupplierSyncRun;
-use Shopware\\Core\\Framework\\DataAbstractionLayer\\Entity;
-use Shopware\\Core\\Framework\\DataAbstractionLayer\\EntityCollection;
-use SupplierIntegration\\Core\\Content\\Supplier\\SupplierEntity;
+namespace SupplierIntegration\Core\Content\SupplierSyncRun;
+use Shopware\Core\Framework\DataAbstractionLayer\Entity;
+use Shopware\Core\Framework\DataAbstractionLayer\EntityCollection;
+use SupplierIntegration\Core\Content\Supplier\SupplierEntity;
 class SupplierSyncRunEntity extends Entity
 {
     protected string $supplierId = '';
