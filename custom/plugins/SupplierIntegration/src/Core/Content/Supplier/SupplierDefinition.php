@@ -1,19 +1,19 @@
 <?php declare(strict_types=1);
 
-namespace SupplierIntegration\\Core\\Content\\Supplier;
+namespace SupplierIntegration\Core\Content\Supplier;
 
-use Shopware\\Core\\Framework\\DataAbstractionLayer\\EntityDefinition;
-use Shopware\\Core\\Framework\\DataAbstractionLayer\\Field\\BoolField;
-use Shopware\\Core\\Framework\\DataAbstractionLayer\\Field\\CreatedAtField;
-use Shopware\\Core\\Framework\\DataAbstractionLayer\\Field\\FkField;
-use Shopware\\Core\\Framework\\DataAbstractionLayer\\Field\\IdField;
-use Shopware\\Core\\Framework\\DataAbstractionLayer\\Field\\LongTextField;
-use Shopware\\Core\\Framework\\DataAbstractionLayer\\Field\\StringField;
-use Shopware\\Core\\Framework\\DataAbstractionLayer\\Field\\UpdatedAtField;
-use Shopware\\Core\\Framework\\DataAbstractionLayer\\Field\\Flag\\PrimaryKey;
-use Shopware\\Core\\Framework\\DataAbstractionLayer\\Field\\Flag\\Required;
-use Shopware\\Core\\Framework\\DataAbstractionLayer\\FieldCollection;
-use Shopware\\Core\\Framework\\DataAbstractionLayer\\Field\\OneToManyAssociationField;
+use Shopware\Core\Framework\DataAbstractionLayer\EntityDefinition;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\BoolField;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\CreatedAtField;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\FkField;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\IdField;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\LongTextField;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\StringField;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\UpdatedAtField;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\PrimaryKey;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\Required;
+use Shopware\Core\Framework\DataAbstractionLayer\FieldCollection;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\OneToManyAssociationField;
 
 class SupplierDefinition extends EntityDefinition
 {
