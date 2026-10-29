@@ -1,5 +1,5 @@
 <?php declare(strict_types=1);
-namespace SupplierIntegration\\Message;
+namespace SupplierIntegration\Message;
 final class IndexSupplierOfferMessage
 {
     /** @param list<string> $offerIds */
