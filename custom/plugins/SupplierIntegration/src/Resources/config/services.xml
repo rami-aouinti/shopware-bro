@@ -7,5 +7,22 @@
         <service id="SupplierIntegration\Storefront\Controller\SupplierOffersController" public="true">
             <tag name="controller.service_arguments" />
         </service>
+        <service id="SupplierIntegration\Core\Content\Supplier\SupplierDefinition">
+            <tag name="shopware.entity.definition" />
+        </service>
+        <service id="SupplierIntegration\Core\Content\SupplierOffer\SupplierOfferDefinition">
+            <tag name="shopware.entity.definition" />
+        </service>
+        <service id="SupplierIntegration\Core\Content\SupplierSyncRun\SupplierSyncRunDefinition">
+            <tag name="shopware.entity.definition" />
+        </service>
+        <service id="SupplierIntegration\Core\Content\SupplierSyncError\SupplierSyncErrorDefinition">
+            <tag name="shopware.entity.definition" />
+        </service>
+        <service id="SupplierIntegration\Service\DemoSupplierApiClient">
+            <argument key="$projectDir">%kernel.project_dir%</argument>
+        </service>
+        <service id="SupplierIntegration\Service\HttpSupplierApiClient" />
+        <service id="SupplierIntegration\Service\SupplierApiClientInterface" alias="SupplierIntegration\Service\DemoSupplierApiClient" />
     </services>
 </container>
