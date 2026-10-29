@@ -7,7 +7,7 @@ class HttpSupplierApiClient implements SupplierApiClientInterface
     public function fetchOffers(string $supplierId): iterable
     {
         $baseUrl = rtrim((string) getenv('SUPPLIER_API_BASE_URL'), '/');
-        if ($baseUrl === '') { throw new \\RuntimeException('SUPPLIER_API_BASE_URL is not configured.'); }
+        if ($baseUrl === '') { throw new \RuntimeException('SUPPLIER_API_BASE_URL is not configured.'); }
         $token = (string) getenv('SUPPLIER_API_TOKEN');
         $page = 1;
         do {
@@ -17,8 +17,8 @@ class HttpSupplierApiClient implements SupplierApiClientInterface
                 'timeout' => 15,
             ]);
             $status = $response->getStatusCode();
-            if ($status === 429 || $status >= 500) { throw new \\RuntimeException('Temporary supplier API error: HTTP ' . $status); }
-            if ($status >= 400) { throw new \\UnexpectedValueException('Supplier API rejected request: HTTP ' . $status); }
+            if ($status === 429 || $status >= 500) { throw new \RuntimeException('Temporary supplier API error: HTTP ' . $status); }
+            if ($status >= 400) { throw new \UnexpectedValueException('Supplier API rejected request: HTTP ' . $status); }
             $body = $response->toArray(false);
             foreach (($body['items'] ?? []) as $item) { yield $item; }
             $page++;
