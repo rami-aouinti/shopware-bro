@@ -1,5 +1,5 @@
 <?php declare(strict_types=1);
-namespace SupplierIntegration\\Service;
+namespace SupplierIntegration\Service;
 interface SupplierApiClientInterface
 {
     /** @return iterable<array<string, mixed>> */
