@@ -1,0 +1,10 @@
+{
+  "productStockWarning": {
+    "admin": {
+      "columnLabel": "Lagerstatus",
+      "outOfStock": "Nicht auf Lager",
+      "lowStock": "Niedriger Bestand",
+      "inStock": "Auf Lager"
+    }
+  }
+}
