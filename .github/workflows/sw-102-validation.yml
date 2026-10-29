@@ -1,0 +1,36 @@
+name: SW-102 plugin validation
+
+on:
+  push:
+    branches:
+      - feature/SW-102-storefront-manufacturer-reference
+    paths:
+      - 'custom/plugins/ProductManufacturerReference/**'
+      - '.github/workflows/sw-102-validation.yml'
+  pull_request:
+    paths:
+      - 'custom/plugins/ProductManufacturerReference/**'
+      - '.github/workflows/sw-102-validation.yml'
+
+jobs:
+  validate-plugin:
+    name: Validate custom field and storefront snippets
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: dom
+          coverage: none
+
+      - name: Validate declarative custom-field definition
+        working-directory: custom/plugins/ProductManufacturerReference
+        run: php tests/validate-custom-fields.php
+
+      - name: Validate storefront template and translations
+        working-directory: custom/plugins/ProductManufacturerReference
+        run: php tests/validate-storefront-reference.php
