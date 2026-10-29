@@ -2,7 +2,7 @@
   "name": "rami/supplier-integration",
   "description": "Supplier integration, asynchronous imports and product offer search for Shopware 6.",
   "type": "shopware-platform-plugin",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "license": "MIT",
   "extra": {
     "shopware-plugin-class": "SupplierIntegration\\SupplierIntegration",
