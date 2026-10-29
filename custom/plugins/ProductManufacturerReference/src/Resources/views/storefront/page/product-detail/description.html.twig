@@ -1,0 +1,15 @@
+{% sw_extends '@Storefront/storefront/page/product-detail/description.html.twig' %}
+
+{% block page_product_detail_description_content_text %}
+    {{ parent() }}
+
+    {% set manufacturerReference = page.product.translated.customFields.rami_manufacturer_reference
+        |default(page.product.customFields.rami_manufacturer_reference|default('')) %}
+
+    {% if manufacturerReference is not empty %}
+        <p class="product-manufacturer-reference mt-3">
+            <strong>{{ 'productManufacturerReference.label'|trans }}:</strong>
+            <span>{{ manufacturerReference }}</span>
+        </p>
+    {% endif %}
+{% endblock %}
