@@ -1,9 +1,8 @@
 framework:
   messenger:
-    transports:
-      supplier_sync: '%env(default:sync_transport_dsn:SUPPLIER_SYNC_TRANSPORT_DSN)%'
-    routing:
-      'SupplierIntegration\Message\StartSupplierSyncMessage': supplier_sync
     failure_transport: failed
     transports:
+      supplier_sync: 'doctrine://default?queue_name=supplier_sync'
       failed: 'doctrine://default?queue_name=failed'
+    routing:
+      'SupplierIntegration\\Message\\StartSupplierSyncMessage': supplier_sync
