@@ -1,45 +1,33 @@
 # SW-105 — Supplier Integration & Product Intelligence
 
-A Shopware 6 plugin training project for importing supplier offers, processing imports asynchronously with Symfony Messenger, persisting records through the Shopware DAL, and making offers searchable through OpenSearch/Elasticsearch.
+Shopware 6 plugin training project. This branch contains the initial storefront fixture and the first integration backend increment.
 
-## Demo data is included
+## Architecture
 
-`src/Resources/demo/supplier-offers.json` contains eight realistic supplier offers with different stock levels, prices, categories and delivery times. These are explicitly fictional demo records, not live supplier data. They are intended to support local development without credentials or a paid external API.
+- **DAL/source of truth:** supplier, supplier offer, sync run and per-item sync error entities.
+- **Relations:** supplier 1:N offers; supplier 1:N sync runs; sync run 1:N errors.
+- **Idempotence:** unique database key (supplier_id, external_id) and stable offer UUID derived from supplier ID + external ID. Re-delivering the same external offer updates the existing record rather than creating a duplicate.
+- **API adapters:** demo fixture client for local work and a Symfony HTTP client for a paginated external API. Configure SUPPLIER_API_BASE_URL and optionally SUPPLIER_API_TOKEN for real API mode.
+- **Async:** StartSupplierSyncMessage handler and Doctrine Messenger transport. Worker command: bin/console messenger:consume supplier_sync -vv. Failed messages are routed to the failed transport.
+- **Search:** bulk OpenSearch HTTP adapter is included; configure OPENSEARCH_URL and optionally OPENSEARCH_INDEX. The DB remains canonical; the reindex command currently validates the DAL read path and is a starting point for a complete reindex pipeline.
+- **Storefront:** /supplier-offers shows the bundled fictional demo data. This route is fixture-backed and does not yet query the DAL or search index.
 
-The target user journey is to open a Supplier Offers storefront page and see the imported demo offers, then filter/search them. A local demo API endpoint and the storefront view will be implemented in subsequent steps of SW-105; this initial commit establishes the plugin scaffold and demo dataset.
+## Install / validate
 
-## Planned architecture
+From the Shopware root:
 
-- `Supplier` DAL entity: external supplier configuration and status.
-- `SupplierOffer` DAL entity: normalized supplier offer, unique by supplier + external product ID.
-- `SupplierSyncRun` DAL entity: import lifecycle and counters.
-- `SupplierSyncError` DAL entity: per-item diagnostics.
-- HTTP client adapter + DTO validation for external APIs.
-- Symfony Messenger messages/handlers for fetch, import and index operations.
-- OpenSearch/Elasticsearch adapter and reindex/reconciliation command.
-- Storefront offers page showing demo/imported offers; Administration controls and sync monitoring.
+    bin/console plugin:refresh
+    bin/console plugin:install --activate SupplierIntegration
+    bin/console database:migrate SupplierIntegration --all
+    bin/console cache:clear
+    bin/console plugin:list | grep SupplierIntegration
 
-## Development principles
+A supplier record must exist before running bin/console supplier-integration:sync <supplier-uuid>. The command creates a sync-run row and dispatches the message. If Messenger is configured with Doctrine transport, run a worker in a separate terminal:
 
-- Shopware database/DAL is the source of truth; search is a derived index.
-- Never overwrite native Shopware sales prices or stock automatically.
-- Do not commit real API credentials; configure secrets through environment variables or Shopware system config.
-- API failures, invalid records and indexing failures must be observable and retryable where appropriate.
-- Keep import handlers idempotent and use database uniqueness constraints to prevent duplicates.
+    bin/console messenger:consume supplier_sync -vv
 
-## Local installation (after implementation is completed)
+The demo API client reads src/Resources/demo/supplier-offers.json. The external API client expects paginated JSON shaped like {"items": [], "hasMore": false}; each item should include externalId, sku, name, and optional price, currency, stock, category, and deliveryDays.
 
-From the Shopware project root:
+## Important limitations
 
-```bash
-bin/console plugin:refresh
-bin/console plugin:install --activate SupplierIntegration
-bin/console database:migrate SupplierIntegration --all
-bin/console cache:clear
-```
-
-Then build the Administration only if the plugin adds Administration JavaScript. The demo offers storefront route and import command will be documented once those components are added.
-
-## Scope status
-
-This branch is being developed incrementally. The scaffold and demo dataset do not yet constitute the completed integration platform; Messenger processing, DAL entities, API endpoint, search adapter, and storefront page remain implementation tasks.
+This is a substantial training scaffold, not yet production-ready. The Storefront page is still fixture-backed; there is no admin CRUD/monitoring UI; OpenSearch indexing is not yet wired into the import handler and the reindex command is only a DAL smoke-check; the integration tests have not been run against the local Docker environment. Validate Shopware-version compatibility and service configuration locally before relying on it. Never commit real credentials.
