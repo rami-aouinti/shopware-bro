@@ -1,0 +1,35 @@
+name: SW-104 administration stock indicator validation
+
+on:
+  push:
+    branches:
+      - feature/SW-104-admin-stock-indicator
+    paths:
+      - 'custom/plugins/ProductStockWarning/**'
+      - '.github/workflows/sw-104-admin-stock-indicator.yml'
+  pull_request:
+    paths:
+      - 'custom/plugins/ProductStockWarning/**'
+      - '.github/workflows/sw-104-admin-stock-indicator.yml'
+
+jobs:
+  validate-admin-stock-indicator:
+    name: Validate administration stock indicator
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          coverage: none
+
+      - name: Validate storefront plugin
+        working-directory: custom/plugins/ProductStockWarning
+        run: php tests/validate-stock-warning.php
+
+      - name: Validate administration extension
+        working-directory: custom/plugins/ProductStockWarning
+        run: php tests/validate-admin-stock-indicator.php

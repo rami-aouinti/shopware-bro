@@ -1,0 +1,23 @@
+{% sw_extends '@Administration/sw-product-list/index.html.twig' %}
+
+{% block sw_product_list_grid_columns %}
+    {% parent %}
+
+    <template #column-stockWarningStatus="{ item }">
+        <span
+            class="product-stock-warning-admin__badge"
+            :class="'product-stock-warning-admin__badge--' + getStockWarningStatus(item.stock)"
+            role="status"
+        >
+            <template v-if="getStockWarningStatus(item.stock) === 'outOfStock'">
+                {{ $t('productStockWarning.admin.outOfStock') }}
+            </template>
+            <template v-else-if="getStockWarningStatus(item.stock) === 'lowStock'">
+                {{ $t('productStockWarning.admin.lowStock') }}
+            </template>
+            <template v-else>
+                {{ $t('productStockWarning.admin.inStock') }}
+            </template>
+        </span>
+    </template>
+{% endblock %}
