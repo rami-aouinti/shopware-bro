@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/shopware/shopware/trunk/src/Core/System/SystemConfig/Schema/config.xsd">
+    <card>
+        <title>Product stock warning</title>
+        <title lang="de-DE">Lagerbestand-Warnung</title>
+        <input-field type="int">
+            <name>stockThreshold</name>
+            <defaultValue>5</defaultValue>
+            <label>Low-stock threshold</label>
+            <label lang="de-DE">Grenzwert für niedrigen Bestand</label>
+            <helpText>Show the warning when stock is above zero and at or below this value.</helpText>
+            <helpText lang="de-DE">Warnung anzeigen, wenn der Bestand größer als null und höchstens dieser Wert ist.</helpText>
+            <min>1</min>
+            <max>1000</max>
+        </input-field>
+    </card>
+</config>
