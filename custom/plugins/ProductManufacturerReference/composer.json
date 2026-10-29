@@ -1,0 +1,23 @@
+
+{
+  "name": "rami/product-manufacturer-reference",
+  "description": "Adds an internal manufacturer reference to Shopware products.",
+  "type": "shopware-platform-plugin",
+  "version": "1.0.1",
+  "license": "MIT",
+  "require": {
+    "shopware/core": "~6.7.0"
+  },
+  "extra": {
+    "shopware-plugin-class": "ProductManufacturerReference\\ProductManufacturerReference",
+    "label": {
+      "en-GB": "Product Manufacturer Reference",
+      "de-DE": "Herstellerreferenz für Produkte"
+    }
+  },
+  "autoload": {
+    "psr-4": {
+      "ProductManufacturerReference\\": "src/"
+    }
+  }
+}
