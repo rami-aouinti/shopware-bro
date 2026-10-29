@@ -1,0 +1,42 @@
+name: SW-101 plugin validation
+
+on:
+  pull_request:
+    paths:
+      - "custom/plugins/ProductManufacturerReference/**"
+      - ".github/workflows/sw-101-validation.yml"
+  push:
+    branches:
+      - "chore/SW-101-review-and-tests"
+    paths:
+      - "custom/plugins/ProductManufacturerReference/**"
+      - ".github/workflows/sw-101-validation.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: custom/plugins/ProductManufacturerReference
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.4"
+          extensions: dom, libxml
+          coverage: none
+
+      - name: Validate Composer metadata
+        run: composer validate --no-check-publish --no-check-lock
+
+      - name: Check PHP syntax
+        run: php -l tests/validate-custom-fields.php
+
+      - name: Validate custom-field definition
+        run: php tests/validate-custom-fields.php
