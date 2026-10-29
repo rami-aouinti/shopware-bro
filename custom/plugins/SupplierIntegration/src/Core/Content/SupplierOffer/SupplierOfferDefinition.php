@@ -1,19 +1,19 @@
 <?php declare(strict_types=1);
-namespace SupplierIntegration\\Core\\Content\\SupplierOffer;
-use SupplierIntegration\\Core\\Content\\Supplier\\SupplierDefinition;
-use Shopware\\Core\\Framework\\DataAbstractionLayer\\EntityDefinition;
-use Shopware\\Core\\Framework\\DataAbstractionLayer\\Field\\BoolField;
-use Shopware\\Core\\Framework\\DataAbstractionLayer\\Field\\CreatedAtField;
-use Shopware\\Core\\Framework\\DataAbstractionLayer\\Field\\FkField;
-use Shopware\\Core\\Framework\\DataAbstractionLayer\\Field\\FloatField;
-use Shopware\\Core\\Framework\\DataAbstractionLayer\\Field\\IdField;
-use Shopware\\Core\\Framework\\DataAbstractionLayer\\Field\\IntField;
-use Shopware\\Core\\Framework\\DataAbstractionLayer\\Field\\StringField;
-use Shopware\\Core\\Framework\\DataAbstractionLayer\\Field\\UpdatedAtField;
-use Shopware\\Core\\Framework\\DataAbstractionLayer\\Field\\ManyToOneAssociationField;
-use Shopware\\Core\\Framework\\DataAbstractionLayer\\Field\\Flag\\PrimaryKey;
-use Shopware\\Core\\Framework\\DataAbstractionLayer\\Field\\Flag\\Required;
-use Shopware\\Core\\Framework\\DataAbstractionLayer\\FieldCollection;
+namespace SupplierIntegration\Core\Content\SupplierOffer;
+use SupplierIntegration\Core\Content\Supplier\SupplierDefinition;
+use Shopware\Core\Framework\DataAbstractionLayer\EntityDefinition;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\BoolField;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\CreatedAtField;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\FkField;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\FloatField;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\IdField;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\IntField;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\StringField;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\UpdatedAtField;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\ManyToOneAssociationField;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\PrimaryKey;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\Required;
+use Shopware\Core\Framework\DataAbstractionLayer\FieldCollection;
 class SupplierOfferDefinition extends EntityDefinition
 {
     public const ENTITY_NAME = 'supplier_integration_offer';
