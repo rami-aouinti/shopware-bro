@@ -1,0 +1,25 @@
+{
+  "base": "/bundles/productstockwarning/administration/",
+  "entryPoints": {
+    "product-stock-warning": {
+      "css": [
+        "/bundles/productstockwarning/administration/assets/product-stock-warning-w_BJV99v.css"
+      ],
+      "dynamic": [],
+      "js": [
+        "/bundles/productstockwarning/administration/assets/product-stock-warning-Bt2FKvat.js"
+      ],
+      "legacy": false,
+      "preload": []
+    }
+  },
+  "legacy": false,
+  "metadatas": {},
+  "version": [
+    "7.1.0",
+    7,
+    1,
+    0
+  ],
+  "viteServer": null
+}

@@ -1,0 +1,11 @@
+{
+  "main.js": {
+    "file": "assets/product-stock-warning-Bt2FKvat.js",
+    "name": "product-stock-warning",
+    "src": "main.js",
+    "isEntry": true,
+    "css": [
+      "assets/product-stock-warning-w_BJV99v.css"
+    ]
+  }
+}
