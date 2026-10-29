@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
-namespace SupplierIntegration\\Tests\\Unit;
-use PHPUnit\\Framework\\TestCase;
+namespace SupplierIntegration\Tests\Unit;
+use PHPUnit\Framework\TestCase;
 final class OfferPayloadNormalizerTest extends TestCase
 {
     public function testPayloadHashIsStableForIdempotentImport(): void
