@@ -9,6 +9,15 @@
         }
     },
     "extra": {
+        "shopware-plugin-class": "SupplierIntegration\\SupplierIntegration",
+        "label": {
+            "en-GB": "Supplier Integration",
+            "de-DE": "Lieferantenintegration"
+        },
+        "description": {
+            "en-GB": "Supplier API integration and offer intelligence",
+            "de-DE": "Lieferanten-API-Integration und Angebotsübersicht"
+        },
         "shopware": {
             "pluginName": "SupplierIntegration",
             "label": {
