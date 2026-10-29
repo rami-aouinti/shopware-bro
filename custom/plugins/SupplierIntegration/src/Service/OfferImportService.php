@@ -14,7 +14,7 @@ class OfferImportService
     ) {}
     public function import(string $supplierId, string $syncRunId, Context $context): void
     {
-        $received = $created = $updated = $failed = 0;
+        $received = $upserted = $failed = 0;
         $this->syncRuns->update([['id' => $syncRunId, 'status' => 'running', 'startedAt' => (new \DateTimeImmutable())->format(DATE_ATOM)]], $context);
         try {
             foreach ($this->apiClient->fetchOffers($supplierId) as $payload) {
@@ -28,20 +28,19 @@ class OfferImportService
                     continue;
                 }
                 $normalized = [
+                    'id' => substr(hash('md5', $supplierId . ':' . $externalId), 0, 32),
                     'supplierId' => $supplierId, 'externalId' => $externalId, 'sku' => $sku, 'name' => $name,
                     'category' => $payload['category'] ?? null, 'price' => max(0, (float) ($payload['price'] ?? 0)),
                     'currency' => strtoupper((string) ($payload['currency'] ?? 'EUR')), 'stock' => max(0, (int) ($payload['stock'] ?? 0)),
                     'deliveryDays' => max(0, (int) ($payload['deliveryDays'] ?? $payload['delivery_days'] ?? 0)),
                     'payloadHash' => hash('sha256', json_encode($payload, JSON_THROW_ON_ERROR)), 'isActive' => true,
                 ];
-                // DAL upsert + DB unique key (supplier_id, external_id) makes repeated deliveries idempotent.
-                $normalized['id'] = Uuid::fromString(hash('sha256', $supplierId . ':' . $externalId, true));
                 $this->offers->upsert([$normalized], $context);
-                ++$created;
+                ++$upserted;
             }
-            $this->syncRuns->update([['id' => $syncRunId, 'status' => $failed > 0 ? 'completed_with_errors' : 'completed', 'finishedAt' => (new \DateTimeImmutable())->format(DATE_ATOM), 'itemsReceived' => $received, 'itemsCreated' => $created, 'itemsUpdated' => $updated, 'itemsFailed' => $failed]], $context);
+            $this->syncRuns->update([['id' => $syncRunId, 'status' => $failed > 0 ? 'completed_with_errors' : 'completed', 'finishedAt' => (new \DateTimeImmutable())->format(DATE_ATOM), 'itemsReceived' => $received, 'itemsCreated' => $upserted, 'itemsUpdated' => 0, 'itemsFailed' => $failed]], $context);
         } catch (\Throwable $e) {
-            $this->syncRuns->update([['id' => $syncRunId, 'status' => 'failed', 'finishedAt' => (new \DateTimeImmutable())->format(DATE_ATOM), 'itemsReceived' => $received, 'itemsCreated' => $created, 'itemsUpdated' => $updated, 'itemsFailed' => $failed, 'lastError' => mb_substr($e->getMessage(), 0, 60000)]], $context);
+            $this->syncRuns->update([['id' => $syncRunId, 'status' => 'failed', 'finishedAt' => (new \DateTimeImmutable())->format(DATE_ATOM), 'itemsReceived' => $received, 'itemsCreated' => $upserted, 'itemsUpdated' => 0, 'itemsFailed' => $failed, 'lastError' => mb_substr($e->getMessage(), 0, 60000)]], $context);
             throw $e;
         }
     }
