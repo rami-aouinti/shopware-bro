@@ -1,7 +1,7 @@
 <?php declare(strict_types=1);
-namespace SupplierIntegration\\Migration;
-use Doctrine\\DBAL\\Connection;
-use Shopware\\Core\\Framework\\Migration\\MigrationStep;
+namespace SupplierIntegration\Migration;
+use Doctrine\DBAL\Connection;
+use Shopware\Core\Framework\Migration\MigrationStep;
 class Migration1761700000CreateSupplierIntegrationTables extends MigrationStep
 {
     public function getCreationTimestamp(): int { return 1761700000; }

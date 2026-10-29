@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
-namespace SupplierIntegration\\Service;
-use Symfony\\Component\\Filesystem\\Filesystem;
+namespace SupplierIntegration\Service;
+use Symfony\Component\Filesystem\Filesystem;
 class DemoSupplierApiClient implements SupplierApiClientInterface
 {
     public function __construct(private readonly string $projectDir) {}
