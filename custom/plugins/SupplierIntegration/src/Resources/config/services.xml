@@ -24,5 +24,7 @@
         </service>
         <service id="SupplierIntegration\Service\HttpSupplierApiClient" />
         <service id="SupplierIntegration\Service\SupplierApiClientInterface" alias="SupplierIntegration\Service\DemoSupplierApiClient" />
+        <service id="SupplierIntegration\Service\OpenSearchOfferIndexer" />
+        <service id="SupplierIntegration\Service\OfferSearchIndexerInterface" alias="SupplierIntegration\Service\OpenSearchOfferIndexer" />
     </services>
 </container>
