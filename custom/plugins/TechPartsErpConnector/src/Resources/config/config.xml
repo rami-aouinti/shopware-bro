@@ -6,8 +6,8 @@
         <title lang="de-DE">ERP-Anbindung</title>
         <input-field type="bool">
             <name>enabled</name>
-            <label>Enable ERP connectivity</label>
-            <label lang="de-DE">ERP-Verbindung aktivieren</label>
+            <label>Enable ERP availability checks</label>
+            <label lang="de-DE">ERP-Verfügbarkeitsprüfung aktivieren</label>
             <defaultValue>true</defaultValue>
         </input-field>
     </card>
