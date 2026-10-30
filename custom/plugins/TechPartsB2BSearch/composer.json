@@ -13,11 +13,30 @@
     "label": {
       "en-GB": "TechPartsB2BSearch",
       "de-DE": "TechPartsB2BSearch"
+    },
+    "description": {
+      "en-GB": "Provides supplier-aware B2B product search with multiple filters and a dedicated search layer designed for fast catalogue queries and future index integrations.",
+      "de-DE": "Ermöglicht lieferantenbezogene B2B-Produktsuche mit mehreren Filtern und einer eigenen Suchschicht für schnelle Katalogabfragen und künftige Indexintegrationen."
+    },
+    "manufacturerLink": {
+      "en-GB": "https://github.com/rami-aouinti/shopware-bro",
+      "de-DE": "https://github.com/rami-aouinti/shopware-bro"
+    },
+    "supportLink": {
+      "en-GB": "https://github.com/rami-aouinti/shopware-bro/issues",
+      "de-DE": "https://github.com/rami-aouinti/shopware-bro/issues"
     }
   },
   "autoload": {
     "psr-4": {
       "TechPartsB2BSearch\\": "src/"
     }
-  }
+  },
+  "authors": [
+    {
+      "name": "Rami Aouinti",
+      "email": "rami.aouinti@gmail.com",
+      "role": "Developer"
+    }
+  ]
 }

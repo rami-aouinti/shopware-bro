@@ -9,7 +9,11 @@ use Shopware\Core\Framework\Migration\MigrationStep;
 
 final class Migration1793322100ImportJob extends MigrationStep
 {
-    public function getCreationTimestamp(): int { return 1793322100; }
+    public function getCreationTimestamp(): int
+    {
+        return 1793322100;
+    }
+
     public function update(Connection $connection): void
     {
         $connection->executeStatement(<<<'SQL'
@@ -31,5 +35,8 @@ CREATE TABLE IF NOT EXISTS `tp_import_job` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
 SQL);
     }
-    public function updateDestructive(Connection $connection): void {}
+
+    public function updateDestructive(Connection $connection): void
+    {
+    }
 }

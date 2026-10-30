@@ -10,7 +10,9 @@ namespace TechPartsErpConnector\Application\Message;
  */
 final readonly class SyncSupplierCatalogMessage
 {
-    /** @param list<array<string, mixed>> $rows */
+    /**
+     * @param list<array<string, mixed>> $rows
+     */
     public function __construct(
         public string $jobId,
         public string $source,

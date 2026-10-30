@@ -34,7 +34,7 @@ final readonly class SyncSupplierCatalogHandler
         }
 
         // Let infrastructure exceptions escape so Messenger can retry the message.
-        $context = Context::createDefaultContext();
+        $context = Context::createCLIContext();
         $result = $this->importService->import($rows, $context, $message->batchSize);
         $received = count($message->rows);
         $rejected = $result->rejected + count($factoryRejected);

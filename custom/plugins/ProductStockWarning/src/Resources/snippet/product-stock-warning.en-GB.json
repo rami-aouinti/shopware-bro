@@ -1,5 +1,5 @@
 {
-  "productStockWarning": {
-    "message": "Only %stock% item(s) left in stock."
-  }
+    "productStockWarning": {
+        "message": "Only %stock% item(s) left in stock."
+    }
 }

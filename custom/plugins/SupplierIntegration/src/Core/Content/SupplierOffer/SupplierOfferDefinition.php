@@ -1,25 +1,41 @@
 <?php declare(strict_types=1);
+
 namespace SupplierIntegration\Core\Content\SupplierOffer;
-use SupplierIntegration\Core\Content\Supplier\SupplierDefinition;
+
 use Shopware\Core\Framework\DataAbstractionLayer\EntityDefinition;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\BoolField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\CreatedAtField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\FkField;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\PrimaryKey;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\Required;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\FloatField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\IdField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\IntField;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\ManyToOneAssociationField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\StringField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\UpdatedAtField;
-use Shopware\Core\Framework\DataAbstractionLayer\Field\ManyToOneAssociationField;
-use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\PrimaryKey;
-use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\Required;
 use Shopware\Core\Framework\DataAbstractionLayer\FieldCollection;
+use SupplierIntegration\Core\Content\Supplier\SupplierDefinition;
+
 class SupplierOfferDefinition extends EntityDefinition
 {
     public const ENTITY_NAME = 'supplier_integration_offer';
-    public function getEntityName(): string { return self::ENTITY_NAME; }
-    public function getEntityClass(): string { return SupplierOfferEntity::class; }
-    public function getCollectionClass(): string { return SupplierOfferCollection::class; }
+
+    public function getEntityName(): string
+    {
+        return self::ENTITY_NAME;
+    }
+
+    public function getEntityClass(): string
+    {
+        return SupplierOfferEntity::class;
+    }
+
+    public function getCollectionClass(): string
+    {
+        return SupplierOfferCollection::class;
+    }
+
     protected function defineFields(): FieldCollection
     {
         return new FieldCollection([
