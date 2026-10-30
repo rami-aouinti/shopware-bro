@@ -34,7 +34,7 @@ final readonly class InventorySyncService
             $sellableQuantity,
             $eventId,
         ): InventorySyncResult {
-            if ($snapshot->version !== null) {
+            {
                 // Lock the Shopware product row so concurrent versions of this product
                 // cannot overwrite one another out of sequence.
                 $lockedProduct = $connection->fetchOne(
@@ -54,7 +54,7 @@ final readonly class InventorySyncService
                     ],
                 );
 
-                if ($highestVersion !== false && $highestVersion !== null && (int) $highestVersion >= $snapshot->version) {
+                if ($highestVersion !== false && $highestVersion !== null && ($snapshot->version === null || (int) $highestVersion >= $snapshot->version)) {
                     $this->logger->info('Stale ERP inventory snapshot ignored', [
                         'source' => $snapshot->source,
                         'productId' => $snapshot->productId,
