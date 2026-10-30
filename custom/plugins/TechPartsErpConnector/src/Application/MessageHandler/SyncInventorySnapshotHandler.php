@@ -25,6 +25,7 @@ final readonly class SyncInventorySnapshotHandler
             $message->productId,
             $message->availableQuantity,
             $message->safetyStock,
+            $message->version,
         );
 
         // Infrastructure errors intentionally bubble up so Messenger can retry.
