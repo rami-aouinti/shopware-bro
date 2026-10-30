@@ -163,7 +163,7 @@ final readonly class ImportBatchStore
             (int) $counts['received'],
             (int) $counts['accepted'],
             (int) $counts['rejected'],
-            Context::createDefaultContext(),
+            Context::createCLIContext(),
             $summary,
         );
     }
