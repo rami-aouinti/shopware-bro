@@ -16,7 +16,7 @@
     "shopware/core": "^6.7"
   },
   "extra": {
-    "shopware-plugin-class": "TechPartsErpConnector\\\\TechPartsErpConnector",
+    "shopware-plugin-class": "TechPartsErpConnector\\TechPartsErpConnector",
     "label": {
       "en-GB": "TechParts ERP Connector",
       "de-DE": "TechParts ERP-Connector"
@@ -24,7 +24,7 @@
   },
   "autoload": {
     "psr-4": {
-      "TechPartsErpConnector\\\\": "src/"
+      "TechPartsErpConnector\\": "src/"
     }
   }
 }
