@@ -1,6 +1,9 @@
 <?php declare(strict_types=1);
+
 namespace SupplierIntegration\Core\Content\SupplierSyncRun;
+
 use SupplierIntegration\Core\Content\Supplier\SupplierDefinition;
+use SupplierIntegration\Core\Content\SupplierSyncError\SupplierSyncErrorDefinition;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityDefinition;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\FkField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\IdField;
@@ -13,12 +16,15 @@ use Shopware\Core\Framework\DataAbstractionLayer\Field\OneToManyAssociationField
 use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\PrimaryKey;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\Required;
 use Shopware\Core\Framework\DataAbstractionLayer\FieldCollection;
+
 class SupplierSyncRunDefinition extends EntityDefinition
 {
     public const ENTITY_NAME = 'supplier_integration_sync_run';
+
     public function getEntityName(): string { return self::ENTITY_NAME; }
     public function getEntityClass(): string { return SupplierSyncRunEntity::class; }
     public function getCollectionClass(): string { return SupplierSyncRunCollection::class; }
+
     protected function defineFields(): FieldCollection
     {
         return new FieldCollection([

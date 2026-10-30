@@ -42,7 +42,7 @@ final readonly class CsvSupplierCatalogReader
             }
 
             while (($values = fgetcsv($handle, 0, $delimiter)) !== false) {
-                if ($values === [null] || $values === []) {
+                if ($values === [null]) {
                     continue;
                 }
 

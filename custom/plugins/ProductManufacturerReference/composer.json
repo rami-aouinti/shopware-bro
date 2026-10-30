@@ -4,6 +4,13 @@
   "type": "shopware-platform-plugin",
   "version": "1.0.1",
   "license": "MIT",
+  "authors": [
+    {
+      "name": "Rami Aouinti",
+      "email": "rami.aouinti@gmail.com",
+      "role": "Developer"
+    }
+  ],
   "require": {
     "shopware/core": "~6.7.13"
   },
@@ -12,6 +19,18 @@
     "label": {
       "en-GB": "Product Manufacturer Reference",
       "de-DE": "Herstellerreferenz für Produkte"
+    },
+    "description": {
+      "en-GB": "Adds a dedicated manufacturer reference field to Shopware products and exposes it for reliable catalogue identification in administration and storefront use.",
+      "de-DE": "Ergänzt Shopware-Produkte um eine eigene Herstellerreferenz und stellt sie zur zuverlässigen Katalogidentifikation in der Administration und im Storefront bereit."
+    },
+    "manufacturerLink": {
+      "en-GB": "https://github.com/rami-aouinti/shopware-bro",
+      "de-DE": "https://github.com/rami-aouinti/shopware-bro"
+    },
+    "supportLink": {
+      "en-GB": "https://github.com/rami-aouinti/shopware-bro/issues",
+      "de-DE": "https://github.com/rami-aouinti/shopware-bro/issues"
     }
   },
   "autoload": {

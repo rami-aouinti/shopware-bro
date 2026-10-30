@@ -13,11 +13,30 @@
     "label": {
       "en-GB": "TechPartsOrderOrchestrator",
       "de-DE": "TechPartsOrderOrchestrator"
+    },
+    "description": {
+      "en-GB": "Coordinates order events and ERP hand-off with explicit processing states, idempotency safeguards and recovery-oriented workflows for reliable order integration.",
+      "de-DE": "Koordiniert Bestellereignisse und ERP-Übergaben mit klaren Verarbeitungszuständen, Idempotenzschutz und wiederherstellbaren Abläufen für zuverlässige Bestellintegration."
+    },
+    "manufacturerLink": {
+      "en-GB": "https://github.com/rami-aouinti/shopware-bro",
+      "de-DE": "https://github.com/rami-aouinti/shopware-bro"
+    },
+    "supportLink": {
+      "en-GB": "https://github.com/rami-aouinti/shopware-bro/issues",
+      "de-DE": "https://github.com/rami-aouinti/shopware-bro/issues"
     }
   },
   "autoload": {
     "psr-4": {
       "TechPartsOrderOrchestrator\\": "src/"
     }
-  }
+  },
+  "authors": [
+    {
+      "name": "Rami Aouinti",
+      "email": "rami.aouinti@gmail.com",
+      "role": "Developer"
+    }
+  ]
 }

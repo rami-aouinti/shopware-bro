@@ -8,8 +8,9 @@ use Shopware\Core\Framework\DataAbstractionLayer\Entity;
 
 class ImportJobEntity extends Entity
 {
-    protected string $source;
-    protected string $status;
+    protected string $id;
+    protected string $source = '';
+    protected string $status = 'queued';
     protected int $received = 0;
     protected int $accepted = 0;
     protected int $rejected = 0;
@@ -17,6 +18,8 @@ class ImportJobEntity extends Entity
     protected ?\DateTimeInterface $startedAt = null;
     protected ?\DateTimeInterface $finishedAt = null;
 
+    public function getId(): string { return $this->id; }
+    public function setId(string $id): void { $this->id = $id; }
     public function getSource(): string { return $this->source; }
     public function setSource(string $source): void { $this->source = $source; }
     public function getStatus(): string { return $this->status; }

@@ -12,11 +12,31 @@
     "label": {
       "en-GB": "TechPartsObservability",
       "de-DE": "TechPartsObservability"
+    },
+    "description": {
+      "en-GB": "Adds integration observability with structured operational events, correlation identifiers and diagnostics that help teams investigate failed or delayed ERP workflows.",
+      "de-DE": "Ergänzt Integrationen um strukturierte Betriebsereignisse, Korrelationskennungen und Diagnoseinformationen zur Analyse fehlgeschlagener oder verzögerter ERP-Abläufe."
+    },
+    "manufacturerLink": {
+      "en-GB": "https://github.com/rami-aouinti/shopware-bro",
+      "de-DE": "https://github.com/rami-aouinti/shopware-bro"
+    },
+    "supportLink": {
+      "en-GB": "https://github.com/rami-aouinti/shopware-bro/issues",
+      "de-DE": "https://github.com/rami-aouinti/shopware-bro/issues"
     }
   },
   "autoload": {
     "psr-4": {
       "TechPartsObservability\\": "src/"
     }
-  }
+  },
+  "authors": [
+    {
+      "name": "Rami Aouinti",
+      "email": "rami.aouinti@gmail.com",
+      "role": "Developer"
+    }
+  ],
+  "description": "Operational observability for Shopware ERP integrations"
 }

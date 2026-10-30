@@ -52,8 +52,7 @@ final readonly class SupplierImportService
                 ];
 
                 if (count($batch) >= $batchSize) {
-                    $this->repository->upsert($batch, $context);
-                    $accepted += count($batch);
+                    $accepted += $this->upsertBatch($batch, $context);
                     $batch = [];
                 }
             } catch (\InvalidArgumentException $exception) {
@@ -69,8 +68,7 @@ final readonly class SupplierImportService
         }
 
         if ($batch !== []) {
-            $this->repository->upsert($batch, $context);
-            $accepted += count($batch);
+            $accepted += $this->upsertBatch($batch, $context);
         }
 
         $this->logger->info('Supplier import finished', [
@@ -81,5 +79,20 @@ final readonly class SupplierImportService
         ]);
 
         return new SupplierImportResult($received, $accepted, $rejected, $errors);
+    }
+    /**
+     * Keep DAL repository calls outside the row-iteration loop while retaining bounded batches.
+     *
+     * @param list<array{id: string, supplierCode: string, externalProductId: string, productId: ?string}> $batch
+     */
+    private function upsertBatch(array $batch, Context $context): int
+    {
+        if ($batch === []) {
+            return 0;
+        }
+
+        $this->repository->upsert($batch, $context);
+
+        return count($batch);
     }
 }

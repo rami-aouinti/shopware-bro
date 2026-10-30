@@ -45,7 +45,7 @@ final readonly class ImportFailureSubscriber implements EventSubscriberInterface
             $this->jobTracker->fail(
                 $message->jobId,
                 $exception::class . ': ' . $exception->getMessage(),
-                Context::createDefaultContext(),
+                Context::createCLIContext(),
             );
         } catch (\Throwable $trackingException) {
             $this->logger->critical('Could not mark exhausted supplier import as failed', [

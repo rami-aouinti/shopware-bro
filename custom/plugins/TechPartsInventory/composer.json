@@ -13,11 +13,30 @@
     "label": {
       "en-GB": "TechPartsInventory",
       "de-DE": "TechPartsInventory"
+    },
+    "description": {
+      "en-GB": "Adds inventory synchronization services for ERP stock snapshots, safety-stock rules, idempotent event processing and traceable product stock updates in Shopware.",
+      "de-DE": "Ergänzt die Bestandssynchronisierung mit ERP-Lagerständen, Sicherheitsbestandsregeln, idempotenter Ereignisverarbeitung und nachvollziehbaren Bestandsänderungen."
+    },
+    "manufacturerLink": {
+      "en-GB": "https://github.com/rami-aouinti/shopware-bro",
+      "de-DE": "https://github.com/rami-aouinti/shopware-bro"
+    },
+    "supportLink": {
+      "en-GB": "https://github.com/rami-aouinti/shopware-bro/issues",
+      "de-DE": "https://github.com/rami-aouinti/shopware-bro/issues"
     }
   },
   "autoload": {
     "psr-4": {
       "TechPartsInventory\\": "src/"
     }
-  }
+  },
+  "authors": [
+    {
+      "name": "Rami Aouinti",
+      "email": "rami.aouinti@gmail.com",
+      "role": "Developer"
+    }
+  ]
 }
