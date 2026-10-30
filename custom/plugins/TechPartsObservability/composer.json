@@ -37,5 +37,6 @@
       "email": "rami.aouinti@gmail.com",
       "role": "Developer"
     }
-  ]
+  ],
+  "description": "Operational observability for Shopware ERP integrations"
 }
