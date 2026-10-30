@@ -16,6 +16,7 @@ class SupplierSyncErrorEntity extends Entity
     protected ?SupplierSyncRunEntity $syncRun = null;
 
     public function getId(): string { return $this->id; }
+    public function setId(string $id): void { $this->id = $id; }
     public function getSyncRunId(): string { return $this->syncRunId; }
     public function setSyncRunId(string $value): void { $this->syncRunId = $value; }
     public function getExternalId(): ?string { return $this->externalId; }
