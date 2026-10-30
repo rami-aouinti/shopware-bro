@@ -68,7 +68,7 @@ final class DispatchSupplierCatalogImportCommand extends Command
             }
         }
 
-        $context = Context::createDefaultContext();
+        $context = Context::createCLIContext();
         $jobId = $this->jobTracker->start((string) $input->getOption('source'), $context);
         try {
             $this->messageBus->dispatch(new SyncSupplierCatalogMessage(
