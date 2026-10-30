@@ -16,6 +16,7 @@ class SupplierCatalogEntity extends Entity
     protected ?ProductEntity $product = null;
 
     public function getId(): string { return $this->id; }
+    public function setId(string $id): void { $this->id = $id; }
     public function getSupplierCode(): string { return $this->supplierCode; }
     public function setSupplierCode(string $code): void { $this->supplierCode = $code; }
     public function getExternalProductId(): string { return $this->externalProductId; }
