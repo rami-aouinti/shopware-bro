@@ -46,7 +46,6 @@ final readonly class SupplierImportService
                 }
 
                 $batch[] = [
-                    // Stable, namespaced ID makes re-imports idempotent. Keep this namespace/version stable.
                     'id' => substr(hash('sha256', "techparts:supplier-reference:v1\0" . $reference->key()), 0, 32),
                     'supplierCode' => $reference->supplierCode,
                     'externalProductId' => $reference->externalProductId,
