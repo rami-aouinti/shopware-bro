@@ -4,11 +4,18 @@
   "type": "shopware-platform-plugin",
   "version": "1.0.1",
   "license": "MIT",
+  "authors": [
+    {
+      "name": "Rami Aouinti",
+      "email": "rami.aouinti@gmail.com",
+      "role": "Developer"
+    }
+  ],
   "require": {
     "shopware/core": "~6.7.13"
   },
   "extra": {
-    "shopware-plugin-class": "ProductManufacturerReference\\ProductManufacturerReference",
+    "shopware-plugin-class": "ProductManufacturerReference\\\\ProductManufacturerReference",
     "label": {
       "en-GB": "Product Manufacturer Reference",
       "de-DE": "Herstellerreferenz für Produkte"
@@ -16,7 +23,7 @@
   },
   "autoload": {
     "psr-4": {
-      "ProductManufacturerReference\\": "src/"
+      "ProductManufacturerReference\\\\": "src/"
     }
   }
 }
