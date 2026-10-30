@@ -1,0 +1,27 @@
+{% block techparts_erp_jobs_list %}
+<sw-page class="techparts-erp-jobs-list">
+    <template #smart-bar-header>
+        <h2>{{ $t('techpartsErp.jobs.title') }}</h2>
+    </template>
+
+    <template #smart-bar-actions>
+        <sw-button variant="primary" @click="loadJobs">
+            {{ $t('techpartsErp.jobs.refresh') }}
+        </sw-button>
+    </template>
+
+    <template #content>
+        <sw-card-view>
+            <sw-card :title="$t('techpartsErp.jobs.title')" :is-loading="isLoading">
+                <sw-data-grid
+                    :data-source="jobs"
+                    :columns="columns"
+                    :show-selection="false"
+                    :show-actions="false"
+                    :is-loading="isLoading"
+                />
+            </sw-card>
+        </sw-card-view>
+    </template>
+</sw-page>
+{% endblock %}
