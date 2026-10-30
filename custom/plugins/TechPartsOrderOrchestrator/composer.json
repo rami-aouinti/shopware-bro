@@ -1,0 +1,23 @@
+{
+  "name": "bro/tech-parts-order-orchestrator",
+  "description": "TP-101 foundation for TechPartsOrderOrchestrator",
+  "type": "shopware-platform-plugin",
+  "license": "MIT",
+  "version": "0.1.0",
+  "require": {
+    "php": ">=8.3",
+    "shopware/core": "^6.7"
+  },
+  "extra": {
+    "shopware-plugin-class": "TechPartsOrderOrchestrator\\TechPartsOrderOrchestrator",
+    "label": {
+      "en-GB": "TechPartsOrderOrchestrator",
+      "de-DE": "TechPartsOrderOrchestrator"
+    }
+  },
+  "autoload": {
+    "psr-4": {
+      "TechPartsOrderOrchestrator\\": "src/"
+    }
+  }
+}
