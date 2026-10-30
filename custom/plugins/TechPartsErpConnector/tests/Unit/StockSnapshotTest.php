@@ -38,4 +38,17 @@ final class StockSnapshotTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
         new StockSnapshot('ACME_ERP', ' ', str_repeat('a', 32), 10, 0);
     }
+    public function testAcceptsMonotonicStockVersion(): void
+    {
+        $snapshot = new StockSnapshot('ACME_ERP', 'event-200', str_repeat('a', 32), 25, 5, 42);
+        self::assertSame(42, $snapshot->version);
+        self::assertSame(20, $snapshot->sellableQuantity());
+    }
+
+    public function testNegativeStockVersionIsRejected(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        new StockSnapshot('ACME_ERP', 'event-201', str_repeat('a', 32), 25, 5, -1);
+    }
+
 }
