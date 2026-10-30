@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
-  <services>
-    <defaults autowire="true" autoconfigure="true" public="false"/>
-    <prototype namespace="TechPartsErpConnector\" resource="../../" exclude="../../{Resources,Tests,TechPartsErpConnector.php}"/>
-    <alias id="TechPartsErpConnector\Domain\Contract\ErpGateway" alias="TechPartsErpConnector\Infrastructure\Erp\UnavailableErpGateway"/>
-  </services>
+<services>
+<defaults autowire="true" autoconfigure="true" public="false"/>
+<prototype namespace="TechPartsErpConnector\" resource="../../" exclude="../../{Resources,Tests,TechPartsErpConnector.php}"/>
+<alias id="TechPartsErpConnector\Domain\Contract\ErpGateway" alias="TechPartsErpConnector\Infrastructure\Erp\UnavailableErpGateway"/>
+<service id="TechPartsErpConnector\Infrastructure\Persistence\Dal\SupplierCatalogDefinition"><tag name="shopware.entity.definition" entity="tp_supplier_catalog"/></service>
+<service id="TechPartsErpConnector\Application\Handler\RegisterSupplierReferenceHandler"><argument type="service" id="tp_supplier_catalog.repository"/></service>
+<service id="TechPartsErpConnector\Application\Import\SupplierImportService"><argument type="service" id="tp_supplier_catalog.repository"/><argument type="service" id="logger"/></service>
+</services>
 </container>
