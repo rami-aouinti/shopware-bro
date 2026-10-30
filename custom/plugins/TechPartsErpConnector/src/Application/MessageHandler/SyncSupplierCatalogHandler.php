@@ -24,32 +24,32 @@ final readonly class SyncSupplierCatalogHandler
     public function __invoke(SyncSupplierCatalogMessage $message): void
     {
         $rows = [];
-        $factoryRejected = [];
+        $factoryErrors = [];
         foreach ($message->rows as $index => $payload) {
             try {
                 $rows[] = $this->rowFactory->fromArray($payload);
             } catch (\InvalidArgumentException $exception) {
-                $factoryRejected[] = ['row' => $index + 1, 'error' => $exception->getMessage()];
+                $factoryErrors[] = [
+                    'row' => $index + 1,
+                    'error' => $exception->getMessage(),
+                ];
             }
         }
 
-        // Let infrastructure exceptions escape so Messenger can retry the message.
-        $context = Context::createCLIContext();
-        $result = $this->importService->import($rows, $context, $message->batchSize);
+        // Do not catch infrastructure exceptions here: Messenger must retry them.
+        $result = $this->importService->import($rows, Context::createDefaultContext(), $message->batchSize);
         $received = count($message->rows);
-        $rejected = $result->rejected + count($factoryRejected);
+        $rejected = $result->rejected + count($factoryErrors);
+        $accepted = $result->accepted;
 
-        $summary = $factoryRejected === []
-            ? null
-            : mb_substr(json_encode($factoryRejected, JSON_THROW_ON_ERROR), 0, 4000);
-
+        // Invalid payload rows are accounted for alongside domain validation errors.
         $this->jobTracker->finish(
             $message->jobId,
             $received,
-            $result->accepted,
+            $accepted,
             $rejected,
-            $context,
-            $summary,
+            Context::createDefaultContext(),
+            $factoryErrors === [] ? null : json_encode($factoryErrors, JSON_THROW_ON_ERROR),
         );
     }
 }

@@ -15,12 +15,6 @@ framework:
                     multiplier: 2
                     max_delay: 60000
             failed:
-                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
-                options:
-                    exchange:
-                        name: techparts_failed
-                    queues:
-                        techparts_failed: ~
+                dsn: 'doctrine://default?queue_name=failed'
         routing:
             'TechPartsErpConnector\Application\Message\SyncSupplierCatalogMessage': async
-            'TechPartsErpConnector\Application\Message\SyncInventorySnapshotMessage': async

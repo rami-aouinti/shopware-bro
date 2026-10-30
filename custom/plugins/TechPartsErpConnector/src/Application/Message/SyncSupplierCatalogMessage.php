@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace TechPartsErpConnector\Application\Message;
 
 /**
- * A bounded supplier catalog batch. For large imports, persist the payload and
- * enqueue only a durable batch identifier instead of serializing all rows.
+ * Carries one bounded batch of supplier catalog rows to the asynchronous worker.
+ *
+ * Keep messages small; for large imports, store the batch in durable storage and
+ * send only a batch identifier instead of serializing the full payload.
  */
 final readonly class SyncSupplierCatalogMessage
 {
