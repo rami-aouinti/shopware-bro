@@ -9,6 +9,7 @@ use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\Uuid\Uuid;
 use TechPartsErpConnector\Application\Command\RegisterSupplierReference;
 use TechPartsErpConnector\Domain\Model\SupplierReference;
+use TechPartsErpConnector\Domain\Service\SupplierReferenceId;
 
 final readonly class RegisterSupplierReferenceHandler
 {
