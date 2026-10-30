@@ -87,7 +87,6 @@ jobs:
           fi
 
       - name: Check first-party code style
-        if: github.event_name != 'pull_request' || github.event.pull_request.head.ref != 'fix/validate-all-custom-plugins' || github.event.pull_request.head.repo.full_name != github.repository
         shell: bash
         run: |
           set -euo pipefail
