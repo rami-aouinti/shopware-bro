@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c5dc7aec92513f89130efff16c003281",
+    "content-hash": "a0e6f0b843b6e1226ca196a0fc3410e3",
     "packages": [
         {
             "name": "async-aws/core",
@@ -137,6 +137,40 @@
                 }
             ],
             "time": "2026-09-12T10:28:18+00:00"
+        },
+        {
+            "name": "bro/tech-parts-erp-connector",
+            "version": "0.1.0",
+            "dist": {
+                "type": "path",
+                "url": "custom/plugins/TechPartsErpConnector",
+                "reference": "443a7dc910d2a676479e475c71a9505a153f6699"
+            },
+            "require": {
+                "php": ">=8.3",
+                "shopware/core": "^6.7"
+            },
+            "type": "shopware-platform-plugin",
+            "extra": {
+                "shopware-plugin-class": "TechPartsErpConnector\\TechPartsErpConnector",
+                "label": {
+                    "en-GB": "TechPartsErpConnector",
+                    "de-DE": "TechPartsErpConnector"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "TechPartsErpConnector\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "TP-101 foundation for TechPartsErpConnector",
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
         },
         {
             "name": "cocur/slugify",
@@ -4452,8 +4486,7 @@
                 "issues": "https://github.com/php-http/discovery/issues",
                 "source": "https://github.com/php-http/discovery/tree/1.20.0"
             },
-            "time": "2024-10-02T11:20:13+00:00",
-            "published-time": "2024-10-02T11:21:00+00:00"
+            "time": "2024-10-02T11:20:13+00:00"
         },
         {
             "name": "phpdocumentor/reflection-common",
@@ -5043,8 +5076,7 @@
             "support": {
                 "source": "https://github.com/php-fig/http-client"
             },
-            "time": "2023-09-23T14:17:50+00:00",
-            "published-time": "2023-09-23T14:18:12+00:00"
+            "time": "2023-09-23T14:17:50+00:00"
         },
         {
             "name": "psr/http-factory",
@@ -5099,8 +5131,7 @@
             "support": {
                 "source": "https://github.com/php-fig/http-factory"
             },
-            "time": "2024-04-15T12:06:14+00:00",
-            "published-time": "2024-05-10T07:32:19+00:00"
+            "time": "2024-04-15T12:06:14+00:00"
         },
         {
             "name": "psr/http-message",
@@ -5153,8 +5184,7 @@
             "support": {
                 "source": "https://github.com/php-fig/http-message/tree/2.0"
             },
-            "time": "2023-04-04T09:54:51+00:00",
-            "published-time": "2023-04-04T09:55:35+00:00"
+            "time": "2023-04-04T09:54:51+00:00"
         },
         {
             "name": "psr/http-server-handler",
@@ -5368,8 +5398,7 @@
             "support": {
                 "source": "https://github.com/php-fig/simple-cache/tree/3.0.0"
             },
-            "time": "2021-10-29T13:26:27+00:00",
-            "published-time": "2021-10-29T13:27:19+00:00"
+            "time": "2021-10-29T13:26:27+00:00"
         },
         {
             "name": "radebatz/type-info-extras",
@@ -6683,8 +6712,7 @@
                 "issues": "https://github.com/shopware/paypal-sdk/issues",
                 "source": "https://github.com/shopware/paypal-sdk/tree/v1.9.1"
             },
-            "time": "2026-10-19T05:21:52+00:00",
-            "published-time": "2026-10-21T07:33:40+00:00"
+            "time": "2026-10-19T05:21:52+00:00"
         },
         {
             "name": "shopware/storefront",
@@ -13455,5 +13483,5 @@
         "composer-runtime-api": "^2.0"
     },
     "platform-dev": {},
-    "plugin-api-version": "2.11.0"
+    "plugin-api-version": "2.9.0"
 }
