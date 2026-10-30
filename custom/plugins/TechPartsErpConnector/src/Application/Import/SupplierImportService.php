@@ -12,11 +12,14 @@ use TechPartsErpConnector\Domain\Model\SupplierReference;
 
 final readonly class SupplierImportService
 {
+    private const MAX_STORED_ERRORS = 1000;
+
     public function __construct(private EntityRepository $repository, private LoggerInterface $logger) {}
 
     /**
      * Imports iterable rows in bounded DAL batches. A failed batch throws to the caller for retry.
-     * Invalid rows are rejected and logged without aborting the entire import.
+     * Invalid rows are rejected and logged without aborting the entire import. Error details are
+     * capped so a malformed multi-million-row feed cannot exhaust memory just by accumulating errors.
      *
      * @param iterable<SupplierImportRow> $rows
      */
@@ -28,8 +31,10 @@ final readonly class SupplierImportService
 
         $received = 0;
         $accepted = 0;
+        $rejected = 0;
         $errors = [];
         $batch = [];
+
         foreach ($rows as $row) {
             ++$received;
             try {
@@ -37,6 +42,7 @@ final readonly class SupplierImportService
                 if ($row->productId !== null && !Uuid::isValid($row->productId)) {
                     throw new \InvalidArgumentException('Invalid Shopware product UUID');
                 }
+
                 $batch[] = [
                     // Stable, namespaced ID makes re-imports idempotent. Keep this namespace/version stable.
                     'id' => substr(hash('sha256', "techparts:supplier-reference:v1\0" . $reference->key()), 0, 32),
@@ -44,21 +50,36 @@ final readonly class SupplierImportService
                     'externalProductId' => $reference->externalProductId,
                     'productId' => $row->productId,
                 ];
+
                 if (count($batch) >= $batchSize) {
                     $this->repository->upsert($batch, $context);
                     $accepted += count($batch);
                     $batch = [];
                 }
             } catch (\InvalidArgumentException $exception) {
-                $errors[] = ['row' => $received, 'error' => $exception->getMessage()];
-                $this->logger->warning('Supplier import row rejected', ['row' => $received, 'reason' => $exception->getMessage()]);
+                ++$rejected;
+                if (count($errors) < self::MAX_STORED_ERRORS) {
+                    $errors[] = ['row' => $received, 'error' => $exception->getMessage()];
+                }
+                $this->logger->warning('Supplier import row rejected', [
+                    'row' => $received,
+                    'reason' => $exception->getMessage(),
+                ]);
             }
         }
+
         if ($batch !== []) {
             $this->repository->upsert($batch, $context);
             $accepted += count($batch);
         }
-        $this->logger->info('Supplier import finished', ['received' => $received, 'accepted' => $accepted, 'rejected' => count($errors)]);
-        return new SupplierImportResult($received, $accepted, count($errors), $errors);
+
+        $this->logger->info('Supplier import finished', [
+            'received' => $received,
+            'accepted' => $accepted,
+            'rejected' => $rejected,
+            'storedErrorDetails' => count($errors),
+        ]);
+
+        return new SupplierImportResult($received, $accepted, $rejected, $errors);
     }
 }

@@ -70,12 +70,23 @@ final class DispatchSupplierCatalogImportCommand extends Command
 
         $context = Context::createDefaultContext();
         $jobId = $this->jobTracker->start((string) $input->getOption('source'), $context);
-        $this->messageBus->dispatch(new SyncSupplierCatalogMessage(
-            $jobId,
-            (string) $input->getOption('source'),
-            $decoded,
-            $batchSize,
-        ));
+        try {
+            $this->messageBus->dispatch(new SyncSupplierCatalogMessage(
+                $jobId,
+                (string) $input->getOption('source'),
+                $decoded,
+                $batchSize,
+            ));
+        } catch (\Throwable $exception) {
+            try {
+                $this->jobTracker->fail($jobId, $exception::class . ': ' . $exception->getMessage(), $context);
+            } catch (\Throwable $trackingException) {
+                $output->writeln('<comment>Could not update import job status: ' . $trackingException->getMessage() . '</comment>');
+            }
+
+            $output->writeln('<error>Could not queue supplier import: ' . $exception->getMessage() . '</error>');
+            return Command::FAILURE;
+        }
 
         $output->writeln(sprintf('<info>Supplier import queued. Job ID: %s</info>', $jobId));
         return Command::SUCCESS;
