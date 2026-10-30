@@ -31,3 +31,13 @@ An ERP sends availableQuantity = 25 and safetyStock = 5; Shopware receives stock
 6. Force the product update to fail and verify the event row rolls back so the message can retry.
 
 Runtime tests are still required in the project Docker environment.
+
+## Dispatching a snapshot
+
+Queue one snapshot through Messenger (the worker must be running):
+
+\`\`\`bash
+bin/console techparts:inventory:dispatch-snapshot <PRODUCT_UUID> <ERP_EVENT_ID> <AVAILABLE_QUANTITY> --source=ACME_ERP --safety-stock=5
+\`\`\`
+
+Use the same ERP event ID when retrying the same event. For example, an available quantity of 25 with safety stock 5 applies a Shopware stock of 20. The command queues work; the worker performs validation and persistence asynchronously.
