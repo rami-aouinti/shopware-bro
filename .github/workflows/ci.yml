@@ -39,11 +39,18 @@ jobs:
             custom/plugins/TechPartsObservability
             custom/plugins/TechPartsOrderOrchestrator
           )
+          failed=()
           for plugin in "${plugins[@]}"; do
             echo "::group::Validate ${plugin}"
-            shopware-cli extension validate "${plugin}"
+            if ! shopware-cli extension validate "${plugin}"; then
+              failed+=("${plugin}")
+            fi
             echo "::endgroup::"
           done
+          if (( ${#failed[@]} > 0 )); then
+            printf 'Validation failed for: %s\n' "${failed[*]}"
+            exit 1
+          fi
 
       - name: Check first-party code style
         shell: bash
@@ -59,8 +66,15 @@ jobs:
             custom/plugins/TechPartsObservability
             custom/plugins/TechPartsOrderOrchestrator
           )
+          failed=()
           for plugin in "${plugins[@]}"; do
             echo "::group::Format check ${plugin}"
-            shopware-cli extension format --dry-run "${plugin}"
+            if ! shopware-cli extension format --dry-run "${plugin}"; then
+              failed+=("${plugin}")
+            fi
             echo "::endgroup::"
           done
+          if (( ${#failed[@]} > 0 )); then
+            printf 'Formatting check failed for: %s\n' "${failed[*]}"
+            exit 1
+          fi
