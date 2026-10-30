@@ -9,9 +9,58 @@ on:
 jobs:
   check:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Project Validate
-        uses: shopware/github-actions/project-validate@main
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
         with:
-          phpVersion: '8.4'
+          php-version: '8.4'
+          tools: composer:v2
+
+      - name: Install Shopware CLI
+        uses: shopware/shopware-cli-action@v3
+
+      - name: Install dependencies
+        run: composer install --no-interaction --prefer-dist
+
+      - name: Validate first-party extensions
+        shell: bash
+        run: |
+          set -euo pipefail
+          plugins=(
+            custom/plugins/ProductManufacturerReference
+            custom/plugins/ProductStockWarning
+            custom/plugins/SupplierIntegration
+            custom/plugins/TechPartsB2BSearch
+            custom/plugins/TechPartsErpConnector
+            custom/plugins/TechPartsInventory
+            custom/plugins/TechPartsObservability
+            custom/plugins/TechPartsOrderOrchestrator
+          )
+          for plugin in "${plugins[@]}"; do
+            echo "::group::Validate ${plugin}"
+            shopware-cli extension validate "${plugin}"
+            echo "::endgroup::"
+          done
+
+      - name: Check first-party code style
+        shell: bash
+        run: |
+          set -euo pipefail
+          plugins=(
+            custom/plugins/ProductManufacturerReference
+            custom/plugins/ProductStockWarning
+            custom/plugins/SupplierIntegration
+            custom/plugins/TechPartsB2BSearch
+            custom/plugins/TechPartsErpConnector
+            custom/plugins/TechPartsInventory
+            custom/plugins/TechPartsObservability
+            custom/plugins/TechPartsOrderOrchestrator
+          )
+          for plugin in "${plugins[@]}"; do
+            echo "::group::Format check ${plugin}"
+            shopware-cli extension format --dry-run "${plugin}"
+            echo "::endgroup::"
+          done
