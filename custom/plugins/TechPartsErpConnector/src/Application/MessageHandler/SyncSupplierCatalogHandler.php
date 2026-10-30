@@ -37,7 +37,7 @@ final readonly class SyncSupplierCatalogHandler
         }
 
         // Do not catch infrastructure exceptions here: Messenger must retry them.
-        $result = $this->importService->import($rows, Context::createDefaultContext(), $message->batchSize);
+        $result = $this->importService->import($rows, Context::createCLIContext(), $message->batchSize);
         $received = count($message->rows);
         $rejected = $result->rejected + count($factoryErrors);
         $accepted = $result->accepted;
@@ -48,7 +48,7 @@ final readonly class SyncSupplierCatalogHandler
             $received,
             $accepted,
             $rejected,
-            Context::createDefaultContext(),
+            Context::createCLIContext(),
             $factoryErrors === [] ? null : json_encode($factoryErrors, JSON_THROW_ON_ERROR),
         );
     }
