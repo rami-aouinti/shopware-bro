@@ -1,0 +1,15 @@
+{
+    "techpartsErp": {
+        "jobs": {
+            "title": "ERP-Importhistorie",
+            "description": "Übersicht der Lieferantenkatalog-Importe",
+            "source": "Quelle",
+            "status": "Status",
+            "received": "Eingegangen",
+            "accepted": "Übernommen",
+            "rejected": "Abgelehnt",
+            "startedAt": "Gestartet",
+            "refresh": "Aktualisieren"
+        }
+    }
+}

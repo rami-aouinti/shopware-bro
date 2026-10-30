@@ -32,7 +32,8 @@ final class DispatchInventorySnapshotCommand extends Command
             ->addArgument('event-id', InputArgument::REQUIRED, 'Stable ERP event ID reused on retries')
             ->addArgument('quantity', InputArgument::REQUIRED, 'ERP available quantity')
             ->addOption('source', null, InputOption::VALUE_REQUIRED, 'ERP source code', 'ACME_ERP')
-            ->addOption('safety-stock', null, InputOption::VALUE_REQUIRED, 'Quantity reserved from sale', '0');
+            ->addOption('safety-stock', null, InputOption::VALUE_REQUIRED, 'Quantity reserved from sale', '0')
+            ->addOption('erp-version', null, InputOption::VALUE_REQUIRED, 'Monotonic version for ordered ERP snapshots');
     }
 
     #[\Override]
@@ -40,8 +41,10 @@ final class DispatchInventorySnapshotCommand extends Command
     {
         $quantity = filter_var($input->getArgument('quantity'), FILTER_VALIDATE_INT);
         $safetyStock = filter_var($input->getOption('safety-stock'), FILTER_VALIDATE_INT);
+        $rawVersion = $input->getOption('erp-version');
+        $version = $rawVersion === null ? null : filter_var($rawVersion, FILTER_VALIDATE_INT);
 
-        if ($quantity === false || $safetyStock === false || $quantity < 0 || $safetyStock < 0) {
+        if ($quantity === false || $safetyStock === false || $quantity < 0 || $safetyStock < 0 || $version === false || ($version !== null && $version < 0)) {
             $output->writeln('<error>quantity and safety-stock must be non-negative integers.</error>');
 
             return Command::INVALID;
@@ -54,6 +57,7 @@ final class DispatchInventorySnapshotCommand extends Command
                 (string) $input->getArgument('product-id'),
                 $quantity,
                 $safetyStock,
+                $version,
             ));
         } catch (\Throwable $exception) {
             $output->writeln('<error>Could not queue inventory snapshot: ' . $exception->getMessage() . '</error>');

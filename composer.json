@@ -79,7 +79,8 @@
             "@psalm",
             "@mess-detector",
             "@test:plugin"
-        ]
+        ],
+        "test:erp:integration": "phpunit --configuration=phpunit.dist.xml custom/plugins/TechPartsErpConnector/tests/Integration"
     },
     "extra": {
         "symfony": {

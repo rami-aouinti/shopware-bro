@@ -1,0 +1,13 @@
+# Optional local-only mock ERP: docker compose -f compose.yaml -f compose.override.yaml -f compose.erp-mock.yaml up -d erp-mock
+services:
+  erp-mock:
+    image: php:8.4-cli
+    command: php -S 0.0.0.0:8090 /app/router.php
+    environment:
+      ERP_MOCK_TOKEN: local-mock-token
+    volumes:
+      - ./tools/erp-mock:/app:ro
+    expose:
+      - "8090"
+    networks:
+      - default

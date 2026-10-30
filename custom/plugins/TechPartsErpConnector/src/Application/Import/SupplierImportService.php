@@ -9,6 +9,7 @@ use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\Uuid\Uuid;
 use TechPartsErpConnector\Domain\Model\SupplierReference;
+use TechPartsErpConnector\Domain\Service\SupplierReferenceId;
 
 final readonly class SupplierImportService
 {
@@ -46,7 +47,7 @@ final readonly class SupplierImportService
                 }
 
                 $batch[] = [
-                    'id' => substr(hash('sha256', "techparts:supplier-reference:v1\0" . $reference->key()), 0, 32),
+                    'id' => SupplierReferenceId::fromReference($reference),
                     'supplierCode' => $reference->supplierCode,
                     'externalProductId' => $reference->externalProductId,
                     'productId' => $row->productId,

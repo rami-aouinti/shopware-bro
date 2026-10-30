@@ -14,6 +14,7 @@ final readonly class StockSnapshot
         public string $productId,
         public int $availableQuantity,
         public int $safetyStock = 0,
+        public ?int $version = null,
     ) {
         if (!preg_match('/^[A-Z0-9_-]{2,40}$/', $source)) {
             throw new \InvalidArgumentException('Stock source must be 2-40 uppercase letters, digits, underscores or hyphens');
@@ -23,6 +24,9 @@ final readonly class StockSnapshot
         }
         if (!Uuid::isValid($productId)) {
             throw new \InvalidArgumentException('A valid Shopware product UUID is required');
+        }
+        if ($version !== null && $version < 0) {
+            throw new \InvalidArgumentException('ERP stock version cannot be negative');
         }
         if ($availableQuantity < 0 || $safetyStock < 0) {
             throw new \InvalidArgumentException('Stock quantities cannot be negative');

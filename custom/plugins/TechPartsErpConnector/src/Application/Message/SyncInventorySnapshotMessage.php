@@ -12,6 +12,7 @@ final readonly class SyncInventorySnapshotMessage
         public string $productId,
         public int $availableQuantity,
         public int $safetyStock = 0,
+        public ?int $version = null,
     ) {
     }
 }

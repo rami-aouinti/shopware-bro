@@ -9,6 +9,7 @@ use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\Uuid\Uuid;
 use TechPartsErpConnector\Application\Command\RegisterSupplierReference;
 use TechPartsErpConnector\Domain\Model\SupplierReference;
+use TechPartsErpConnector\Domain\Service\SupplierReferenceId;
 
 final readonly class RegisterSupplierReferenceHandler
 {
@@ -23,7 +24,7 @@ final readonly class RegisterSupplierReferenceHandler
             throw new \InvalidArgumentException('Invalid Shopware product UUID');
         }
         $this->supplierCatalogRepository->upsert([[
-            'id' => Uuid::fromStringToHex($reference->key()),
+            'id' => SupplierReferenceId::fromReference($reference),
             'supplierCode' => $reference->supplierCode,
             'externalProductId' => $reference->externalProductId,
             'productId' => $command->productId,
