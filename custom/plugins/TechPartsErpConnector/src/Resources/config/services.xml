@@ -3,8 +3,8 @@
 <services>
 <defaults autowire="true" autoconfigure="true" public="false"/>
 <prototype namespace="TechPartsErpConnector\" resource="../../" exclude="../../{Resources,Tests,TechPartsErpConnector.php}"/>
-<alias id="TechPartsErpConnector\Domain\Contract\ErpGateway" alias="TechPartsErpConnector\Infrastructure\Erp\HttpErpGateway"/>
-<service id="TechPartsErpConnector\Infrastructure\Erp\ErpClientConfig">
+    <service id="TechPartsErpConnector\Domain\Contract\ErpGateway" alias="TechPartsErpConnector\Infrastructure\Erp\HttpErpGateway"/>
+    <service id="TechPartsErpConnector\Infrastructure\Erp\ErpClientConfig">
 <argument>%env(string:TP_ERP_BASE_URL)%</argument><argument>%env(string:TP_ERP_API_TOKEN)%</argument><argument>%env(int:TP_ERP_TIMEOUT)%</argument>
 </service>
 <service id="TechPartsErpConnector\Infrastructure\Persistence\Dal\SupplierCatalogDefinition"><tag name="shopware.entity.definition" entity="tp_supplier_catalog"/></service>
