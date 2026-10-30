@@ -23,7 +23,7 @@ final readonly class RegisterSupplierReferenceHandler
             throw new \InvalidArgumentException('Invalid Shopware product UUID');
         }
         $this->supplierCatalogRepository->upsert([[
-            'id' => Uuid::fromStringToHex($reference->key()),
+            'id' => SupplierReferenceId::fromReference($reference),
             'supplierCode' => $reference->supplierCode,
             'externalProductId' => $reference->externalProductId,
             'productId' => $command->productId,
