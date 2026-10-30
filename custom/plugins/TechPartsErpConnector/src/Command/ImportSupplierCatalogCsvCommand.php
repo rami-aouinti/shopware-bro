@@ -89,8 +89,14 @@ final class ImportSupplierCatalogCsvCommand extends Command
             $io->success('Supplier catalog CSV import completed.');
             return Command::SUCCESS;
         } catch (\Throwable $exception) {
+            try {
+                $this->jobs->fail($jobId, $exception::class . ': ' . $exception->getMessage(), $context);
+            } catch (\Throwable $trackingException) {
+                // Preserve the original import failure; the tracking failure is reported separately.
+                $io->warning('Could not update import job status: ' . $trackingException->getMessage());
+            }
+
             $io->error('Import failed: ' . $exception->getMessage());
-            // A dedicated terminal-failure transition is planned with the async import reliability work.
             return Command::FAILURE;
         }
     }
