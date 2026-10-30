@@ -7,6 +7,11 @@
 >
     <description>Maintainability rules for the TechParts ERP Connector plugin.</description>
 
-    <rule ref="rulesets/cleancode.xml"/>
+    <rule ref="rulesets/cleancode.xml">
+        <!-- Shopware intentionally uses static UUID and Context factory helpers. -->
+        <exclude name="StaticAccess"/>
+        <!-- Fully qualified exception names are acceptable; import usage is a style choice. -->
+        <exclude name="MissingImport"/>
+    </rule>
     <rule ref="rulesets/codesize.xml"/>
 </ruleset>
