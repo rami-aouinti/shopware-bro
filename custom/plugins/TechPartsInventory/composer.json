@@ -1,0 +1,23 @@
+{
+  "name": "bro/tech-parts-inventory",
+  "description": "TP-101 foundation for TechPartsInventory",
+  "type": "shopware-platform-plugin",
+  "license": "MIT",
+  "version": "0.1.0",
+  "require": {
+    "php": ">=8.3",
+    "shopware/core": "^6.7"
+  },
+  "extra": {
+    "shopware-plugin-class": "TechPartsInventory\\TechPartsInventory",
+    "label": {
+      "en-GB": "TechPartsInventory",
+      "de-DE": "TechPartsInventory"
+    }
+  },
+  "autoload": {
+    "psr-4": {
+      "TechPartsInventory\\": "src/"
+    }
+  }
+}
