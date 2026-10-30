@@ -18,12 +18,15 @@ final class InventoryPersistenceIntegrationTest extends TestCase
 
     protected function setUp(): void
     {
-        $url = getenv('DATABASE_URL');
+        $url = $_SERVER['DATABASE_URL'] ?? $_ENV['DATABASE_URL'] ?? getenv('DATABASE_URL');
         if (!is_string($url) || $url === '') {
             self::markTestSkipped('DATABASE_URL must point to a dedicated test database.');
         }
 
-        $this->connection = DriverManager::getConnection(['url' => $url]);
+        // Shopware's DATABASE_URL normally uses mysql://. DBAL 4 requires an
+        // explicit mapping from that scheme to its concrete driver name.
+        $connectionParams = (new DsnParser(['mysql' => 'pdo_mysql']))->parse($url);
+        $this->connection = DriverManager::getConnection($connectionParams);
         if (!$this->connection->createSchemaManager()->tablesExist(['tp_inventory_sync'])) {
             self::markTestSkipped('Run Shopware ERP migrations first.');
         }

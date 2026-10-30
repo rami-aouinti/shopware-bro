@@ -34,7 +34,7 @@ final readonly class ProcessSupplierBatchHandler
                 }
             }
 
-            $result = $this->importer->import($rows, Context::createDefaultContext());
+            $result = $this->importer->import($rows, Context::createCLIContext());
             $allErrors = [...$invalid, ...$result->errors];
 
             return [
