@@ -19,6 +19,18 @@
     "label": {
       "en-GB": "Product Stock Warning",
       "de-DE": "Lagerbestand-Warnung"
+    },
+    "description": {
+      "en-GB": "Displays configurable low-stock notices on product detail pages so shoppers can make informed decisions while the store team keeps stock thresholds manageable.",
+      "de-DE": "Zeigt konfigurierbare Hinweise bei niedrigem Lagerbestand auf Produktseiten, damit Kunden informiert entscheiden und das Team Bestandsgrenzen einfach verwalten kann."
+    },
+    "manufacturerLink": {
+      "en-GB": "https://github.com/rami-aouinti/shopware-bro",
+      "de-DE": "https://github.com/rami-aouinti/shopware-bro"
+    },
+    "supportLink": {
+      "en-GB": "https://github.com/rami-aouinti/shopware-bro/issues",
+      "de-DE": "https://github.com/rami-aouinti/shopware-bro/issues"
     }
   },
   "autoload": {
