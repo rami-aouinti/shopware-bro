@@ -1,0 +1,25 @@
+framework:
+    messenger:
+        failure_transport: failed
+        transports:
+            async:
+                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+                options:
+                    exchange:
+                        name: techparts_async
+                    queues:
+                        techparts_async: ~
+                retry_strategy:
+                    max_retries: 5
+                    delay: 1000
+                    multiplier: 2
+                    max_delay: 60000
+            failed:
+                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+                options:
+                    exchange:
+                        name: techparts_failed
+                    queues:
+                        techparts_failed: ~
+        routing:
+            'TechPartsErpConnector\Application\Message\SyncSupplierCatalogMessage': async
