@@ -4,8 +4,18 @@
   "type": "shopware-platform-plugin",
   "version": "1.0.1",
   "license": "MIT",
+  "authors": [
+    {
+      "name": "Rami Aouinti",
+      "email": "rami.aouinti@gmail.com",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "shopware/core": "~6.7.13"
+  },
   "extra": {
-    "shopware-plugin-class": "SupplierIntegration\\SupplierIntegration",
+    "shopware-plugin-class": "SupplierIntegration\\\\SupplierIntegration",
     "label": {
       "en-GB": "Supplier Integration",
       "de-DE": "Lieferantenintegration"
@@ -13,7 +23,7 @@
   },
   "autoload": {
     "psr-4": {
-      "SupplierIntegration\\": "src/"
+      "SupplierIntegration\\\\": "src/"
     }
   }
 }
