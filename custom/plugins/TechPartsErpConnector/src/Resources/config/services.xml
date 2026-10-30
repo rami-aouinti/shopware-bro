@@ -12,5 +12,6 @@
 <service id="TechPartsErpConnector\Application\Handler\RegisterSupplierReferenceHandler"><argument type="service" id="tp_supplier_catalog.repository"/></service>
 <service id="TechPartsErpConnector\Application\Import\SupplierImportService"><argument type="service" id="tp_supplier_catalog.repository"/><argument type="service" id="logger"/></service>
 <service id="TechPartsErpConnector\Application\Import\ImportJobTracker"><argument type="service" id="tp_import_job.repository"/><argument type="service" id="logger"/></service>
+<service id="TechPartsErpConnector\Application\Inventory\InventorySyncService"><argument type="service" id="Doctrine\DBAL\Connection"/><argument type="service" id="product.repository"/><argument type="service" id="logger"/></service>
 </services>
 </container>
