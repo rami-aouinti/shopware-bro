@@ -9,11 +9,13 @@ use Shopware\Core\Framework\Migration\MigrationStep;
 
 final class Migration1793322100ImportJob extends MigrationStep
 {
+    #[\Override]
     public function getCreationTimestamp(): int
     {
         return 1793322100;
     }
 
+    #[\Override]
     public function update(Connection $connection): void
     {
         $connection->executeStatement(<<<'SQL'
@@ -36,6 +38,7 @@ CREATE TABLE IF NOT EXISTS `tp_import_job` (
 SQL);
     }
 
+    #[\Override]
     public function updateDestructive(Connection $connection): void
     {
     }

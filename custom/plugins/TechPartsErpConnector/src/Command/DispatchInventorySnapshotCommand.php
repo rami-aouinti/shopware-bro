@@ -24,6 +24,7 @@ final class DispatchInventorySnapshotCommand extends Command
         parent::__construct();
     }
 
+    #[\Override]
     protected function configure(): void
     {
         $this
@@ -34,6 +35,7 @@ final class DispatchInventorySnapshotCommand extends Command
             ->addOption('safety-stock', null, InputOption::VALUE_REQUIRED, 'Quantity reserved from sale', '0');
     }
 
+    #[\Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $quantity = filter_var($input->getArgument('quantity'), FILTER_VALIDATE_INT);

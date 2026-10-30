@@ -28,6 +28,7 @@ final class DispatchSupplierCatalogImportCommand extends Command
         parent::__construct();
     }
 
+    #[\Override]
     protected function configure(): void
     {
         $this
@@ -36,6 +37,7 @@ final class DispatchSupplierCatalogImportCommand extends Command
             ->addOption('batch-size', null, InputOption::VALUE_REQUIRED, 'DAL batch size (1-1000)', '100');
     }
 
+    #[\Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $path = (string) $input->getArgument('file');

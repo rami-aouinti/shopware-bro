@@ -23,6 +23,7 @@ final readonly class ImportFailureSubscriber implements EventSubscriberInterface
     ) {
     }
 
+    #[\Override]
     public static function getSubscribedEvents(): array
     {
         return [WorkerMessageFailedEvent::class => 'onMessageFailed'];

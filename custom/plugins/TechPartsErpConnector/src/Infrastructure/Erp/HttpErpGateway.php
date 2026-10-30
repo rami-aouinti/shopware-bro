@@ -13,6 +13,7 @@ final readonly class HttpErpGateway implements ErpGateway
     {
     }
 
+    #[\Override]
     public function health(): ErpHealth
     {
         try {

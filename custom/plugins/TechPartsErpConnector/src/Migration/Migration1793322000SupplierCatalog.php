@@ -9,11 +9,13 @@ use Shopware\Core\Framework\Migration\MigrationStep;
 
 final class Migration1793322000SupplierCatalog extends MigrationStep
 {
+    #[\Override]
     public function getCreationTimestamp(): int
     {
         return 1793322000;
     }
 
+    #[\Override]
     public function update(Connection $connection): void
     {
         $connection->executeStatement(<<<'SQL'
@@ -31,6 +33,7 @@ CREATE TABLE IF NOT EXISTS `tp_supplier_catalog` (
 SQL);
     }
 
+    #[\Override]
     public function updateDestructive(Connection $connection): void
     {
     }

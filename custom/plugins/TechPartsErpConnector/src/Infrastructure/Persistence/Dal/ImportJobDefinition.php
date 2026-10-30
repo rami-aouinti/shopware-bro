@@ -18,21 +18,25 @@ class ImportJobDefinition extends EntityDefinition
 {
     public const ENTITY_NAME = 'tp_import_job';
 
+    #[\Override]
     public function getEntityName(): string
     {
         return self::ENTITY_NAME;
     }
 
+    #[\Override]
     public function getEntityClass(): string
     {
         return ImportJobEntity::class;
     }
 
+    #[\Override]
     public function getCollectionClass(): string
     {
         return ImportJobCollection::class;
     }
 
+    #[\Override]
     protected function defineFields(): FieldCollection
     {
         return new FieldCollection([

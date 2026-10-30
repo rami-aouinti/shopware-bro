@@ -11,6 +11,7 @@ use Shopware\Core\Framework\DataAbstractionLayer\EntityCollection;
  */
 class ImportJobCollection extends EntityCollection
 {
+    #[\Override]
     protected function getExpectedClass(): string
     {
         return ImportJobEntity::class;

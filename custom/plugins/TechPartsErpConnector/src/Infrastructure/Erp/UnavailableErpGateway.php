@@ -9,6 +9,7 @@ use TechPartsErpConnector\Domain\Model\ErpHealth;
 
 final class UnavailableErpGateway implements ErpGateway
 {
+    #[\Override]
     public function health(): ErpHealth
     {
         return new ErpHealth(false, 'unconfigured');
