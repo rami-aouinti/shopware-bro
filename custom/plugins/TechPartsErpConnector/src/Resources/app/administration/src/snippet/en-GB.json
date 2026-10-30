@@ -1,0 +1,15 @@
+{
+    "techpartsErp": {
+        "jobs": {
+            "title": "ERP import history",
+            "description": "Overview of supplier catalog imports",
+            "source": "Source",
+            "status": "Status",
+            "received": "Received",
+            "accepted": "Accepted",
+            "rejected": "Rejected",
+            "startedAt": "Started",
+            "refresh": "Refresh"
+        }
+    }
+}
