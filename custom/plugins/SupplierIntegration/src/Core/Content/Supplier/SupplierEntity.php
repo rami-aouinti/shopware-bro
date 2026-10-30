@@ -19,6 +19,7 @@ class SupplierEntity extends Entity
     protected ?EntityCollection $syncRuns = null;
 
     public function getId(): string { return $this->id; }
+    public function setId(string $id): void { $this->id = $id; }
     public function getName(): string { return $this->name; }
     public function setName(string $value): void { $this->name = $value; }
     public function getCode(): string { return $this->code; }
