@@ -34,36 +34,34 @@ final readonly class InventorySyncService
             $sellableQuantity,
             $eventId,
         ): InventorySyncResult {
-            {
-                // Lock the Shopware product row so concurrent versions of this product
-                // cannot overwrite one another out of sequence.
-                $lockedProduct = $connection->fetchOne(
-                    'SELECT id FROM product WHERE id = :productId FOR UPDATE',
-                    ['productId' => Uuid::fromHexToBytes($snapshot->productId)],
-                );
-                if ($lockedProduct === false) {
-                    throw new \RuntimeException('Cannot synchronize an unknown Shopware product');
-                }
+            // Lock the Shopware product row so concurrent versions of this product
+            // cannot overwrite one another out of sequence.
+            $lockedProduct = $connection->fetchOne(
+                'SELECT id FROM product WHERE id = :productId FOR UPDATE',
+                ['productId' => Uuid::fromHexToBytes($snapshot->productId)],
+            );
+            if ($lockedProduct === false) {
+                throw new \RuntimeException('Cannot synchronize an unknown Shopware product');
+            }
 
-                $highestVersion = $connection->fetchOne(
-                    'SELECT MAX(event_version) FROM tp_inventory_sync WHERE source = :source AND product_id = :productId AND status = :status',
-                    [
-                        'source' => $snapshot->source,
-                        'productId' => Uuid::fromHexToBytes($snapshot->productId),
-                        'status' => 'applied',
-                    ],
-                );
+            $highestVersion = $connection->fetchOne(
+                'SELECT MAX(event_version) FROM tp_inventory_sync WHERE source = :source AND product_id = :productId AND status = :status',
+                [
+                    'source' => $snapshot->source,
+                    'productId' => Uuid::fromHexToBytes($snapshot->productId),
+                    'status' => 'applied',
+                ],
+            );
 
-                if ($highestVersion !== false && $highestVersion !== null && ($snapshot->version === null || (int) $highestVersion >= $snapshot->version)) {
-                    $this->logger->info('Stale ERP inventory snapshot ignored', [
-                        'source' => $snapshot->source,
-                        'productId' => $snapshot->productId,
-                        'version' => $snapshot->version,
-                        'highestVersion' => (int) $highestVersion,
-                    ]);
+            if ($highestVersion !== false && $highestVersion !== null && ($snapshot->version === null || (int) $highestVersion >= $snapshot->version)) {
+                $this->logger->info('Stale ERP inventory snapshot ignored', [
+                    'source' => $snapshot->source,
+                    'productId' => $snapshot->productId,
+                    'version' => $snapshot->version,
+                    'highestVersion' => (int) $highestVersion,
+                ]);
 
-                    return InventorySyncResult::duplicate();
-                }
+                return InventorySyncResult::duplicate();
             }
 
             $inserted = $connection->executeStatement(
