@@ -1,0 +1,22 @@
+{
+  "name": "bro/tech-parts-observability",
+  "type": "shopware-platform-plugin",
+  "version": "0.1.0",
+  "license": "MIT",
+  "require": {
+    "php": ">=8.3",
+    "shopware/core": "^6.7"
+  },
+  "extra": {
+    "shopware-plugin-class": "TechPartsObservability\\TechPartsObservability",
+    "label": {
+      "en-GB": "TechPartsObservability",
+      "de-DE": "TechPartsObservability"
+    }
+  },
+  "autoload": {
+    "psr-4": {
+      "TechPartsObservability\\": "src/"
+    }
+  }
+}
