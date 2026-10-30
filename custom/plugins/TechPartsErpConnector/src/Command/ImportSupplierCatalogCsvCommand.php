@@ -53,7 +53,7 @@ final class ImportSupplierCatalogCsvCommand extends Command
             return Command::INVALID;
         }
 
-        $context = Context::createDefaultContext();
+        $context = Context::createCLIContext();
         $jobId = $this->jobs->start('csv:' . basename($path), $context);
 
         try {
