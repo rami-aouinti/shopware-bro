@@ -27,7 +27,7 @@ final readonly class ErpHttpClient
                 throw new ErpApiException(sprintf('ERP returned HTTP %d', $status), $status);
             }
             $data = $response->toArray(false);
-            if (!is_array($data) || array_is_list($data)) {
+            if (array_is_list($data)) {
                 throw new ErpApiException('ERP response must be a JSON object', $status);
             }
             return $data;
