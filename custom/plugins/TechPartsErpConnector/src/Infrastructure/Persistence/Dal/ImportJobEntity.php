@@ -19,6 +19,7 @@ class ImportJobEntity extends Entity
     protected ?\DateTimeInterface $finishedAt = null;
 
     public function getId(): string { return $this->id; }
+    public function setId(string $id): void { $this->id = $id; }
     public function getSource(): string { return $this->source; }
     public function setSource(string $source): void { $this->source = $source; }
     public function getStatus(): string { return $this->status; }
