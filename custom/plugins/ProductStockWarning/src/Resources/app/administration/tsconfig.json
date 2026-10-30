@@ -3,15 +3,6 @@
 // Spec files stay excluded here — the check type-checks them separately with jest types.
 {
     "extends": "./.shopware/tsconfig.json",
-    "include": [
-        "src/**/*.ts",
-        "src/**/*.tsx",
-        "src/**/*.vue",
-        "src/**/*.js"
-    ],
-    "exclude": [
-        "**/*.spec.ts",
-        "**/*.spec.tsx",
-        "**/*.spec.js"
-    ]
+    "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue", "src/**/*.js"],
+    "exclude": ["**/*.spec.ts", "**/*.spec.tsx", "**/*.spec.js"]
 }

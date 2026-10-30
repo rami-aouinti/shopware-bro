@@ -6,7 +6,9 @@ namespace TechPartsErpConnector\Application\Import;
 
 final class SupplierImportRowFactory
 {
-    /** @param array<string, mixed> $payload */
+    /**
+     * @param array<string, mixed> $payload
+     */
     public function fromArray(array $payload): SupplierImportRow
     {
         foreach (['supplierCode', 'externalProductId'] as $key) {
@@ -17,6 +19,7 @@ final class SupplierImportRowFactory
         if (isset($payload['productId']) && !is_string($payload['productId'])) {
             throw new \InvalidArgumentException('Invalid productId type');
         }
+
         return new SupplierImportRow($payload['supplierCode'], $payload['externalProductId'], $payload['productId'] ?? null);
     }
 }

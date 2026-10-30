@@ -4,11 +4,34 @@
   "type": "shopware-platform-plugin",
   "version": "1.0.1",
   "license": "MIT",
+  "authors": [
+    {
+      "name": "Rami Aouinti",
+      "email": "rami.aouinti@gmail.com",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "shopware/core": "~6.7.13",
+    "shopware/storefront": "~6.7.13"
+  },
   "extra": {
     "shopware-plugin-class": "SupplierIntegration\\SupplierIntegration",
     "label": {
       "en-GB": "Supplier Integration",
       "de-DE": "Lieferantenintegration"
+    },
+    "description": {
+      "en-GB": "Connects external suppliers to Shopware with asynchronous offer imports, sync-run tracking, error details and searchable supplier product data for B2B catalogues.",
+      "de-DE": "Verbindet externe Lieferanten mit Shopware durch asynchrone Angebotsimporte, Synchronisationsprotokolle, Fehlerdetails und durchsuchbare B2B-Produktdaten."
+    },
+    "manufacturerLink": {
+      "en-GB": "https://github.com/rami-aouinti/shopware-bro",
+      "de-DE": "https://github.com/rami-aouinti/shopware-bro"
+    },
+    "supportLink": {
+      "en-GB": "https://github.com/rami-aouinti/shopware-bro/issues",
+      "de-DE": "https://github.com/rami-aouinti/shopware-bro/issues"
     }
   },
   "autoload": {

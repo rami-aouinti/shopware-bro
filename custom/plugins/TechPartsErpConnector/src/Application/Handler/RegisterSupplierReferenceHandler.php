@@ -12,7 +12,9 @@ use TechPartsErpConnector\Domain\Model\SupplierReference;
 
 final readonly class RegisterSupplierReferenceHandler
 {
-    public function __construct(private EntityRepository $supplierCatalogRepository) {}
+    public function __construct(private EntityRepository $supplierCatalogRepository)
+    {
+    }
 
     public function handle(RegisterSupplierReference $command, Context $context): void
     {

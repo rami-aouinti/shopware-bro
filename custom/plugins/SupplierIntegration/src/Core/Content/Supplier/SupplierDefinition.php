@@ -5,22 +5,35 @@ namespace SupplierIntegration\Core\Content\Supplier;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityDefinition;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\BoolField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\CreatedAtField;
-use Shopware\Core\Framework\DataAbstractionLayer\Field\FkField;
-use Shopware\Core\Framework\DataAbstractionLayer\Field\IdField;
-use Shopware\Core\Framework\DataAbstractionLayer\Field\LongTextField;
-use Shopware\Core\Framework\DataAbstractionLayer\Field\StringField;
-use Shopware\Core\Framework\DataAbstractionLayer\Field\UpdatedAtField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\PrimaryKey;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\Required;
-use Shopware\Core\Framework\DataAbstractionLayer\FieldCollection;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\IdField;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\LongTextField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\OneToManyAssociationField;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\StringField;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\UpdatedAtField;
+use Shopware\Core\Framework\DataAbstractionLayer\FieldCollection;
+use SupplierIntegration\Core\Content\SupplierOffer\SupplierOfferDefinition;
+use SupplierIntegration\Core\Content\SupplierSyncRun\SupplierSyncRunDefinition;
 
 class SupplierDefinition extends EntityDefinition
 {
     public const ENTITY_NAME = 'supplier_integration_supplier';
-    public function getEntityName(): string { return self::ENTITY_NAME; }
-    public function getEntityClass(): string { return SupplierEntity::class; }
-    public function getCollectionClass(): string { return SupplierCollection::class; }
+
+    public function getEntityName(): string
+    {
+        return self::ENTITY_NAME;
+    }
+
+    public function getEntityClass(): string
+    {
+        return SupplierEntity::class;
+    }
+
+    public function getCollectionClass(): string
+    {
+        return SupplierCollection::class;
+    }
 
     protected function defineFields(): FieldCollection
     {

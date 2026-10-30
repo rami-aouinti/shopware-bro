@@ -1,6 +1,6 @@
-{% sw_extends '@Storefront/storefront/component/product/description.html.twig' %}
+{% sw_extends '@Storefront/storefront/page/product-detail/description.html.twig' %}
 
-{% block component_product_description_content_text %}
+{% block page_product_detail_description_content_text %}
     {{ parent() }}
 
     {% set manufacturerReference = product.translated.customFields.rami_manufacturer_reference

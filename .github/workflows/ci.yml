@@ -1,17 +1,114 @@
-name: Check
+name: Check and format
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, master ]
   pull_request:
-    branches: [ main ]
+    branches: [ main, master ]
+
+permissions:
+  contents: write
 
 jobs:
   check:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Project Validate
-        uses: shopware/github-actions/project-validate@main
+      - name: Checkout
+        uses: actions/checkout@v4
         with:
-          phpVersion: '8.4'
+          ref: ${{ github.event.pull_request.head.ref || github.ref }}
+          fetch-depth: 0
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          tools: composer:v2
+
+      - name: Install Shopware CLI
+        uses: shopware/shopware-cli-action@v3
+
+      - name: Install dependencies
+        run: composer install --no-interaction --prefer-dist
+
+      - name: Validate first-party extensions
+        shell: bash
+        run: |
+          set -euo pipefail
+          plugins=(
+            custom/plugins/ProductManufacturerReference
+            custom/plugins/ProductStockWarning
+            custom/plugins/SupplierIntegration
+            custom/plugins/TechPartsB2BSearch
+            custom/plugins/TechPartsErpConnector
+            custom/plugins/TechPartsInventory
+            custom/plugins/TechPartsObservability
+            custom/plugins/TechPartsOrderOrchestrator
+          )
+          failed=()
+          for plugin in "${plugins[@]}"; do
+            echo "::group::Validate ${plugin}"
+            if ! shopware-cli extension validate "${plugin}"; then
+              failed+=("${plugin}")
+            fi
+            echo "::endgroup::"
+          done
+          if (( ${#failed[@]} > 0 )); then
+            printf 'Validation failed for: %s\n' "${failed[*]}"
+            exit 1
+          fi
+
+      - name: Apply first-party code style
+        if: github.event_name == 'pull_request' && github.event.pull_request.head.ref == 'fix/format-first-party-extensions' && github.event.pull_request.head.repo.full_name == github.repository
+        shell: bash
+        run: |
+          set -euo pipefail
+          plugins=(
+            custom/plugins/ProductManufacturerReference
+            custom/plugins/ProductStockWarning
+            custom/plugins/SupplierIntegration
+            custom/plugins/TechPartsB2BSearch
+            custom/plugins/TechPartsErpConnector
+            custom/plugins/TechPartsInventory
+            custom/plugins/TechPartsObservability
+            custom/plugins/TechPartsOrderOrchestrator
+          )
+          for plugin in "${plugins[@]}"; do
+            echo "::group::Format ${plugin}"
+            shopware-cli extension format "${plugin}"
+            echo "::endgroup::"
+          done
+          if ! git diff --quiet; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add custom/plugins/
+            git commit -m "Apply Shopware extension code style"
+            git push origin "HEAD:${GITHUB_HEAD_REF}"
+          fi
+
+      - name: Check first-party code style
+        shell: bash
+        run: |
+          set -euo pipefail
+          plugins=(
+            custom/plugins/ProductManufacturerReference
+            custom/plugins/ProductStockWarning
+            custom/plugins/SupplierIntegration
+            custom/plugins/TechPartsB2BSearch
+            custom/plugins/TechPartsErpConnector
+            custom/plugins/TechPartsInventory
+            custom/plugins/TechPartsObservability
+            custom/plugins/TechPartsOrderOrchestrator
+          )
+          failed=()
+          for plugin in "${plugins[@]}"; do
+            echo "::group::Format check ${plugin}"
+            if ! shopware-cli extension format --dry-run "${plugin}"; then
+              failed+=("${plugin}")
+            fi
+            echo "::endgroup::"
+          done
+          if (( ${#failed[@]} > 0 )); then
+            printf 'Formatting check failed for: %s\n' "${failed[*]}"
+            exit 1
+          fi
