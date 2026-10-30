@@ -18,7 +18,9 @@ use Symfony\Component\DependencyInjection\Attribute\Autowire;
 class ReindexSupplierOffersCommand extends Command
 {
     public function __construct(
-        /** @var EntityRepository<SupplierOfferCollection> */
+        /**
+         * @var EntityRepository<SupplierOfferCollection>
+         */
         #[Autowire(service: 'supplier_integration_offer.repository')]
         private readonly EntityRepository $offers,
         private readonly OfferSearchIndexerInterface $indexer
@@ -69,9 +71,11 @@ class ReindexSupplierOffersCommand extends Command
             } while ($hasNextPage);
 
             $output->writeln(sprintf('<info>Indexed %d active supplier offers.</info>', $total));
+
             return Command::SUCCESS;
         } catch (\Throwable $exception) {
             $output->writeln('<error>Reindex failed: ' . $exception->getMessage() . '</error>');
+
             return Command::FAILURE;
         }
     }

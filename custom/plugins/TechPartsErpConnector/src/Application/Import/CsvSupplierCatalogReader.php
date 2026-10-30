@@ -30,6 +30,7 @@ final readonly class CsvSupplierCatalogReader
 
             $headers = array_map(static function (mixed $header): string {
                 $value = trim((string) $header);
+
                 return preg_replace('/^\xEF\xBB\xBF/', '', $value) ?? $value;
             }, $headers);
             $headers = array_map(static fn (string $header): string => strtolower($header), $headers);

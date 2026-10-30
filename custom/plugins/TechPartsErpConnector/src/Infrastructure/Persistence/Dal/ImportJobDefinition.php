@@ -6,20 +6,33 @@ namespace TechPartsErpConnector\Infrastructure\Persistence\Dal;
 
 use Shopware\Core\Framework\DataAbstractionLayer\EntityDefinition;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\DateTimeField;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\PrimaryKey;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\Required;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\IdField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\IntField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\LongTextField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\StringField;
-use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\PrimaryKey;
-use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\Required;
 use Shopware\Core\Framework\DataAbstractionLayer\FieldCollection;
 
 class ImportJobDefinition extends EntityDefinition
 {
     public const ENTITY_NAME = 'tp_import_job';
-    public function getEntityName(): string { return self::ENTITY_NAME; }
-    public function getEntityClass(): string { return ImportJobEntity::class; }
-    public function getCollectionClass(): string { return ImportJobCollection::class; }
+
+    public function getEntityName(): string
+    {
+        return self::ENTITY_NAME;
+    }
+
+    public function getEntityClass(): string
+    {
+        return ImportJobEntity::class;
+    }
+
+    public function getCollectionClass(): string
+    {
+        return ImportJobCollection::class;
+    }
+
     protected function defineFields(): FieldCollection
     {
         return new FieldCollection([

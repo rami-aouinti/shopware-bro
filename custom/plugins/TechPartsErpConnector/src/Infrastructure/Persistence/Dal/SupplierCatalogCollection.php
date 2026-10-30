@@ -6,7 +6,9 @@ namespace TechPartsErpConnector\Infrastructure\Persistence\Dal;
 
 use Shopware\Core\Framework\DataAbstractionLayer\EntityCollection;
 
-/** @extends EntityCollection<SupplierCatalogEntity> */
+/**
+ * @extends EntityCollection<SupplierCatalogEntity>
+ */
 class SupplierCatalogCollection extends EntityCollection
 {
     protected function getExpectedClass(): string

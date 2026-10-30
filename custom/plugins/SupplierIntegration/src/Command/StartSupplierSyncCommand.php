@@ -13,14 +13,16 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
+use Symfony\Component\Messenger\MessageBusInterface;
 
 #[AsCommand(name: 'supplier-integration:sync', description: 'Queue an import for a supplier ID.')]
 class StartSupplierSyncCommand extends Command
 {
     public function __construct(
-        /** @var EntityRepository<SupplierCollection> */
+        /**
+         * @var EntityRepository<SupplierCollection>
+         */
         #[Autowire(service: 'supplier_integration_supplier.repository')]
         private readonly EntityRepository $suppliers,
         #[Autowire(service: 'supplier_integration_sync_run.repository')]
@@ -40,6 +42,7 @@ class StartSupplierSyncCommand extends Command
         $supplierId = (string) $input->getArgument('supplier-id');
         if (!Uuid::isValid($supplierId)) {
             $output->writeln('<error>supplier-id must be a valid Shopware UUID.</error>');
+
             return Command::INVALID;
         }
 
@@ -47,6 +50,7 @@ class StartSupplierSyncCommand extends Command
         $criteria = new Criteria([$supplierId]);
         if ($this->suppliers->search($criteria, $context)->getEntities()->first() === null) {
             $output->writeln('<error>Supplier not found.</error>');
+
             return Command::FAILURE;
         }
 
@@ -64,6 +68,7 @@ class StartSupplierSyncCommand extends Command
 
         $this->bus->dispatch(new StartSupplierSyncMessage($supplierId, $runId));
         $output->writeln(sprintf('Queued supplier sync run %s', $runId));
+
         return Command::SUCCESS;
     }
 }

@@ -6,8 +6,13 @@ namespace TechPartsErpConnector\Infrastructure\Persistence\Dal;
 
 use Shopware\Core\Framework\DataAbstractionLayer\EntityCollection;
 
-/** @extends EntityCollection<ImportJobEntity> */
+/**
+ * @extends EntityCollection<ImportJobEntity>
+ */
 class ImportJobCollection extends EntityCollection
 {
-    protected function getExpectedClass(): string { return ImportJobEntity::class; }
+    protected function getExpectedClass(): string
+    {
+        return ImportJobEntity::class;
+    }
 }

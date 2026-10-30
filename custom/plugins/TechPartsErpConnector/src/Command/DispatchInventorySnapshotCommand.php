@@ -41,6 +41,7 @@ final class DispatchInventorySnapshotCommand extends Command
 
         if ($quantity === false || $safetyStock === false || $quantity < 0 || $safetyStock < 0) {
             $output->writeln('<error>quantity and safety-stock must be non-negative integers.</error>');
+
             return Command::INVALID;
         }
 
@@ -54,6 +55,7 @@ final class DispatchInventorySnapshotCommand extends Command
             ));
         } catch (\Throwable $exception) {
             $output->writeln('<error>Could not queue inventory snapshot: ' . $exception->getMessage() . '</error>');
+
             return Command::FAILURE;
         }
 

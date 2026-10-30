@@ -17,7 +17,9 @@ use Symfony\Component\Routing\Attribute\Route;
 final class SupplierOffersController extends StorefrontController
 {
     public function __construct(
-        /** @var EntityRepository<SupplierOfferCollection> */
+        /**
+         * @var EntityRepository<SupplierOfferCollection>
+         */
         #[Autowire(service: 'supplier_integration_offer.repository')]
         private readonly EntityRepository $offerRepository
     ) {
@@ -76,6 +78,7 @@ final class SupplierOffersController extends StorefrontController
                     (string) ($offer['brand'] ?? ''),
                     (string) ($offer['category'] ?? ''),
                 ]));
+
                 return str_contains($haystack, $needle);
             }));
         }

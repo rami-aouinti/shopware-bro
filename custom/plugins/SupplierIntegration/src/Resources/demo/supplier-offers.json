@@ -1,120 +1,120 @@
 {
-  "supplier": {
-    "externalId": "demo-electronics-eu",
-    "name": "Demo Electronics Europe",
-    "apiBaseUrl": "https://demo-api.example.test/v1",
-    "demo": true
-  },
-  "items": [
-    {
-      "externalProductId": "DEMO-KB-1001",
-      "sku": "KB-1001",
-      "name": "Wireless Mechanical Keyboard",
-      "description": "Hot-swappable mechanical keyboard with USB-C and wireless connectivity.",
-      "brand": "KeyForge",
-      "category": "Peripherals",
-      "purchasePrice": "42.90",
-      "currency": "EUR",
-      "availableQuantity": 120,
-      "deliveryDays": 2,
-      "rating": 4.7
+    "supplier": {
+        "externalId": "demo-electronics-eu",
+        "name": "Demo Electronics Europe",
+        "apiBaseUrl": "https://demo-api.example.test/v1",
+        "demo": true
     },
-    {
-      "externalProductId": "DEMO-MS-1002",
-      "sku": "MS-1002",
-      "name": "Ergonomic Wireless Mouse",
-      "description": "Ergonomic wireless mouse with adjustable DPI and USB receiver.",
-      "brand": "PointerWorks",
-      "category": "Peripherals",
-      "purchasePrice": "18.40",
-      "currency": "EUR",
-      "availableQuantity": 8,
-      "deliveryDays": 1,
-      "rating": 4.4
-    },
-    {
-      "externalProductId": "DEMO-MON-1003",
-      "sku": "MON-1003",
-      "name": "27-inch QHD Monitor",
-      "description": "27-inch IPS monitor with QHD resolution and height-adjustable stand.",
-      "brand": "ViewMax",
-      "category": "Monitors",
-      "purchasePrice": "159.00",
-      "currency": "EUR",
-      "availableQuantity": 0,
-      "deliveryDays": 5,
-      "rating": 4.6
-    },
-    {
-      "externalProductId": "DEMO-USB-1004",
-      "sku": "USB-1004",
-      "name": "USB-C Docking Station",
-      "description": "Universal USB-C docking station with dual display output.",
-      "brand": "DockLab",
-      "category": "Accessories",
-      "purchasePrice": "76.50",
-      "currency": "EUR",
-      "availableQuantity": 34,
-      "deliveryDays": 3,
-      "rating": 4.3
-    },
-    {
-      "externalProductId": "DEMO-HS-1005",
-      "sku": "HS-1005",
-      "name": "Noise Cancelling Headset",
-      "description": "Bluetooth headset with active noise cancellation and microphone.",
-      "brand": "ClearSound",
-      "category": "Audio",
-      "purchasePrice": "64.95",
-      "currency": "EUR",
-      "availableQuantity": 15,
-      "deliveryDays": 2,
-      "rating": 4.5
-    },
-    {
-      "externalProductId": "DEMO-CAM-1006",
-      "sku": "CAM-1006",
-      "name": "Full HD Conference Camera",
-      "description": "Full HD USB camera with privacy shutter for remote meetings.",
-      "brand": "MeetPro",
-      "category": "Video",
-      "purchasePrice": "39.90",
-      "currency": "EUR",
-      "availableQuantity": 3,
-      "deliveryDays": 4,
-      "rating": 4.1
-    },
-    {
-      "externalProductId": "DEMO-SSD-1007",
-      "sku": "SSD-1007",
-      "name": "1 TB NVMe SSD",
-      "description": "High-speed NVMe solid-state drive for workstations.",
-      "brand": "FlashPeak",
-      "category": "Storage",
-      "purchasePrice": "58.20",
-      "currency": "EUR",
-      "availableQuantity": 52,
-      "deliveryDays": 2,
-      "rating": 4.8
-    },
-    {
-      "externalProductId": "DEMO-ADP-1008",
-      "sku": "ADP-1008",
-      "name": "Multiport USB-C Adapter",
-      "description": "Compact multiport adapter with HDMI, USB-A and card reader.",
-      "brand": "Connectix",
-      "category": "Accessories",
-      "purchasePrice": "21.75",
-      "currency": "EUR",
-      "availableQuantity": 5,
-      "deliveryDays": 1,
-      "rating": 4
+    "items": [
+        {
+            "externalProductId": "DEMO-KB-1001",
+            "sku": "KB-1001",
+            "name": "Wireless Mechanical Keyboard",
+            "description": "Hot-swappable mechanical keyboard with USB-C and wireless connectivity.",
+            "brand": "KeyForge",
+            "category": "Peripherals",
+            "purchasePrice": "42.90",
+            "currency": "EUR",
+            "availableQuantity": 120,
+            "deliveryDays": 2,
+            "rating": 4.7
+        },
+        {
+            "externalProductId": "DEMO-MS-1002",
+            "sku": "MS-1002",
+            "name": "Ergonomic Wireless Mouse",
+            "description": "Ergonomic wireless mouse with adjustable DPI and USB receiver.",
+            "brand": "PointerWorks",
+            "category": "Peripherals",
+            "purchasePrice": "18.40",
+            "currency": "EUR",
+            "availableQuantity": 8,
+            "deliveryDays": 1,
+            "rating": 4.4
+        },
+        {
+            "externalProductId": "DEMO-MON-1003",
+            "sku": "MON-1003",
+            "name": "27-inch QHD Monitor",
+            "description": "27-inch IPS monitor with QHD resolution and height-adjustable stand.",
+            "brand": "ViewMax",
+            "category": "Monitors",
+            "purchasePrice": "159.00",
+            "currency": "EUR",
+            "availableQuantity": 0,
+            "deliveryDays": 5,
+            "rating": 4.6
+        },
+        {
+            "externalProductId": "DEMO-USB-1004",
+            "sku": "USB-1004",
+            "name": "USB-C Docking Station",
+            "description": "Universal USB-C docking station with dual display output.",
+            "brand": "DockLab",
+            "category": "Accessories",
+            "purchasePrice": "76.50",
+            "currency": "EUR",
+            "availableQuantity": 34,
+            "deliveryDays": 3,
+            "rating": 4.3
+        },
+        {
+            "externalProductId": "DEMO-HS-1005",
+            "sku": "HS-1005",
+            "name": "Noise Cancelling Headset",
+            "description": "Bluetooth headset with active noise cancellation and microphone.",
+            "brand": "ClearSound",
+            "category": "Audio",
+            "purchasePrice": "64.95",
+            "currency": "EUR",
+            "availableQuantity": 15,
+            "deliveryDays": 2,
+            "rating": 4.5
+        },
+        {
+            "externalProductId": "DEMO-CAM-1006",
+            "sku": "CAM-1006",
+            "name": "Full HD Conference Camera",
+            "description": "Full HD USB camera with privacy shutter for remote meetings.",
+            "brand": "MeetPro",
+            "category": "Video",
+            "purchasePrice": "39.90",
+            "currency": "EUR",
+            "availableQuantity": 3,
+            "deliveryDays": 4,
+            "rating": 4.1
+        },
+        {
+            "externalProductId": "DEMO-SSD-1007",
+            "sku": "SSD-1007",
+            "name": "1 TB NVMe SSD",
+            "description": "High-speed NVMe solid-state drive for workstations.",
+            "brand": "FlashPeak",
+            "category": "Storage",
+            "purchasePrice": "58.20",
+            "currency": "EUR",
+            "availableQuantity": 52,
+            "deliveryDays": 2,
+            "rating": 4.8
+        },
+        {
+            "externalProductId": "DEMO-ADP-1008",
+            "sku": "ADP-1008",
+            "name": "Multiport USB-C Adapter",
+            "description": "Compact multiport adapter with HDMI, USB-A and card reader.",
+            "brand": "Connectix",
+            "category": "Accessories",
+            "purchasePrice": "21.75",
+            "currency": "EUR",
+            "availableQuantity": 5,
+            "deliveryDays": 1,
+            "rating": 4
+        }
+    ],
+    "pagination": {
+        "page": 1,
+        "perPage": 100,
+        "total": 8,
+        "nextPage": null
     }
-  ],
-  "pagination": {
-    "page": 1,
-    "perPage": 100,
-    "total": 8,
-    "nextPage": null
-  }
 }

@@ -14,7 +14,9 @@ final readonly class SupplierImportService
 {
     private const MAX_STORED_ERRORS = 1000;
 
-    public function __construct(private EntityRepository $repository, private LoggerInterface $logger) {}
+    public function __construct(private EntityRepository $repository, private LoggerInterface $logger)
+    {
+    }
 
     /**
      * Imports iterable rows in bounded DAL batches. A failed batch throws to the caller for retry.
@@ -80,6 +82,7 @@ final readonly class SupplierImportService
 
         return new SupplierImportResult($received, $accepted, $rejected, $errors);
     }
+
     /**
      * Keep DAL repository calls outside the row-iteration loop while retaining bounded batches.
      *

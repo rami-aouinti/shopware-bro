@@ -1,5 +1,5 @@
 {
-  "productStockWarning": {
-    "message": "Nur noch %stock% Stück auf Lager."
-  }
+    "productStockWarning": {
+        "message": "Nur noch %stock% Stück auf Lager."
+    }
 }

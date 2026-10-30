@@ -9,9 +9,13 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 final readonly class ErpHttpClient
 {
-    public function __construct(private HttpClientInterface $httpClient, private ErpClientConfig $config) {}
+    public function __construct(private HttpClientInterface $httpClient, private ErpClientConfig $config)
+    {
+    }
 
-    /** @return array<string, mixed> */
+    /**
+     * @return array<string, mixed>
+     */
     public function get(string $path): array
     {
         if ($path === '' || str_starts_with($path, '//') || preg_match('#^[a-z][a-z0-9+.-]*:#i', $path)) {
@@ -30,6 +34,7 @@ final readonly class ErpHttpClient
             if (array_is_list($data)) {
                 throw new ErpApiException('ERP response must be a JSON object', $status);
             }
+
             return $data;
         } catch (TransportExceptionInterface $exception) {
             throw new ErpApiException('ERP transport failure', null, $exception);
