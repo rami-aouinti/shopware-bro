@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<psalm
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="vendor/vimeo/psalm/config.xsd"
+    errorLevel="5"
+    resolveFromConfigFile="true"
+    findUnusedCode="false"
+>
+    <projectFiles>
+        <directory name="custom/plugins/TechPartsErpConnector/src"/>
+        <directory name="custom/plugins/TechPartsErpConnector/tests"/>
+        <ignoreFiles>
+            <directory name="vendor"/>
+        </ignoreFiles>
+    </projectFiles>
+</psalm>

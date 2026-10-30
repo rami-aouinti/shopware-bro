@@ -30,3 +30,7 @@
 /phpunit.xml
 /.phpunit.cache/
 ###< phpunit/phpunit ###
+
+# PHP quality-tool caches
+/.php-cs-fixer.cache
+/.psalm/
