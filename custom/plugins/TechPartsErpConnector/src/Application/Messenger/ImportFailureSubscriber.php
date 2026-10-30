@@ -9,6 +9,8 @@ use Shopware\Core\Framework\Context;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Messenger\Event\WorkerMessageFailedEvent;
 use TechPartsErpConnector\Application\Import\ImportJobTracker;
+use TechPartsErpConnector\Application\Import\ImportBatchStore;
+use TechPartsErpConnector\Application\Message\ProcessSupplierBatchMessage;
 use TechPartsErpConnector\Application\Message\SyncSupplierCatalogMessage;
 
 /**
@@ -19,6 +21,7 @@ final readonly class ImportFailureSubscriber implements EventSubscriberInterface
 {
     public function __construct(
         private ImportJobTracker $jobTracker,
+        private ImportBatchStore $batchStore,
         private LoggerInterface $logger,
     ) {
     }
@@ -36,13 +39,18 @@ final readonly class ImportFailureSubscriber implements EventSubscriberInterface
         }
 
         $message = $event->getEnvelope()->getMessage();
-        if (!$message instanceof SyncSupplierCatalogMessage) {
+        if (!$message instanceof SyncSupplierCatalogMessage && !$message instanceof ProcessSupplierBatchMessage) {
             return;
         }
 
         $exception = $event->getThrowable();
 
         try {
+            if ($message instanceof ProcessSupplierBatchMessage) {
+                $this->batchStore->failed($message->jobId, $message->batchId, $exception::class . ': ' . $exception->getMessage());
+                return;
+            }
+
             $this->jobTracker->fail(
                 $message->jobId,
                 $exception::class . ': ' . $exception->getMessage(),
