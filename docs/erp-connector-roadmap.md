@@ -91,21 +91,39 @@ docker compose exec web bin/console techparts:inventory:dispatch-snapshot PRODUC
 
 Consume each message with `messenger:consume async --limit=1` and verify stock stays at 30. Test two concurrently arriving versions and a mixed versioned/unversioned stream. **Caution:** source-specific sequencing does not define precedence among multiple ERP sources updating the same Shopware stock. Add a business priority/ownership rule before supporting multi-source writes.
 
-### P1.3 — Large imports (not implemented)
+### P1.3 — Large imports (implemented as a new opt-in CSV path; live verification pending)
 
-Current `SyncSupplierCatalogMessage` carries all JSON rows, and the handler finalizes the job immediately after its own message. Simply splitting one job into many messages would corrupt the job's counters/status. Implement durable batches with a batch table, idempotent batch IDs, atomic claim/complete transitions, total counters and a finalizer. Test worker crashes and repeat delivery before rollout.
+The existing JSON command remains unchanged (it still carries all rows). The new `techparts:erp:dispatch-supplier-csv-async` command reads CSV as a generator, splits it into bounded chunks, saves chunks to `tp_import_batch`, and publishes tiny `ProcessSupplierBatchMessage` messages with IDs only. Workers lock the parent job and batch row, use existing DAL bulk import, persist per-batch outcomes, and finalize the job only when no pending batches remain. Retry exhaustion marks the batch failed. The `resume-supplier-import` command republishes pending IDs; repeated deliveries of already finished batches do not reapply them.
 
-### P2.1 — Administration (partial implementation)
+```bash
+# Put a CSV at /var/www/html/var/erp-sample.csv (headers: supplier_code,external_product_id,product_id).
+docker compose exec web bin/console techparts:erp:dispatch-supplier-csv-async /var/www/html/var/erp-sample.csv --batch-size=2
+docker compose exec web bin/console messenger:consume async -vv --time-limit=30
+docker compose exec web bin/console techparts:erp:resume-supplier-import JOB_ID
+docker compose exec web vendor/bin/phpunit -c phpunit.dist.xml custom/plugins/TechPartsErpConnector/tests/Unit/SupplierBatchChunkerTest.php
+```
 
-`src/Resources/config/config.xml` adds a Shopware-native Administration configuration toggle. `HttpErpGateway::health()` honors it. The toggle does **not** disable CLI imports or inventory sync; those controls and a read-only import history Administration view remain to build.
+Acceptance: run a five-row CSV with batch size 2; expect 3 persisted batches, 5 processed rows, and the job marked succeeded. Requeue a finished batch and verify it is not applied twice. Stop the worker mid-import; restart and retry, then check counters remain correct. Repeat with one malformed supplier row and with an intentionally failing DB operation in a **disposable environment**.
 
-In Administration: Extensions > My extensions > TechParts ERP Connector > Configure. Disable the toggle, then verify `ErpGateway::health()` reports unavailable. API token and infrastructure secrets still belong in environment variables.
+**Trade-off:** the parent job row lock serializes batch commits for the same import job; optimize concurrency only after tests establish correct finalization under parallel workers. Live DB/worker behavior is **not yet verified**.
 
-### P2.2 — Observability and CI (partly implemented)
+### P2.1 — Administration (implemented as first read-only view; build and UX checks pending)
 
-The plugin already logs imports, duplicates and failures. The new `.github/workflows/erp-connector-quality.yml` runs PHP lint, PHPUnit unit tests and PHPStan for the ERP plugin on push/PR. Check its status on GitHub; it has **not** been executed by this assistant.
+`src/Resources/config/config.xml` adds a Shopware-native toggle. `HttpErpGateway::health()` honors it. The toggle does **not** disable CLI imports or inventory sync; operational secrets remain in environment variables.
 
-Remaining: dedicated structured event correlation IDs, redaction checks, alerts for failed jobs/stuck batches, metrics, DB-backed integration workflow and worker health monitoring.
+An Administration module under `src/Resources/app/administration/src` now lists `tp_import_job` records (source, status, received/accepted/rejected counters, started time) as read-only history. Build Administration assets in the local Shopware environment, clear cache, log in as an administrator and verify the new **ERP import history** settings navigation item. It must handle empty lists and permission failures correctly. Pagination, filters, batch details and more complete settings remain to implement.
+
+### P2.2 — Observability and CI (implemented baseline; operations checks pending)
+
+The plugin already logs imports, duplicates and failures. `techparts:erp:metrics` reports JSON counts for import job/batch statuses and stale running jobs, and exits with code 1 for failed or stale jobs. You can wire this to a monitoring probe, but first validate the desired alert thresholds and retention policy.
+
+```bash
+docker compose exec web bin/console techparts:erp:metrics
+```
+
+The `.github/workflows/erp-connector-quality.yml` workflow runs PHP lint, PHPUnit unit tests and PHPStan for the plugin on push/PR. Check run results at GitHub Actions.
+
+Remaining: production monitoring dashboard, metric retention, log scrubbing, correlation IDs across Messenger, DB integration CI, worker heartbeat, and actionable incident alerts.
 
 ## Suggested sequential acceptance
 
