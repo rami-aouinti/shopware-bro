@@ -43,6 +43,7 @@ class SupplierOfferEntity extends Entity
     public function getPayloadHash(): ?string { return $this->payloadHash; }
     public function setPayloadHash(?string $value): void { $this->payloadHash = $value; }
     public function isActive(): bool { return $this->isActive; }
+    public function getIsActive(): bool { return $this->isActive; }
     public function setIsActive(bool $value): void { $this->isActive = $value; }
     public function getSupplier(): ?SupplierEntity { return $this->supplier; }
     public function setSupplier(?SupplierEntity $value): void { $this->supplier = $value; }
