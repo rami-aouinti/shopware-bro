@@ -28,6 +28,6 @@ final readonly class SyncInventorySnapshotHandler
         );
 
         // Infrastructure errors intentionally bubble up so Messenger can retry.
-        $this->inventorySync->synchronize($snapshot, Context::createDefaultContext());
+        $this->inventorySync->synchronize($snapshot, Context::createCLIContext());
     }
 }
