@@ -20,6 +20,18 @@
     "label": {
       "en-GB": "TechParts ERP Connector",
       "de-DE": "TechParts ERP-Connector"
+    },
+    "description": {
+      "en-GB": "Synchronizes supplier catalogue and inventory data with an ERP through resilient asynchronous messages, idempotent imports, import-job tracking and recoverable failures.",
+      "de-DE": "Synchronisiert Lieferantenkataloge und Bestände mit einem ERP über robuste asynchrone Nachrichten, idempotente Importe, Importprotokolle und behandelbare Fehler."
+    },
+    "manufacturerLink": {
+      "en-GB": "https://github.com/rami-aouinti/shopware-bro",
+      "de-DE": "https://github.com/rami-aouinti/shopware-bro"
+    },
+    "supportLink": {
+      "en-GB": "https://github.com/rami-aouinti/shopware-bro/issues",
+      "de-DE": "https://github.com/rami-aouinti/shopware-bro/issues"
     }
   },
   "autoload": {
