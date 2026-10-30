@@ -1,0 +1,23 @@
+{
+  "name": "bro/tech-parts-erp-connector",
+  "description": "TP-101 foundation for TechPartsErpConnector",
+  "type": "shopware-platform-plugin",
+  "license": "MIT",
+  "version": "0.1.0",
+  "require": {
+    "php": ">=8.3",
+    "shopware/core": "^6.7"
+  },
+  "extra": {
+    "shopware-plugin-class": "TechPartsErpConnector\\TechPartsErpConnector",
+    "label": {
+      "en-GB": "TechPartsErpConnector",
+      "de-DE": "TechPartsErpConnector"
+    }
+  },
+  "autoload": {
+    "psr-4": {
+      "TechPartsErpConnector\\": "src/"
+    }
+  }
+}
