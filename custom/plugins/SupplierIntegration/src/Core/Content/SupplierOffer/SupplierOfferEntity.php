@@ -22,6 +22,7 @@ class SupplierOfferEntity extends Entity
     protected ?SupplierEntity $supplier = null;
 
     public function getId(): string { return $this->id; }
+    public function setId(string $id): void { $this->id = $id; }
     public function getSupplierId(): string { return $this->supplierId; }
     public function setSupplierId(string $value): void { $this->supplierId = $value; }
     public function getExternalId(): string { return $this->externalId; }
