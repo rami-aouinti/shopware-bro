@@ -3,11 +3,14 @@
 <services>
 <defaults autowire="true" autoconfigure="true" public="false"/>
 <prototype namespace="TechPartsErpConnector\" resource="../../" exclude="../../{Resources,Tests,TechPartsErpConnector.php}"/>
-<alias id="TechPartsErpConnector\Domain\Contract\ErpGateway" alias="TechPartsErpConnector\Infrastructure\Erp\UnavailableErpGateway"/>
+<alias id="TechPartsErpConnector\Domain\Contract\ErpGateway" alias="TechPartsErpConnector\Infrastructure\Erp\HttpErpGateway"/>
+<service id="TechPartsErpConnector\Infrastructure\Erp\ErpClientConfig">
+<argument>%env(string:TP_ERP_BASE_URL)%</argument><argument>%env(string:TP_ERP_API_TOKEN)%</argument><argument>%env(int:TP_ERP_TIMEOUT)%</argument>
+</service>
 <service id="TechPartsErpConnector\Infrastructure\Persistence\Dal\SupplierCatalogDefinition"><tag name="shopware.entity.definition" entity="tp_supplier_catalog"/></service>
+<service id="TechPartsErpConnector\Infrastructure\Persistence\Dal\ImportJobDefinition"><tag name="shopware.entity.definition" entity="tp_import_job"/></service>
 <service id="TechPartsErpConnector\Application\Handler\RegisterSupplierReferenceHandler"><argument type="service" id="tp_supplier_catalog.repository"/></service>
 <service id="TechPartsErpConnector\Application\Import\SupplierImportService"><argument type="service" id="tp_supplier_catalog.repository"/><argument type="service" id="logger"/></service>
-<service id="TechPartsErpConnector\Infrastructure\Persistence\Dal\ImportJobDefinition"><tag name="shopware.entity.definition" entity="tp_import_job"/></service>
 <service id="TechPartsErpConnector\Application\Import\ImportJobTracker"><argument type="service" id="tp_import_job.repository"/><argument type="service" id="logger"/></service>
 </services>
 </container>
