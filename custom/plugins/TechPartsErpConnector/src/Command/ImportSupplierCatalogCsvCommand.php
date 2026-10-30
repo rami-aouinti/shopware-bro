@@ -45,11 +45,13 @@ final class ImportSupplierCatalogCsvCommand extends Command
 
         if (!is_file($path) || !is_readable($path)) {
             $io->error('CSV file does not exist or is not readable.');
+
             return Command::INVALID;
         }
 
         if (strlen($delimiter) !== 1) {
             $io->error('The delimiter must be exactly one character.');
+
             return Command::INVALID;
         }
 
@@ -83,10 +85,12 @@ final class ImportSupplierCatalogCsvCommand extends Command
 
             if ($result->rejected > 0) {
                 $io->warning(sprintf('%d row(s) were rejected. The job details contain a summary of the first 50 errors.', $result->rejected));
+
                 return Command::FAILURE;
             }
 
             $io->success('Supplier catalog CSV import completed.');
+
             return Command::SUCCESS;
         } catch (\Throwable $exception) {
             try {
@@ -97,6 +101,7 @@ final class ImportSupplierCatalogCsvCommand extends Command
             }
 
             $io->error('Import failed: ' . $exception->getMessage());
+
             return Command::FAILURE;
         }
     }

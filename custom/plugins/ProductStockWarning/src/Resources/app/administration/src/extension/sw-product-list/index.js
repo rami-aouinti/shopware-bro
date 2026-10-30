@@ -18,7 +18,11 @@ Shopware.Component.override('sw-product-list', {
         productColumns() {
             const columns = this.$super('productColumns');
 
-            if (columns.some((column) => column.property === 'stockWarningStatus')) {
+            if (
+                columns.some(
+                    (column) => column.property === 'stockWarningStatus'
+                )
+            ) {
                 return columns;
             }
 
@@ -38,16 +42,25 @@ Shopware.Component.override('sw-product-list', {
     methods: {
         async loadStockWarningThreshold() {
             try {
-                const config = await Shopware.Service('systemConfigApiService')
-                    .getValues('ProductStockWarning.config');
-                const configuredThreshold = Number(config['ProductStockWarning.config.stockThreshold']);
+                const config = await Shopware.Service(
+                    'systemConfigApiService'
+                ).getValues('ProductStockWarning.config');
+                const configuredThreshold = Number(
+                    config['ProductStockWarning.config.stockThreshold']
+                );
 
-                if (Number.isFinite(configuredThreshold) && configuredThreshold >= 1) {
+                if (
+                    Number.isFinite(configuredThreshold) &&
+                    configuredThreshold >= 1
+                ) {
                     this.stockWarningThreshold = configuredThreshold;
                 }
             } catch (error) {
                 // Keep the documented default if the plugin configuration cannot be loaded.
-                console.warn('[ProductStockWarning] Could not load the stock threshold. Using 5.', error);
+                console.warn(
+                    '[ProductStockWarning] Could not load the stock threshold. Using 5.',
+                    error
+                );
             }
         },
 

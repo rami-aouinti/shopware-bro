@@ -20,14 +20,19 @@ final readonly class InventorySyncService
     ) {
     }
 
-    /** Apply an authoritative ERP stock snapshot once per source/event ID. */
+    /**
+     * Apply an authoritative ERP stock snapshot once per source/event ID.
+     */
     public function synchronize(StockSnapshot $snapshot, Context $context): InventorySyncResult
     {
         $sellableQuantity = $snapshot->sellableQuantity();
         $eventId = Uuid::randomBytes();
 
         return $this->connection->transactional(function (Connection $connection) use (
-            $snapshot, $context, $sellableQuantity, $eventId,
+            $snapshot,
+            $context,
+            $sellableQuantity,
+            $eventId,
         ): InventorySyncResult {
             $inserted = $connection->executeStatement(
                 <<<'SQL'

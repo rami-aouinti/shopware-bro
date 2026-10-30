@@ -12,7 +12,9 @@ use TechPartsErpConnector\Domain\Model\ImportJobStatus;
 
 final readonly class ImportJobTracker
 {
-    public function __construct(private EntityRepository $repository, private LoggerInterface $logger) {}
+    public function __construct(private EntityRepository $repository, private LoggerInterface $logger)
+    {
+    }
 
     public function start(string $source, Context $context): string
     {
@@ -32,6 +34,7 @@ final readonly class ImportJobTracker
         ]], $context);
 
         $this->logger->info('ERP import job started', ['jobId' => $id, 'source' => $source]);
+
         return $id;
     }
 
