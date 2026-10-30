@@ -50,9 +50,15 @@ docker compose exec web bin/console techparts:inventory:dispatch-snapshot PRODUC
 
 Verify a worker receives it, the product stock becomes 20, and `tp_inventory_sync` records `applied`. Repeat the event: stock should not change. For retry/failure testing, use a controlled broken ERP event in a disposable environment; inspect `messenger:failed:show` and `messenger:failed:retry` and avoid injecting deliberate failures into production.
 
-### P0.3 — Database/DAL integration (not implemented as automated tests)
+### P0.3 — Database/DAL integration (partial implementation; live verification pending)
 
-Add actual kernel/database integration tests for Shopware DAL repository creation/upsert, transactions/rollback, the `tp_inventory_sync` uniqueness constraint, and duplicate/old-version events. Make the tests isolated and tear down fixtures. PHPUnit unit successes do **not** cover these.
+A rollback-only DBAL integration test is now present at `tests/Integration/InventoryPersistenceIntegrationTest.php`. It checks uniqueness of (source, event ID) and independence of different sources, using an explicit DB transaction. Run **only against an isolated, disposable database**, after migrations:
+
+```bash
+docker compose exec web composer test:erp:integration
+```
+
+A dedicated Shopware Kernel/DAL repository test, product stock update + rollback test, and concurrent version-check integration test remain open. The existing DBAL test does **not** yet verify Shopware DAL or real Messenger handlers. PHPUnit unit successes do **not** cover these.
 
 ### P1.1 — Local ERP mock (implemented; HTTP smoke pending)
 
