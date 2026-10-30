@@ -17,4 +17,5 @@ framework:
             failed:
                 dsn: 'doctrine://default?queue_name=failed'
         routing:
-            'TechPartsErpConnector\Application\Message\SyncSupplierCatalogMessage': async
+            'TechPartsErpConnector\\Application\\Message\\SyncSupplierCatalogMessage': async
+            'TechPartsErpConnector\\Application\\Message\\SyncInventorySnapshotMessage': async
