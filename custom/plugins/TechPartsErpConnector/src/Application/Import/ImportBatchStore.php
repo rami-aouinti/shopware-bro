@@ -104,6 +104,9 @@ final readonly class ImportBatchStore
             }
 
             $rows = json_decode((string) $row['rows_json'], true, 512, JSON_THROW_ON_ERROR);
+            if (!is_array($rows) || !array_is_list($rows)) {
+                throw new \RuntimeException('Invalid stored import batch payload');
+            }
             $connection->update('tp_import_batch', [
                 'status' => 'failed',
                 'accepted' => 0,
@@ -149,12 +152,19 @@ final readonly class ImportBatchStore
             ['jobId' => $jobId],
         );
 
+        $errors = $connection->fetchFirstColumn(
+            "SELECT last_error FROM tp_import_batch WHERE job_id = :jobId AND last_error IS NOT NULL ORDER BY batch_index LIMIT 3",
+            ['jobId' => $jobId],
+        );
+        $summary = $errors === [] ? null : mb_substr(implode('; ', array_map('strval', $errors)), 0, 4000);
+
         $this->jobs->finish(
             $jobId,
             (int) $counts['received'],
             (int) $counts['accepted'],
             (int) $counts['rejected'],
             Context::createDefaultContext(),
+            $summary,
         );
     }
 }
