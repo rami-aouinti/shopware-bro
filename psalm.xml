@@ -3,6 +3,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="vendor/vimeo/psalm/config.xsd"
     errorLevel="5"
+    phpVersion="8.3"
     resolveFromConfigFile="true"
     findUnusedCode="false"
 >
