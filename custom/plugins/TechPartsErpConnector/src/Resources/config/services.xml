@@ -6,5 +6,6 @@
 <alias id="TechPartsErpConnector\Domain\Contract\ErpGateway" alias="TechPartsErpConnector\Infrastructure\Erp\UnavailableErpGateway"/>
 <service id="TechPartsErpConnector\Infrastructure\Persistence\Dal\SupplierCatalogDefinition"><tag name="shopware.entity.definition" entity="tp_supplier_catalog"/></service>
 <service id="TechPartsErpConnector\Application\Handler\RegisterSupplierReferenceHandler"><argument type="service" id="tp_supplier_catalog.repository"/></service>
+<service id="TechPartsErpConnector\Application\Import\SupplierImportService"><argument type="service" id="tp_supplier_catalog.repository"/><argument type="service" id="logger"/></service>
 </services>
 </container>
