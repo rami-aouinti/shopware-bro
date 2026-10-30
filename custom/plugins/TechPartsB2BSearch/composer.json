@@ -1,0 +1,23 @@
+{
+  "name": "bro/tech-parts-b2bsearch",
+  "description": "TP-101 foundation for TechPartsB2BSearch",
+  "type": "shopware-platform-plugin",
+  "license": "MIT",
+  "version": "0.1.0",
+  "require": {
+    "php": ">=8.3",
+    "shopware/core": "^6.7"
+  },
+  "extra": {
+    "shopware-plugin-class": "TechPartsB2BSearch\\TechPartsB2BSearch",
+    "label": {
+      "en-GB": "TechPartsB2BSearch",
+      "de-DE": "TechPartsB2BSearch"
+    }
+  },
+  "autoload": {
+    "psr-4": {
+      "TechPartsB2BSearch\\": "src/"
+    }
+  }
+}
