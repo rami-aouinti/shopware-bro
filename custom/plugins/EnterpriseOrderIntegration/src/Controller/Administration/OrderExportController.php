@@ -3,7 +3,7 @@ namespace EnterpriseOrderIntegration\Controller\Administration;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\ParameterType;
 use EnterpriseOrderIntegration\Application\Message\ExportOrderMessage;
-use Shopware\Core\Framework\Routing\Attribute\Acl;
+use Shopware\Core\PlatformRequest;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Messenger\MessageBusInterface;
