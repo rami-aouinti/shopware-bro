@@ -12,6 +12,7 @@
             <argument type="service" id="product.repository"/>
             <argument type="service" id="Rami\B2BCartRules\Service\ProductOrderRuleValidator"/>
             <argument type="service" id="Shopware\Core\System\SystemConfig\SystemConfigService"/>
+            <argument type="service" id="translator"/>
         </service>
     </services>
 </container>
