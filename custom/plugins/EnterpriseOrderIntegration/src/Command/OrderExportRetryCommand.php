@@ -21,9 +21,10 @@ final class OrderExportRetryCommand extends Command
         $id = strtolower(str_replace('-', '', (string) $input->getArgument('order-id')));
         if (!preg_match('/^[a-f0-9]{32}$/', $id)) { $io->error('Invalid order UUID.'); return Command::INVALID; }
         $bytes = hex2bin($id);
-        $row = $this->connection->fetchAssociative('SELECT status FROM enterprise_order_export WHERE order_id = :id', ['id' => $bytes], ['id' => ParameterType::BINARY]);
+        $row = $this->connection->fetchAssociative('SELECT status, (updated_at >= DATE_SUB(NOW(), INTERVAL 10 MINUTE)) AS is_recent FROM enterprise_order_export WHERE order_id = :id', ['id' => $bytes], ['id' => ParameterType::BINARY]);
         if (!is_array($row)) { $io->error('No export record found.'); return Command::FAILURE; }
         if ($row['status'] === 'succeeded') { $io->warning('Already exported successfully; retry refused.'); return Command::SUCCESS; }
+        if ($row['status'] === 'processing' && (int) $row['is_recent'] === 1) { $io->warning('Export is actively processing; retry refused.'); return Command::SUCCESS; }
         $correlationId = bin2hex(random_bytes(16));
         $this->connection->executeStatement("UPDATE enterprise_order_export SET status = 'pending', next_attempt_at = NULL, updated_at = NOW(3) WHERE order_id = :id", ['id' => $bytes], ['id' => ParameterType::BINARY]);
         $this->messageBus->dispatch(new ExportOrderMessage($id, $correlationId));

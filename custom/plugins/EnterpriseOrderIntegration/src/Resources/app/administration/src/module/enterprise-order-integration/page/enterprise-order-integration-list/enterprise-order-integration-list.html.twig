@@ -1,0 +1,31 @@
+<sw-page class="enterprise-order-integration-list">
+    <template #smart-bar-header>
+        <h2>ERP order exports</h2>
+    </template>
+    <template #smart-bar-actions>
+        <sw-button variant="primary" :is-loading="isLoading" @click="loadExports">
+            Refresh
+        </sw-button>
+    </template>
+    <template #content>
+        <sw-card-view>
+            <sw-card title="Recent exports" :is-loading="isLoading">
+                <sw-data-grid
+                    :data-source="exports"
+                    :columns="columns"
+                    :show-selection="false"
+                    :is-loading="isLoading"
+                    identifier="enterprise-order-integration-exports">
+                    <template #actions="{ item }">
+                        <sw-context-menu-item
+                            v-if="item.status !== 'succeeded'"
+                            @click="retryExport(item)">
+                            Retry export
+                        </sw-context-menu-item>
+                    </template>
+                </sw-data-grid>
+                <sw-empty-state v-if="!isLoading && exports.length === 0" title="No exports yet" />
+            </sw-card>
+        </sw-card-view>
+    </template>
+</sw-page>

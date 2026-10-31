@@ -24,7 +24,15 @@ final class ExportOrderHandler
             return;
         }
         $exportId = $export['id'];
-        $this->connection->executeStatement('UPDATE enterprise_order_export SET status = :status, attempts = attempts + 1, updated_at = NOW(3) WHERE id = :id', ['status' => 'processing', 'id' => $exportId], ['id' => ParameterType::BINARY]);
+        $claimed = $this->connection->executeStatement("UPDATE enterprise_order_export SET status = 'processing', attempts = attempts + 1, updated_at = NOW(3) WHERE id = :id AND status IN ('pending', 'failed')", ['id' => $exportId], ['id' => ParameterType::BINARY]);
+        if ($claimed !== 1) {
+            $this->logger->info('Export message skipped because another worker owns the record', [
+                'orderId' => $message->orderId,
+                'exportId' => bin2hex($exportId),
+                'correlationId' => $message->correlationId,
+            ]);
+            return;
+        }
         try {
             $criteria = new Criteria([$message->orderId]);
             $criteria->addAssociation('lineItems');
