@@ -12,6 +12,7 @@ Shopware 6.7 plugin for configurable B2B product quantity restrictions.
 - **SW-106 — Translations:** English (`en-GB`) and German (`de-DE`) cart error catalogues.
 - **SW-107 — Unit tests:** coverage for optional rules, minimums, multiples, combined violations, numeric strings, invalid configuration, and non-positive quantity.
 - **SW-108 — Documentation:** install/update commands and acceptance checklist.
+- **SW-109 — Minimum order value:** validates the configured merchandise position total before shipping costs, blocks invalid checkout through Shopware cart errors, and includes German/English messages plus unit tests.
 
 ## Requirements
 
@@ -50,6 +51,7 @@ docker compose exec web php -l custom/plugins/B2BCartRules/src/Service/ProductOr
 docker compose exec web php -l custom/plugins/B2BCartRules/src/Service/ProductOrderRuleCartValidator.php
 docker compose exec web php -l custom/plugins/B2BCartRules/tests/Service/ProductOrderRuleValidatorTest.php
 docker compose exec web vendor/bin/phpunit custom/plugins/B2BCartRules/tests/Service/ProductOrderRuleValidatorTest.php
+docker compose exec web vendor/bin/phpunit custom/plugins/B2BCartRules/tests/Service/MinimumOrderValueValidatorTest.php
 docker compose exec web xmllint --noout custom/plugins/B2BCartRules/src/Resources/config/config.xml
 docker compose exec web xmllint --noout custom/plugins/B2BCartRules/src/Resources/config/services.xml
 docker compose exec web xmllint --noout custom/plugins/B2BCartRules/src/Resources/config/custom-fields.xml
@@ -83,16 +85,19 @@ Run against a non-production sales channel with a test product:
 5. Set `B2BCartRules.config.enabled` to `false`; verify custom quantity rules no longer block checkout.
 6. Repeat with quantity `7` and with both English and German storefront languages.
 7. Confirm errors disappear after cart recalculation when the customer corrects the quantity.
+8. Set the minimum order value to `250.00`; verify a merchandise total of `249.99` is blocked and `250.00` is accepted.
+9. Disable `minimumOrderEnabled`; verify the minimum-value rule no longer blocks checkout while quantity rules still apply.
+10. Repeat minimum-value checks through both Storefront checkout and Store API order submission.
 
 These are acceptance scenarios and must be executed locally before declaring checkout behavior verified.
 
 ## Global configuration
 
 - `B2BCartRules.config.enabled`: enable/disable product quantity restrictions (default `true`).
-- `B2BCartRules.config.minimumOrderEnabled`: configuration flag reserved for minimum order value.
-- `B2BCartRules.config.minimumOrderValue`: configured minimum net merchandise value in EUR (default `250.00`).
+- `B2BCartRules.config.minimumOrderEnabled`: enable/disable the minimum merchandise value rule.
+- `B2BCartRules.config.minimumOrderValue`: configured minimum merchandise value in the sales channel's currency context (default `250.00`). The cart position total is used, excluding shipping costs.
 
-**Scope limitation:** minimum order value is not yet calculated or enforced. The current implementation enforces product minimum quantity and quantity-step rules only.
+Storefront cart pages display the translated blocking error through Shopware's native cart error rendering. Store API cart validation also receives the blocking error, so invalid orders are rejected server-side. The minimum-order threshold uses Shopware's calculated merchandise position total and excludes shipping costs.
 
 ## Release checklist
 

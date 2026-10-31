@@ -4,3 +4,5 @@ b2bCartRules:
     minimum_quantity: 'Product "%product%" must be ordered in a quantity of at least %minimumQuantity%.'
     quantity_step: 'Product "%product%" must be ordered in multiples of %quantityStep%.'
     invalid_rule_configuration: 'The order rules for product "%product%" are incorrectly configured. Please contact the store.'
+    minimum_order_value: 'Your merchandise total is %currentValue%. The minimum order value is %minimumValue%. Add %remainingValue% more to continue.'
+    invalid_minimum_order_configuration: 'The minimum order value is incorrectly configured. Please contact the store.'
