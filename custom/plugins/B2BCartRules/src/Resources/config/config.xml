@@ -20,8 +20,8 @@
             <label>Enable minimum order value</label>
             <label lang="de-DE">Mindestbestellwert aktivieren</label>
             <defaultValue>true</defaultValue>
-            <helpText>Apply the minimum merchandise value before shipping costs.</helpText>
-            <helpText lang="de-DE">Mindestwarenwert vor Versandkosten anwenden.</helpText>
+            <helpText>Require the configured merchandise value before shipping costs. Cart errors are shown in Storefront and Store API.</helpText>
+            <helpText lang="de-DE">Den konfigurierten Warenwert vor Versandkosten verlangen. Fehler werden im Storefront und in der Store API angezeigt.</helpText>
         </input-field>
 
         <input-field type="text">
@@ -29,8 +29,8 @@
             <label>Minimum order value (net, EUR)</label>
             <label lang="de-DE">Mindestbestellwert (netto, EUR)</label>
             <defaultValue>250.00</defaultValue>
-            <helpText>Enter a non-negative amount, for example 250.00. Validation is implemented in a later ticket.</helpText>
-            <helpText lang="de-DE">Einen nicht negativen Betrag eingeben, zum Beispiel 250,00. Die Validierung folgt in einem späteren Ticket.</helpText>
+            <helpText>Enter a non-negative amount, for example 250.00.</helpText>
+            <helpText lang="de-DE">Einen nicht negativen Betrag eingeben, zum Beispiel 250,00.</helpText>
         </input-field>
     </card>
 </config>
