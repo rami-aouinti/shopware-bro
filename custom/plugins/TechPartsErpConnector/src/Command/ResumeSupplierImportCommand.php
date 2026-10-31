@@ -42,10 +42,12 @@ final class ResumeSupplierImportCommand extends Command
             }
         } catch (\Throwable $exception) {
             $output->writeln('<error>' . $exception->getMessage() . '</error>');
+
             return Command::FAILURE;
         }
 
         $output->writeln(sprintf('<info>Requeued %d pending batch(es).</info>', count($pending)));
+
         return Command::SUCCESS;
     }
 }

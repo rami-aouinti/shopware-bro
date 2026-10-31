@@ -48,6 +48,7 @@ final readonly class ImportFailureSubscriber implements EventSubscriberInterface
         try {
             if ($message instanceof ProcessSupplierBatchMessage) {
                 $this->batchStore->failed($message->jobId, $message->batchId, $exception::class . ': ' . $exception->getMessage());
+
                 return;
             }
 

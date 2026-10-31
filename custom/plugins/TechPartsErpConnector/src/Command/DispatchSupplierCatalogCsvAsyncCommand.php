@@ -48,6 +48,7 @@ final class DispatchSupplierCatalogCsvAsyncCommand extends Command
         $batchSize = filter_var($input->getOption('batch-size'), FILTER_VALIDATE_INT);
         if (!is_file($file) || !is_readable($file) || $batchSize === false || $batchSize < 1 || $batchSize > 1000) {
             $output->writeln('<error>Provide a readable file and a batch size between 1 and 1000.</error>');
+
             return Command::INVALID;
         }
 
@@ -62,6 +63,7 @@ final class DispatchSupplierCatalogCsvAsyncCommand extends Command
             if ($count === 0) {
                 $this->jobs->finish($jobId, 0, 0, 0, Context::createCLIContext());
                 $output->writeln('<info>Empty CSV; job finished.</info>');
+
                 return Command::SUCCESS;
             }
 
@@ -76,10 +78,12 @@ final class DispatchSupplierCatalogCsvAsyncCommand extends Command
                 $jobId,
                 $jobId
             ));
+
             return Command::FAILURE;
         }
 
         $output->writeln(sprintf('<info>Queued %d durable batches for job %s</info>', $count, $jobId));
+
         return Command::SUCCESS;
     }
 }

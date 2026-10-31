@@ -35,7 +35,7 @@ final class ErpMetricsCommand extends Command
             'SELECT status, COUNT(*) FROM tp_import_batch GROUP BY status',
         );
         $stale = (int) $this->connection->fetchOne(
-            "SELECT COUNT(*) FROM tp_import_job WHERE status = 'running' AND started_at < DATE_SUB(NOW(), INTERVAL 15 MINUTE)",
+            'SELECT COUNT(*) FROM tp_import_job WHERE status = \'running\' AND started_at < DATE_SUB(NOW(), INTERVAL 15 MINUTE)',
         );
 
         $summary = [
