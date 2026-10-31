@@ -28,7 +28,7 @@ if (!is_array($payload) || !isset($payload['orderId'], $payload['orderNumber'], 
     return;
 }
 
-$scenario = (string) ($_GET['scenario'] ?? 'success');
+$scenario = (string) (getenv('ERP_SIMULATOR_SCENARIO') ?: ($_GET['scenario'] ?? 'success'));
 if ($scenario === 'timeout') {
     sleep(15);
 }
