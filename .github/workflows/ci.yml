@@ -42,9 +42,8 @@ jobs:
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git add custom/plugins/TechPartsErpConnector
             git commit -m "Fix TechParts ERP connector formatting"
-            git push origin "HEAD:${GITHUB_HEAD_REF}"
+            git push origin "HEAD:$GITHUB_HEAD_REF"
           fi
-
       - name: Validate first-party extensions
         shell: bash
         run: |
@@ -68,7 +67,7 @@ jobs:
             echo "::endgroup::"
           done
           if (( ${#failed[@]} > 0 )); then
-            printf 'Validation failed for: %s\\n' "${failed[*]}"
+            printf 'Validation failed for: %s\n' "${failed[*]}"
             exit 1
           fi
 
@@ -94,7 +93,7 @@ jobs:
           done
           if ! git diff --quiet; then
             git config user.name "github-actions[bot]"
-            git config user.email "41898282+users.noreply.github.com"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git add custom/plugins/
             git commit -m "Apply Shopware extension code style"
             git push origin "HEAD:${GITHUB_HEAD_REF}"
@@ -123,6 +122,6 @@ jobs:
             echo "::endgroup::"
           done
           if (( ${#failed[@]} > 0 )); then
-            printf 'Formatting check failed for: %s\\n' "${failed[*]}"
+            printf 'Formatting check failed for: %s\n' "${failed[*]}"
             exit 1
           fi
