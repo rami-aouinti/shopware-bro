@@ -32,9 +32,10 @@ final class OrderExportController
         $normalized = strtolower(str_replace('-', '', $orderId));
         if (!preg_match('/^[a-f0-9]{32}$/', $normalized)) return new JsonResponse(['error' => 'invalid_order_id'], 400);
         $bytes = hex2bin($normalized);
-        $row = $this->connection->fetchAssociative('SELECT status FROM enterprise_order_export WHERE order_id = :id', ['id' => $bytes], ['id' => ParameterType::BINARY]);
+        $row = $this->connection->fetchAssociative('SELECT status, (updated_at >= DATE_SUB(NOW(), INTERVAL 10 MINUTE)) AS is_recent FROM enterprise_order_export WHERE order_id = :id', ['id' => $bytes], ['id' => ParameterType::BINARY]);
         if (!is_array($row)) return new JsonResponse(['error' => 'export_not_found'], 404);
         if ($row['status'] === 'succeeded') return new JsonResponse(['error' => 'already_succeeded'], 409);
+        if ($row['status'] === 'processing' && (int) $row['is_recent'] === 1) return new JsonResponse(['error' => 'export_is_processing'], 409);
         $this->connection->executeStatement("UPDATE enterprise_order_export SET status = 'pending', next_attempt_at = NULL, updated_at = NOW(3) WHERE order_id = :id AND status <> 'succeeded'", ['id' => $bytes], ['id' => ParameterType::BINARY]);
         $correlationId = bin2hex(random_bytes(16));
         $this->messageBus->dispatch(new ExportOrderMessage($normalized, $correlationId));
