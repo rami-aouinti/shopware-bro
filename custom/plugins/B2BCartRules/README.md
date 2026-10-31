@@ -21,7 +21,7 @@ A Shopware 6.7 plugin foundation for configurable B2B cart rules.
 
 Shopware 6.7.13 and newer synchronizes declarative custom fields during the plugin lifecycle. These fields are editable on product records in Administration once the plugin has been refreshed/installed or updated.
 
-**Important:** SW-102 defines product metadata. SW-103 now provides a unit-testable validation service for these rules, but the service is not yet connected to cart events or checkout. That integration belongs to subsequent tickets.
+**Important:** SW-102 defines product metadata. SW-103 provides the rule validation service, and SW-104 connects it to Shopware's cart validation lifecycle. Checkout blocking is handled separately in SW-105.
 
 ## Requirements
 
@@ -97,7 +97,7 @@ docker compose exec web php -l custom/plugins/B2BCartRules/tests/Service/Product
 docker compose exec web vendor/bin/phpunit custom/plugins/B2BCartRules/tests/Service/ProductOrderRuleValidatorTest.php
 ```
 
-The validator currently validates supplied values only. It does not yet extract custom fields from Shopware cart line items or prevent checkout; SW-104/SW-105 will connect it to the cart and checkout lifecycle.
+The SW-103 service validates supplied values. SW-104 adds `ProductOrderRuleCartValidator`, which loads product custom fields from the product repository, aggregates quantities for repeated product IDs, and adds readable cart errors when configured rules are violated. These errors are currently informational/non-blocking; SW-105 will enforce the rules during checkout.
 
 ## Global plugin configuration
 
@@ -106,3 +106,25 @@ The validator currently validates supplied values only. It does not yet extract 
 - `B2BCartRules.config.minimumOrderValue`: minimum net merchandise value in EUR (default: `250.00`)
 
 The minimum order value is stored as a text configuration value so decimal amounts can be represented. Later validation code must parse it strictly and reject invalid or negative values.
+
+
+### SW-104 — Cart validation integration
+
+`ProductOrderRuleCartValidator` implements Shopware's `CartValidatorInterface` and is registered as an autoconfigured cart validator. On cart validation it:
+
+- Reads the `B2BCartRules.config.enabled` setting; an unset value preserves the configured default of enabled.
+- Considers product line items only and aggregates quantities for repeated references to the same product.
+- Loads the corresponding product entities and their custom fields using the current sales-channel context.
+- Adds stable, non-persistent cart errors for minimum quantity, quantity step, invalid rule configuration, or invalid quantity.
+- Revalidates on the normal cart validation lifecycle, so errors disappear when the cart is corrected.
+- Does not block order submission yet; that enforcement is SW-105. English fallback messages are attached to cart errors; dedicated English/German translation catalogues are SW-106.
+
+After pulling the branch, run:
+
+```bash
+docker compose exec web php -l custom/plugins/B2BCartRules/src/Service/ProductOrderRuleCartValidator.php
+docker compose exec web xmllint --noout custom/plugins/B2BCartRules/src/Resources/config/services.xml
+docker compose exec web php bin/console cache:clear
+```
+
+Manual smoke test: configure a product with minimum quantity `6` and step `6`, add it to the cart with quantity `5`, and verify that a cart error is displayed. Change the quantity to `6` or `12` and verify the rule error disappears. Checkout may still be submitted until SW-105 is implemented.
