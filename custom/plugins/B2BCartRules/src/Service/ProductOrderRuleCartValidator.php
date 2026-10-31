@@ -22,6 +22,7 @@ final class ProductOrderRuleCartValidator implements CartValidatorInterface
         private readonly ProductOrderRuleValidator $ruleValidator,
         private readonly SystemConfigService $systemConfigService,
         private readonly TranslatorInterface $translator,
+        private readonly MinimumOrderValueValidator $minimumOrderValueValidator,
     ) {
     }
 
@@ -106,6 +107,51 @@ final class ProductOrderRuleCartValidator implements CartValidatorInterface
                 $error->setTranslatedMessage($message);
                 $errors->add($error);
             }
+        }
+
+        // Shopware renders cart errors in Storefront and also returns them through Store API.
+        // Position price is the merchandise total and excludes shipping costs.
+        $minimumOrderEnabled = $this->systemConfigService->get(
+            'B2BCartRules.config.minimumOrderEnabled',
+            $context->getSalesChannelId(),
+        );
+        $minimumOrderValue = $this->systemConfigService->get(
+            'B2BCartRules.config.minimumOrderValue',
+            $context->getSalesChannelId(),
+        );
+
+        $cartMerchandiseValue = $cart->getPrice()->getPositionPrice()->getTotalPrice();
+        $minimumViolation = $this->minimumOrderValueValidator->validate(
+            $cartMerchandiseValue,
+            $minimumOrderValue ?? '250.00',
+            $minimumOrderEnabled !== false,
+        );
+
+        if ($minimumViolation !== null) {
+            $code = $minimumViolation['code'];
+            $parameters = [];
+
+            if ($code === 'minimum_order_value') {
+                $parameters = [
+                    '%minimumValue%' => number_format($minimumViolation['minimumValue'], 2, '.', ''),
+                    '%currentValue%' => number_format($minimumViolation['currentValue'], 2, '.', ''),
+                    '%remainingValue%' => number_format($minimumViolation['remainingValue'], 2, '.', ''),
+                ];
+            }
+
+            $messageKey = sprintf('b2bCartRules.cart.%s', $code);
+            $message = $this->translator->trans($messageKey, $parameters, 'messages');
+            $error = new GenericCartError(
+                'b2b-cart-minimum-order-value',
+                $messageKey,
+                $parameters,
+                Error::LEVEL_ERROR,
+                true,
+                false,
+                false,
+            );
+            $error->setTranslatedMessage($message);
+            $errors->add($error);
         }
     }
 }
