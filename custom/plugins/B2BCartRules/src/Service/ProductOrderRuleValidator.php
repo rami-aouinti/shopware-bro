@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Rami\\B2BCartRules\\Service;
+namespace Rami\B2BCartRules\Service;
 
 /**
  * Validates product quantity rules independently of the Storefront or checkout.
