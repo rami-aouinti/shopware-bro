@@ -13,13 +13,15 @@ Shopware.Module.register('techparts-erp-jobs', {
             path: 'index',
         },
     },
-    navigation: [{
-        id: 'techparts-erp-jobs',
-        label: 'techpartsErp.jobs.title',
-        color: '#2673B8',
-        icon: 'regular-history',
-        path: 'techparts.erp.jobs.index',
-        parent: 'sw-settings',
-        position: 110,
-    }],
+    navigation: [
+        {
+            id: 'techparts-erp-jobs',
+            label: 'techpartsErp.jobs.title',
+            color: '#2673B8',
+            icon: 'regular-history',
+            path: 'techparts.erp.jobs.index',
+            parent: 'sw-settings',
+            position: 110,
+        },
+    ],
 });
