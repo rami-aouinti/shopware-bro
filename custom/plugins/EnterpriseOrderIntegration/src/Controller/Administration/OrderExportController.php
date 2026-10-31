@@ -1,15 +1,15 @@
 <?php declare(strict_types=1);
 
-namespace EnterpriseOrderIntegration\\Controller\\Administration;
+namespace EnterpriseOrderIntegration\Controller\Administration;
 
-use Doctrine\\DBAL\\Connection;
-use Doctrine\\DBAL\\ParameterType;
-use EnterpriseOrderIntegration\\Application\\Message\\ExportOrderMessage;
-use Shopware\\Core\\PlatformRequest;
-use Symfony\\Component\\HttpFoundation\\JsonResponse;
-use Symfony\\Component\\HttpFoundation\\Request;
-use Symfony\\Component\\Routing\\Attribute\\Route;
-use Symfony\\Component\\Messenger\\MessageBusInterface;
+use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\ParameterType;
+use EnterpriseOrderIntegration\Application\Message\ExportOrderMessage;
+use Shopware\Core\PlatformRequest;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Messenger\MessageBusInterface;
 
 #[Route(defaults: ['_routeScope' => ['api']])]
 final class OrderExportController
@@ -62,7 +62,7 @@ final class OrderExportController
 
         foreach (['fromDate' => '>=', 'toDate' => '<='] as $key => $operator) {
             $date = trim((string) $request->query->get($key, ''));
-            if ($date !== '' && preg_match('/^\\d{4}-\\d{2}-\\d{2}$/', $date) === 1) {
+            if ($date !== '' && preg_match('/^\d{4}-\d{2}-\d{2}$/', $date) === 1) {
                 $where[] = 'DATE(created_at) ' . $operator . ' :' . $key;
                 $parameters[$key] = $date;
             }
@@ -94,10 +94,24 @@ final class OrderExportController
         foreach ($rows as &$row) {
             $row['id'] = bin2hex((string) $row['id']);
             $row['orderId'] = bin2hex((string) $row['order_id']);
-            unset($row['order_id']);
+            $row['erpReference'] = $row['erp_reference'];
+            $row['lastError'] = $row['last_error'];
+            $row['correlationId'] = $row['correlation_id'];
+            $row['nextAttemptAt'] = $row['next_attempt_at'];
+            $row['createdAt'] = $row['created_at'];
+            $row['updatedAt'] = $row['updated_at'];
             $row['attempts'] = (int) $row['attempts'];
             $row['isDemo'] = (bool) $row['is_demo'];
-            unset($row['is_demo']);
+            unset(
+                $row['order_id'],
+                $row['erp_reference'],
+                $row['last_error'],
+                $row['correlation_id'],
+                $row['next_attempt_at'],
+                $row['created_at'],
+                $row['updated_at'],
+                $row['is_demo'],
+            );
         }
         unset($row);
 
