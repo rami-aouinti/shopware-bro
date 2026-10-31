@@ -45,7 +45,8 @@
     "autoload": {
         "psr-4": {
             "App\\": "src/",
-            "Rami\\B2BCartRules\\": "custom/plugins/B2BCartRules/src/"
+            "Rami\\B2BCartRules\\": "custom/plugins/B2BCartRules/src/",
+            "EnterpriseOrderIntegration\\": "custom/plugins/EnterpriseOrderIntegration/src/"
         }
     },
     "prefer-stable": true,
