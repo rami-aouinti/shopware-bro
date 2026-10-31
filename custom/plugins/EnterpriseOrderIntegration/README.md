@@ -22,8 +22,9 @@ Run in the PHP container from the Shopware project root:
     bin/console plugin:refresh
     bin/console plugin:install --activate EnterpriseOrderIntegration
     bin/console cache:clear
+    bin/console administration:build
 
-Configure the ERP API base URL in Extensions > My Extensions > Enterprise Order Integration. The endpoint expected by the client is POST /api/orders. The target host must be reachable from the PHP container.
+The Administration build is required to compile the plugin's custom monitoring page in a local development setup. Configure the ERP API base URL in Extensions > My Extensions > Enterprise Order Integration. The endpoint expected by the client is POST /api/orders. The target host must be reachable from the PHP container.
 
 ## Monitoring
 
@@ -51,7 +52,7 @@ Run checks inside the project's PHP container. A branch is not considered tested
 
 Never commit real ERP credentials. Logs should contain identifiers, status codes, duration and exception class, but not bearer tokens, payment information, addresses or full customer payloads.
 
-See docs/monitoring-and-runbook.md and docs/test-plan.md.
+See docs/monitoring-and-runbook.md, docs/demo-data.md, docs/test-plan.md and docs/ticket-map.md.
 
 ## Remaining production-hardening items
 
