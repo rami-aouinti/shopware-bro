@@ -115,9 +115,11 @@ The minimum order value is stored as a text configuration value so decimal amoun
 - Reads the `B2BCartRules.config.enabled` setting; an unset value preserves the configured default of enabled.
 - Considers product line items only and aggregates quantities for repeated references to the same product.
 - Loads the corresponding product entities and their custom fields using the current sales-channel context.
-- Adds stable, non-persistent cart errors for minimum quantity, quantity step, invalid rule configuration, or invalid quantity.
+- Adds stable cart errors for minimum quantity, quantity step, invalid rule configuration, or invalid quantity.
+- Marks each rule error with `blockOrder = true`, so Shopware treats the cart as invalid for order submission.
+- Leaves errors non-persistent, allowing the cart to be recalculated and the error to disappear after the customer corrects the quantity.
 - Revalidates on the normal cart validation lifecycle, so errors disappear when the cart is corrected.
-- Does not block order submission yet; that enforcement is SW-105. English fallback messages are attached to cart errors; dedicated English/German translation catalogues are SW-106.
+- Blocks order submission through Shopware's cart-error mechanism, which is used by both Storefront checkout and the Store API order flow. English fallback messages are attached to cart errors; dedicated English/German translation catalogues are SW-106.
 
 After pulling the branch, run:
 
@@ -128,3 +130,19 @@ docker compose exec web php bin/console cache:clear
 ```
 
 Manual smoke test: configure a product with minimum quantity `6` and step `6`, add it to the cart with quantity `5`, and verify that a cart error is displayed. Change the quantity to `6` or `12` and verify the rule error disappears. Checkout may still be submitted until SW-105 is implemented.
+
+
+### SW-105 — Checkout enforcement
+
+SW-105 uses the existing cart validator instead of duplicating product-rule checks in a Storefront controller. Every product-rule violation is created as a `GenericCartError` with `blockOrder = true`. Shopware's checkout/order flow recalculates and validates the cart before persisting an order, so the same rule is enforced for the Storefront and Store API. Errors remain non-persistent and are recalculated after cart changes.
+
+**Manual acceptance checks**
+
+1. Configure a product with minimum quantity `6` and step `6`.
+2. Add quantity `5`; confirm the cart displays the rule error and the customer cannot place an order.
+3. Attempt order submission through the Store API with an invalid cart; confirm no order is created.
+4. Change the quantity to `6` or `12`; confirm the error disappears and order submission is allowed.
+5. Set `B2BCartRules.config.enabled` to `false`; confirm the custom rule no longer blocks checkout.
+6. Repeat for an invalid step quantity such as `7`.
+
+These are acceptance scenarios, not test results; run them against the local Shopware installation before considering SW-105 verified.
