@@ -21,7 +21,7 @@ A Shopware 6.7 plugin foundation for configurable B2B cart rules.
 
 Shopware 6.7.13 and newer synchronizes declarative custom fields during the plugin lifecycle. These fields are editable on product records in Administration once the plugin has been refreshed/installed or updated.
 
-**Important:** SW-102 only defines product metadata. It does not yet validate cart quantities or block checkout. That behaviour belongs to subsequent tickets.
+**Important:** SW-102 defines product metadata. SW-103 now provides a unit-testable validation service for these rules, but the service is not yet connected to cart events or checkout. That integration belongs to subsequent tickets.
 
 ## Requirements
 
@@ -78,6 +78,26 @@ Expected meaning for the next validation ticket:
 - Quantity step `6`: allowed quantities are multiples of 6 (6, 12, 18, …).
 - Empty field: no restriction from that rule.
 - These fields are configuration only until cart and checkout validation is implemented.
+
+### SW-103 — Product quantity validation service
+
+The service `Rami\\B2BCartRules\\Service\\ProductOrderRuleValidator` accepts a quantity and the product's custom-field array, then returns a list of violations. It checks:
+
+- Quantity must be at least 1.
+- If a minimum is configured, quantity must be at least that minimum.
+- If a step is configured, quantity must be divisible by that step.
+- Invalid rule configuration returns a violation instead of silently disabling the restriction.
+- Empty optional fields mean no restriction for that rule.
+
+Unit tests are in `tests/Service/ProductOrderRuleValidatorTest.php`. Run them from the Shopware project root if PHPUnit is available in the host project:
+
+```bash
+docker compose exec web php -l custom/plugins/B2BCartRules/src/Service/ProductOrderRuleValidator.php
+docker compose exec web php -l custom/plugins/B2BCartRules/tests/Service/ProductOrderRuleValidatorTest.php
+docker compose exec web vendor/bin/phpunit custom/plugins/B2BCartRules/tests/Service/ProductOrderRuleValidatorTest.php
+```
+
+The validator currently validates supplied values only. It does not yet extract custom fields from Shopware cart line items or prevent checkout; SW-104/SW-105 will connect it to the cart and checkout lifecycle.
 
 ## Global plugin configuration
 

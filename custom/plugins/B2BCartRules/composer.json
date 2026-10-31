@@ -2,7 +2,7 @@
     "name": "bro/b2b-cart-rules",
     "description": "Configurable B2B cart validation rules for Shopware 6.7.",
     "type": "shopware-platform-plugin",
-    "version": "0.2.0",
+    "version": "0.3.0",
     "license": "MIT",
     "authors": [
         {
@@ -29,6 +29,11 @@
         "description": {
             "de-DE": "Konfigurierbare B2B-Warenkorbregeln und Mindestbestellwerte.",
             "en-GB": "Configurable B2B cart rules and minimum order values."
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Rami\\B2BCartRules\\Tests\\": "tests/"
         }
     }
 }
