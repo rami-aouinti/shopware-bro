@@ -11,8 +11,7 @@ use Symfony\Component\Messenger\MessageBusInterface;
 final class OrderExportController
 {
     public function __construct(private readonly Connection $connection, private readonly MessageBusInterface $messageBus) {}
-    #[Route(path: '/api/_action/enterprise-order-integration/exports', name: 'api.action.enterprise_order_integration.exports', methods: ['GET'])]
-    #[Acl(['order:read'])]
+    #[Route(path: '/api/_action/enterprise-order-integration/exports', name: 'api.action.enterprise_order_integration.exports', methods: ['GET'], defaults: [PlatformRequest::ATTRIBUTE_ACL => ['order:read']])]
     public function list(): JsonResponse
     {
         $rows = $this->connection->fetchAllAssociative('SELECT id, order_id, status, attempts, correlation_id, erp_reference, last_error, next_attempt_at, created_at, updated_at FROM enterprise_order_export ORDER BY created_at DESC LIMIT 100');
@@ -25,8 +24,7 @@ final class OrderExportController
         unset($row);
         return new JsonResponse(['data' => $rows, 'meta' => ['limit' => 100]]);
     }
-    #[Route(path: '/api/_action/enterprise-order-integration/exports/{orderId}/retry', name: 'api.action.enterprise_order_integration.retry', methods: ['POST'], requirements: ['orderId' => '[a-fA-F0-9-]{32,36}'])]
-    #[Acl(['order:update'])]
+    #[Route(path: '/api/_action/enterprise-order-integration/exports/{orderId}/retry', name: 'api.action.enterprise_order_integration.retry', methods: ['POST'], requirements: ['orderId' => '[a-fA-F0-9-]{32,36}'], defaults: [PlatformRequest::ATTRIBUTE_ACL => ['order:update']])]
     public function retry(string $orderId): JsonResponse
     {
         $normalized = strtolower(str_replace('-', '', $orderId));
