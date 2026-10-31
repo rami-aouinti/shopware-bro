@@ -13,6 +13,7 @@ use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
 use Shopware\Core\System\SystemConfig\SystemConfigService;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 final class ProductOrderRuleCartValidator implements CartValidatorInterface
 {
@@ -20,6 +21,7 @@ final class ProductOrderRuleCartValidator implements CartValidatorInterface
         private readonly EntityRepository $productRepository,
         private readonly ProductOrderRuleValidator $ruleValidator,
         private readonly SystemConfigService $systemConfigService,
+        private readonly TranslatorInterface $translator,
     ) {
     }
 
@@ -81,30 +83,20 @@ final class ProductOrderRuleCartValidator implements CartValidatorInterface
 
             foreach ($violations as $violation) {
                 $code = $violation['code'];
-                $parameters = ['product' => $productName];
-                $message = match ($code) {
-                    'minimum_quantity' => $this->minimumQuantityMessage($productName, $customFields),
-                    'quantity_step' => $this->quantityStepMessage($productName, $customFields),
-                    'invalid_rule_configuration' => sprintf(
-                        'The order rules for product "%s" are incorrectly configured. Please contact the store.',
-                        $productName,
-                    ),
-                    'invalid_quantity' => sprintf(
-                        'The quantity for product "%s" must be at least 1.',
-                        $productName,
-                    ),
-                    default => sprintf('The order quantity for product "%s" is invalid.', $productName),
-                };
+                $parameters = ['%product%' => $productName];
 
                 if ($code === 'minimum_quantity') {
-                    $parameters['minimumQuantity'] = $customFields[ProductOrderRuleValidator::MINIMUM_QUANTITY_FIELD] ?? null;
+                    $parameters['%minimumQuantity%'] = (string) ($customFields[ProductOrderRuleValidator::MINIMUM_QUANTITY_FIELD] ?? '');
                 } elseif ($code === 'quantity_step') {
-                    $parameters['quantityStep'] = $customFields[ProductOrderRuleValidator::QUANTITY_STEP_FIELD] ?? null;
+                    $parameters['%quantityStep%'] = (string) ($customFields[ProductOrderRuleValidator::QUANTITY_STEP_FIELD] ?? '');
                 }
+
+                $messageKey = sprintf('b2bCartRules.cart.%s', $code);
+                $message = $this->translator->trans($messageKey, $parameters, 'messages');
 
                 $error = new GenericCartError(
                     sprintf('b2b-cart-rule-%s-%s', $productId, $code),
-                    sprintf('b2bCartRules.cart.%s', $code),
+                    $messageKey,
                     $parameters,
                     Error::LEVEL_ERROR,
                     true, // blockOrder: invalid B2B quantities must not be submitted.
@@ -115,33 +107,5 @@ final class ProductOrderRuleCartValidator implements CartValidatorInterface
                 $errors->add($error);
             }
         }
-    }
-
-    /**
-     * @param array<string, mixed> $customFields
-     */
-    private function minimumQuantityMessage(string $productName, array $customFields): string
-    {
-        $minimum = $customFields[ProductOrderRuleValidator::MINIMUM_QUANTITY_FIELD] ?? null;
-
-        return sprintf(
-            'Product "%s" must be ordered in a quantity of at least %s.',
-            $productName,
-            is_scalar($minimum) ? (string) $minimum : 'the configured minimum',
-        );
-    }
-
-    /**
-     * @param array<string, mixed> $customFields
-     */
-    private function quantityStepMessage(string $productName, array $customFields): string
-    {
-        $step = $customFields[ProductOrderRuleValidator::QUANTITY_STEP_FIELD] ?? null;
-
-        return sprintf(
-            'Product "%s" must be ordered in multiples of %s.',
-            $productName,
-            is_scalar($step) ? (string) $step : 'the configured quantity step',
-        );
     }
 }
