@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace Rami\\B2BCartRules\\Tests\\Service;
+namespace Rami\B2BCartRules\Tests\Service;
 
-use PHPUnit\\Framework\\TestCase;
-use Rami\\B2BCartRules\\Service\\MinimumOrderValueValidator;
+use PHPUnit\Framework\TestCase;
+use Rami\B2BCartRules\Service\MinimumOrderValueValidator;
 
 final class MinimumOrderValueValidatorTest extends TestCase
 {
