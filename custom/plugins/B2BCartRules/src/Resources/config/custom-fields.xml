@@ -1,27 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <custom-fields>
-    <name>rami_b2b_product_order_rules</name>
-    <label>Product order rules</label>
-    <label lang="de-DE">Bestellregeln für Produkte</label>
-    <related-entities>
-        <product />
-    </related-entities>
-    <fields>
-        <int name="rami_b2b_minimum_order_quantity">
-            <label>Minimum order quantity</label>
-            <label lang="de-DE">Mindestbestellmenge</label>
-            <help-text>Leave empty to allow any positive quantity.</help-text>
-            <help-text lang="de-DE">Leer lassen, um jede positive Menge zu erlauben.</help-text>
-            <min>1</min>
-            <position>1</position>
-        </int>
-        <int name="rami_b2b_order_quantity_step">
-            <label>Order quantity multiple</label>
-            <label lang="de-DE">Bestellmengen-Schritt</label>
-            <help-text>Leave empty for no multiple restriction. For example, 6 means quantities must be 6, 12, 18, and so on.</help-text>
-            <help-text lang="de-DE">Leer lassen, wenn keine Mengenschritte gelten. Beispiel: 6 bedeutet 6, 12, 18 usw.</help-text>
-            <min>1</min>
-            <position>2</position>
-        </int>
-    </fields>
+    <custom-field-set>
+        <name>rami_b2b_product_order_rules</name>
+        <label>Product order rules</label>
+        <label lang="de-DE">Bestellregeln für Produkte</label>
+        <related-entities>
+            <product />
+        </related-entities>
+        <fields>
+            <int name="rami_b2b_minimum_order_quantity">
+                <label>Minimum order quantity</label>
+                <label lang="de-DE">Mindestbestellmenge</label>
+                <help-text>Leave empty to allow any positive quantity.</help-text>
+                <help-text lang="de-DE">Leer lassen, um jede positive Menge zu erlauben.</help-text>
+                <min>1</min>
+                <position>1</position>
+            </int>
+            <int name="rami_b2b_order_quantity_step">
+                <label>Order quantity multiple</label>
+                <label lang="de-DE">Bestellmengen-Schritt</label>
+                <help-text>Leave empty for no multiple restriction. For example, 6 means quantities must be 6, 12, 18, and so on.</help-text>
+                <help-text lang="de-DE">Leer lassen, wenn keine Mengenschritte gelten. Beispiel: 6 bedeutet 6, 12, 18 usw.</help-text>
+                <min>1</min>
+                <position>2</position>
+            </int>
+        </fields>
+    </custom-field-set>
 </custom-fields>
