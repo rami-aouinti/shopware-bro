@@ -8,8 +8,8 @@ use Psr\Log\LoggerInterface;
 use Shopware\Core\Framework\Context;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Messenger\Event\WorkerMessageFailedEvent;
-use TechPartsErpConnector\Application\Import\ImportJobTracker;
 use TechPartsErpConnector\Application\Import\ImportBatchStore;
+use TechPartsErpConnector\Application\Import\ImportJobTracker;
 use TechPartsErpConnector\Application\Message\ProcessSupplierBatchMessage;
 use TechPartsErpConnector\Application\Message\SyncSupplierCatalogMessage;
 

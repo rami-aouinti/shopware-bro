@@ -50,5 +50,4 @@ final class StockSnapshotTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
         new StockSnapshot('ACME_ERP', 'event-201', str_repeat('a', 32), 25, 5, -1);
     }
-
 }
