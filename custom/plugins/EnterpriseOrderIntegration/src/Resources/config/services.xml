@@ -1,0 +1,25 @@
+<?xml version="1.0" ?>
+<container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
+  <services>
+    <defaults autowire="true" autoconfigure="true" public="false"/>
+    <service id="EnterpriseOrderIntegration\Subscriber\PaymentStateSubscriber">
+      <argument type="service" id="messenger.default_bus"/>
+      <argument type="service" id="order_transaction.repository"/>
+      <tag name="kernel.event_subscriber"/>
+    </service>
+    <service id="EnterpriseOrderIntegration\MessageHandler\ExportOrderHandler">
+      <argument type="service" id="Doctrine\DBAL\Connection"/>
+      <argument type="service" id="order.repository"/>
+      <argument type="service" id="EnterpriseOrderIntegration\Service\ErpClient"/>
+      <argument type="service" id="logger"/>
+      <tag name="messenger.message_handler"/>
+    </service>
+    <service id="EnterpriseOrderIntegration\Service\ErpClient"/>
+    <service id="EnterpriseOrderIntegration\Command\OrderExportHealthCommand">
+      <tag name="console.command"/>
+    </service>
+    <service id="EnterpriseOrderIntegration\Command\OrderExportRetryCommand">
+      <tag name="console.command"/>
+    </service>
+  </services>
+</container>
