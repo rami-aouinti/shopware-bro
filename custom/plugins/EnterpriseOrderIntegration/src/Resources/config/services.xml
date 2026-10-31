@@ -5,7 +5,7 @@
     <service id="EnterpriseOrderIntegration\Core\Content\Flow\Dispatching\Action\ExportOrderToErpAction">
       <argument type="service" id="messenger.default_bus"/>
       <argument type="service" id="order_transaction.repository"/>
-      <tag name="flow.action" priority="600"/>
+      <tag name="flow.action" key="action.enterprise_order.export_to_erp" priority="600"/>
     </service>
     <service id="EnterpriseOrderIntegration\MessageHandler\ExportOrderHandler">
       <argument type="service" id="Doctrine\DBAL\Connection"/>
