@@ -1,0 +1,14 @@
+{
+  "error": {
+    "b2bCartRules": {
+      "cart": {
+        "invalid_quantity": "The quantity must be at least 1.",
+        "minimum_quantity": "The product must be ordered in at least the minimum quantity.",
+        "quantity_step": "The quantity must follow the required order increments.",
+        "invalid_rule_configuration": "The order rules are incorrectly configured. Please contact the shop.",
+        "minimum_order_value": "The merchandise total is %currentValue%. The minimum order value is %minimumValue%. Please add another %remainingValue%.",
+        "invalid_minimum_order_configuration": "The minimum order value is incorrectly configured. Please contact the shop."
+      }
+    }
+  }
+}

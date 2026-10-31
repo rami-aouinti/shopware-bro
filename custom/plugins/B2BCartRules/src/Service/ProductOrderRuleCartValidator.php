@@ -93,18 +93,17 @@ final class ProductOrderRuleCartValidator implements CartValidatorInterface
                 }
 
                 $messageKey = sprintf('b2bCartRules.cart.%s', $code);
-                $message = $this->translator->trans($messageKey, $parameters, 'messages');
 
                 $error = new GenericCartError(
                     sprintf('b2b-cart-rule-%s-%s', $productId, $code),
                     $messageKey,
                     $parameters,
                     Error::LEVEL_ERROR,
-                    true, // blockOrder: invalid B2B quantities must not be submitted.
-                    false, // persistent: recalculate this error from the current cart.
-                    false, // blockResubmit: normal cart correction/retry is allowed.
+                    true,
+                    false,
+                    false,
                 );
-                $error->setTranslatedMessage($message);
+
                 $errors->add($error);
             }
         }
@@ -120,7 +119,7 @@ final class ProductOrderRuleCartValidator implements CartValidatorInterface
             $context->getSalesChannelId(),
         );
 
-        $cartMerchandiseValue = $cart->getPrice()->getPositionPrice()->getTotalPrice();
+        $cartMerchandiseValue = $cart->getPrice()->getPositionPrice();
         $minimumViolation = $this->minimumOrderValueValidator->validate(
             $cartMerchandiseValue,
             $minimumOrderValue ?? '250.00',
@@ -140,7 +139,7 @@ final class ProductOrderRuleCartValidator implements CartValidatorInterface
             }
 
             $messageKey = sprintf('b2bCartRules.cart.%s', $code);
-            $message = $this->translator->trans($messageKey, $parameters, 'messages');
+
             $error = new GenericCartError(
                 'b2b-cart-minimum-order-value',
                 $messageKey,
@@ -150,7 +149,7 @@ final class ProductOrderRuleCartValidator implements CartValidatorInterface
                 false,
                 false,
             );
-            $error->setTranslatedMessage($message);
+
             $errors->add($error);
         }
     }
