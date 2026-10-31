@@ -16,7 +16,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.pull_request.head.ref || github.ref }}
+          ref: \${{ github.event.pull_request.head.ref || github.ref }}
           fetch-depth: 0
 
       - name: Setup PHP
@@ -30,6 +30,20 @@ jobs:
 
       - name: Install dependencies
         run: composer install --no-interaction --prefer-dist
+
+      - name: Format TechPartsErpConnector
+        if: github.event_name == 'pull_request' && github.event.pull_request.head.ref == 'feature/erp-export-admin-search-demo-data' && github.event.pull_request.head.repo.full_name == github.repository
+        shell: bash
+        run: |
+          set -euo pipefail
+          shopware-cli extension format custom/plugins/TechPartsErpConnector
+          if ! git diff --quiet -- custom/plugins/TechPartsErpConnector; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add custom/plugins/TechPartsErpConnector
+            git commit -m "Fix TechParts ERP connector formatting"
+            git push origin "HEAD:\${GITHUB_HEAD_REF}"
+          fi
 
       - name: Validate first-party extensions
         shell: bash
@@ -46,15 +60,15 @@ jobs:
             custom/plugins/TechPartsOrderOrchestrator
           )
           failed=()
-          for plugin in "${plugins[@]}"; do
-            echo "::group::Validate ${plugin}"
-            if ! shopware-cli extension validate "${plugin}"; then
-              failed+=("${plugin}")
+          for plugin in "\${plugins[@]}"; do
+            echo "::group::Validate \${plugin}"
+            if ! shopware-cli extension validate "\${plugin}"; then
+              failed+=("\${plugin}")
             fi
             echo "::endgroup::"
           done
-          if (( ${#failed[@]} > 0 )); then
-            printf 'Validation failed for: %s\n' "${failed[*]}"
+          if (( \${#failed[@]} > 0 )); then
+            printf 'Validation failed for: %s\\n' "\${failed[*]}"
             exit 1
           fi
 
@@ -73,17 +87,17 @@ jobs:
             custom/plugins/TechPartsObservability
             custom/plugins/TechPartsOrderOrchestrator
           )
-          for plugin in "${plugins[@]}"; do
-            echo "::group::Format ${plugin}"
-            shopware-cli extension format "${plugin}"
+          for plugin in "\${plugins[@]}"; do
+            echo "::group::Format \${plugin}"
+            shopware-cli extension format "\${plugin}"
             echo "::endgroup::"
           done
           if ! git diff --quiet; then
             git config user.name "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git config user.email "41898282+users.noreply.github.com"
             git add custom/plugins/
             git commit -m "Apply Shopware extension code style"
-            git push origin "HEAD:${GITHUB_HEAD_REF}"
+            git push origin "HEAD:\${GITHUB_HEAD_REF}"
           fi
 
       - name: Check first-party code style
@@ -101,14 +115,14 @@ jobs:
             custom/plugins/TechPartsOrderOrchestrator
           )
           failed=()
-          for plugin in "${plugins[@]}"; do
-            echo "::group::Format check ${plugin}"
-            if ! shopware-cli extension format --dry-run "${plugin}"; then
-              failed+=("${plugin}")
+          for plugin in "\${plugins[@]}"; do
+            echo "::group::Format check \${plugin}"
+            if ! shopware-cli extension format --dry-run "\${plugin}"; then
+              failed+=("\${plugin}")
             fi
             echo "::endgroup::"
           done
-          if (( ${#failed[@]} > 0 )); then
-            printf 'Formatting check failed for: %s\n' "${failed[*]}"
+          if (( \${#failed[@]} > 0 )); then
+            printf 'Formatting check failed for: %s\\n' "\${failed[*]}"
             exit 1
           fi
