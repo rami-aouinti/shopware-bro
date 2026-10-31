@@ -3,5 +3,9 @@
     "general": {
       "mainMenuItemGeneral": "ERP-Auftragsexporte"
     }
+  },
+  "enterprise-order-flow-action": {
+    "titleExportOrderToErp": "Bestellung an ERP exportieren",
+    "descriptionExportOrderToErp": "Die Bestellung nach bestätigter Zahlung für den asynchronen ERP-Export vormerken."
   }
 }

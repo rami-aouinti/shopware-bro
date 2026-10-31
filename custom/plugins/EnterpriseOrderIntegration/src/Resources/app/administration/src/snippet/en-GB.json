@@ -3,5 +3,9 @@
     "general": {
       "mainMenuItemGeneral": "ERP order exports"
     }
+  },
+  "enterprise-order-flow-action": {
+    "titleExportOrderToErp": "Export order to ERP",
+    "descriptionExportOrderToErp": "Queue the order for asynchronous export to the ERP after payment confirmation."
   }
 }
