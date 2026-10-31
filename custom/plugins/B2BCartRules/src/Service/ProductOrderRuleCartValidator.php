@@ -107,9 +107,9 @@ final class ProductOrderRuleCartValidator implements CartValidatorInterface
                     sprintf('b2bCartRules.cart.%s', $code),
                     $parameters,
                     Error::LEVEL_ERROR,
-                    false,
-                    false,
-                    false,
+                    true, // blockOrder: invalid B2B quantities must not be submitted.
+                    false, // persistent: recalculate this error from the current cart.
+                    false, // blockResubmit: normal cart correction/retry is allowed.
                 );
                 $error->setTranslatedMessage($message);
                 $errors->add($error);
