@@ -4,3 +4,5 @@ b2bCartRules:
     minimum_quantity: 'Das Produkt "%product%" muss mit einer Mindestmenge von %minimumQuantity% bestellt werden.'
     quantity_step: 'Das Produkt "%product%" muss in Vielfachen von %quantityStep% bestellt werden.'
     invalid_rule_configuration: 'Die Bestellregeln für das Produkt "%product%" sind falsch konfiguriert. Bitte wenden Sie sich an den Shop.'
+    minimum_order_value: 'Der Warenwert beträgt %currentValue%. Der Mindestbestellwert beträgt %minimumValue%. Bitte fügen Sie weitere %remainingValue% hinzu.'
+    invalid_minimum_order_configuration: 'Der Mindestbestellwert ist falsch konfiguriert. Bitte wenden Sie sich an den Shop.'
