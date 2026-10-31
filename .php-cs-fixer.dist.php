@@ -15,7 +15,8 @@ $finder = Finder::create()
     ->ignoreVCS(true);
 
 return (new Config())
-    ->setRiskyAllowed(false)
+    // The project intentionally enforces declare(strict_types=1) in every PHP file.
+    ->setRiskyAllowed(true)
     ->setRules([
         '@PSR12' => true,
         'declare_strict_types' => true,
