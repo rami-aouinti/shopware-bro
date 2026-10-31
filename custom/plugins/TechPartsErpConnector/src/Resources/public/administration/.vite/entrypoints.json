@@ -1,0 +1,23 @@
+{
+  "base": "/bundles/techpartserpconnector/administration/",
+  "entryPoints": {
+    "tech-parts-erp-connector": {
+      "css": [],
+      "dynamic": [],
+      "js": [
+        "/bundles/techpartserpconnector/administration/assets/tech-parts-erp-connector-B4dJ3-9y.js"
+      ],
+      "legacy": false,
+      "preload": []
+    }
+  },
+  "legacy": false,
+  "metadatas": {},
+  "version": [
+    "7.1.0",
+    7,
+    1,
+    0
+  ],
+  "viteServer": null
+}

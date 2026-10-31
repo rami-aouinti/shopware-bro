@@ -1,0 +1,23 @@
+{
+  "base": "/bundles/enterpriseorderintegration/administration/",
+  "entryPoints": {
+    "enterprise-order-integration": {
+      "css": [],
+      "dynamic": [],
+      "js": [
+        "/bundles/enterpriseorderintegration/administration/assets/enterprise-order-integration-B_uabnl0.js"
+      ],
+      "legacy": false,
+      "preload": []
+    }
+  },
+  "legacy": false,
+  "metadatas": {},
+  "version": [
+    "7.1.0",
+    7,
+    1,
+    0
+  ],
+  "viteServer": null
+}
