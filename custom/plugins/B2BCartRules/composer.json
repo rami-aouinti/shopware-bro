@@ -1,0 +1,34 @@
+{
+    "name": "bro/b2b-cart-rules",
+    "description": "Configurable B2B cart validation rules for Shopware 6.7.",
+    "type": "shopware-platform-plugin",
+    "version": "0.1.0",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Rami Aouinti",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=8.3",
+        "shopware/core": "^6.7",
+        "shopware/storefront": "^6.7"
+    },
+    "autoload": {
+        "psr-4": {
+            "Rami\\B2BCartRules\\": "src/"
+        }
+    },
+    "extra": {
+        "shopware-plugin-class": "Rami\\B2BCartRules\\B2BCartRules",
+        "label": {
+            "de-DE": "B2B-Warenkorbregeln",
+            "en-GB": "B2B Cart Rules"
+        },
+        "description": {
+            "de-DE": "Konfigurierbare B2B-Warenkorbregeln und Mindestbestellwerte.",
+            "en-GB": "Configurable B2B cart rules and minimum order values."
+        }
+    }
+}

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/shopware/shopware/trunk/src/Core/System/SystemConfig/Schema/config.xsd">
+
+    <card>
+        <title>B2B Cart Rules</title>
+        <title lang="de-DE">B2B-Warenkorbregeln</title>
+
+        <input-field type="bool">
+            <name>enabled</name>
+            <label>Enable B2B cart rules</label>
+            <label lang="de-DE">B2B-Warenkorbregeln aktivieren</label>
+            <defaultValue>true</defaultValue>
+            <helpText>Enable or disable all custom B2B cart restrictions.</helpText>
+            <helpText lang="de-DE">Alle benutzerdefinierten B2B-Warenkorbregeln aktivieren oder deaktivieren.</helpText>
+        </input-field>
+
+        <input-field type="bool">
+            <name>minimumOrderEnabled</name>
+            <label>Enable minimum order value</label>
+            <label lang="de-DE">Mindestbestellwert aktivieren</label>
+            <defaultValue>true</defaultValue>
+            <helpText>Apply the minimum merchandise value before shipping costs.</helpText>
+            <helpText lang="de-DE">Mindestwarenwert vor Versandkosten anwenden.</helpText>
+        </input-field>
+
+        <input-field type="text">
+            <name>minimumOrderValue</name>
+            <label>Minimum order value (net, EUR)</label>
+            <label lang="de-DE">Mindestbestellwert (netto, EUR)</label>
+            <defaultValue>250.00</defaultValue>
+            <helpText>Enter a non-negative amount, for example 250.00. Validation is implemented in a later ticket.</helpText>
+            <helpText lang="de-DE">Einen nicht negativen Betrag eingeben, zum Beispiel 250,00. Die Validierung folgt in einem späteren Ticket.</helpText>
+        </input-field>
+    </card>
+</config>
