@@ -34,7 +34,6 @@ foreach ([
 }
 
 foreach ([
-    '@Administration/sw-product-list/index.html.twig',
     'sw_product_list_grid_columns',
     'column-stockWarningStatus',
 ] as $needle) {
@@ -42,6 +41,11 @@ foreach ([
         fwrite(STDERR, "Missing template extension point: " . $needle . PHP_EOL);
         exit(1);
     }
+}
+
+if (str_contains($template, 'sw_extends')) {
+    fwrite(STDERR, "Administration override template must not use sw_extends." . PHP_EOL);
+    exit(1);
 }
 
 foreach (['de-DE', 'en-GB'] as $locale) {
