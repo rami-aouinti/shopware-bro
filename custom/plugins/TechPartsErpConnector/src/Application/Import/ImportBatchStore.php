@@ -42,7 +42,9 @@ final readonly class ImportBatchStore
         return $id;
     }
 
-    /** @return list<string> */
+    /**
+     * @return list<string>
+     */
     public function pendingIds(string $jobId): array
     {
         if (!Uuid::isValid($jobId)) {
@@ -50,7 +52,7 @@ final readonly class ImportBatchStore
         }
 
         return $this->connection->fetchFirstColumn(
-            "SELECT id FROM tp_import_batch WHERE job_id = :jobId AND status = 'pending' ORDER BY batch_index",
+            'SELECT id FROM tp_import_batch WHERE job_id = :jobId AND status = \'pending\' ORDER BY batch_index',
             ['jobId' => $jobId],
         );
     }
@@ -137,7 +139,7 @@ final readonly class ImportBatchStore
     private function finishWhenAllTerminal(Connection $connection, string $jobId): void
     {
         $pending = (int) $connection->fetchOne(
-            "SELECT COUNT(*) FROM tp_import_batch WHERE job_id = :jobId AND status = 'pending'",
+            'SELECT COUNT(*) FROM tp_import_batch WHERE job_id = :jobId AND status = \'pending\'',
             ['jobId' => $jobId],
         );
         if ($pending > 0) {
@@ -153,7 +155,7 @@ final readonly class ImportBatchStore
         );
 
         $errors = $connection->fetchFirstColumn(
-            "SELECT last_error FROM tp_import_batch WHERE job_id = :jobId AND last_error IS NOT NULL ORDER BY batch_index LIMIT 3",
+            'SELECT last_error FROM tp_import_batch WHERE job_id = :jobId AND last_error IS NOT NULL ORDER BY batch_index LIMIT 3',
             ['jobId' => $jobId],
         );
         $summary = $errors === [] ? null : mb_substr(implode('; ', array_map('strval', $errors)), 0, 4000);

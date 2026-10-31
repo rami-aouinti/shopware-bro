@@ -8,6 +8,7 @@ final class SupplierBatchChunker
 {
     /**
      * @param iterable<SupplierImportRow> $rows
+     *
      * @return iterable<list<array{supplierCode:string,externalProductId:string,productId:?string}>>
      */
     public function chunk(iterable $rows, int $batchSize): iterable

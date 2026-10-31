@@ -9,22 +9,76 @@
     </template>
     <template #content>
         <sw-card-view>
-            <sw-card title="Recent exports" :is-loading="isLoading">
+            <sw-card title="Filters" :is-loading="isLoading">
+                <div class="eoi-export-filters">
+                    <sw-text-field
+                        v-model:value="searchTerm"
+                        label="Search"
+                        placeholder="Order UUID, correlation ID, ERP reference or error"
+                        @keydown.enter="applyFilters" />
+                    <sw-single-select
+                        v-model:value="statusFilter"
+                        label="Status"
+                        :options="statusOptions"
+                        show-clearable-button />
+                    <div class="eoi-export-date-filter">
+                        <label for="eoi-from-date">Created from</label>
+                        <input id="eoi-from-date" v-model="fromDate" type="date">
+                    </div>
+                    <div class="eoi-export-date-filter">
+                        <label for="eoi-to-date">Created to</label>
+                        <input id="eoi-to-date" v-model="toDate" type="date">
+                    </div>
+                    <sw-button variant="primary" :disabled="isLoading" @click="applyFilters">
+                        Apply filters
+                    </sw-button>
+                    <sw-button :disabled="isLoading" @click="resetFilters">
+                        Reset
+                    </sw-button>
+                </div>
+            </sw-card>
+            <sw-card title="Order exports" :is-loading="isLoading">
                 <sw-data-grid
                     :data-source="exports"
                     :columns="columns"
                     :show-selection="false"
                     :is-loading="isLoading"
-                    identifier="enterprise-order-integration-exports">
+                    :sort-by="sortBy"
+                    :sort-direction="sortDirection"
+                    identifier="enterprise-order-integration-exports"
+                    @column-sort="onColumnSort">
+                    <template #column-isDemo="{ item }">
+                        <span v-if="item.isDemo">Demo</span>
+                        <span v-else>—</span>
+                    </template>
                     <template #actions="{ item }">
                         <sw-context-menu-item
-                            v-if="item.status !== 'succeeded'"
+                            v-if="item.status !== 'succeeded' && !item.isDemo"
                             @click="retryExport(item)">
                             Retry export
                         </sw-context-menu-item>
                     </template>
                 </sw-data-grid>
-                <sw-empty-state v-if="!isLoading && exports.length === 0" title="No exports yet" />
+
+                <div class="eoi-export-pagination">
+                    <span>{{ total }} result(s)</span>
+                    <sw-select-field
+                        label="Rows per page"
+                        :value="String(limit)"
+                        :options="[{ value: '10', label: '10' }, { value: '25', label: '25' }, { value: '50', label: '50' }, { value: '100', label: '100' }]"
+                        @update:value="onLimitChange" />
+                    <sw-pagination
+                        :page="page"
+                        :limit="limit"
+                        :total="total"
+                        :total-visible="7"
+                        @page-change="onPageChange" />
+                </div>
+
+                <sw-empty-state
+                    v-if="!isLoading && exports.length === 0"
+                    title="No exports found"
+                    subline="Try changing the filters or create demo records with erp:orders:demo-data." />
             </sw-card>
         </sw-card-view>
     </template>

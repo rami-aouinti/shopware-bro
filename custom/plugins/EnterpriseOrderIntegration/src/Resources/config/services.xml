@@ -21,6 +21,11 @@
     <service id="EnterpriseOrderIntegration\Command\OrderExportRetryCommand">
       <tag name="console.command"/>
     </service>
-    <service id="EnterpriseOrderIntegration\Controller\Administration\OrderExportController" public="true"><tag name="controller.service_arguments"/></service>
+    <service id="EnterpriseOrderIntegration\Command\OrderExportDemoDataCommand">
+      <tag name="console.command"/>
+    </service>
+    <service id="EnterpriseOrderIntegration\Controller\Administration\OrderExportController" public="true">
+      <tag name="controller.service_arguments"/>
+    </service>
   </services>
 </container>
