@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/shopware/shopware/trunk/src/Core/System/SystemConfig/Schema/config.xsd">
+  <card>
+    <title>ERP connection</title><title lang="de-DE">ERP-Verbindung</title>
+    <input-field type="url"><name>erpBaseUrl</name><label>ERP API base URL</label><label lang="de-DE">Basis-URL der ERP-API</label><required>true</required></input-field>
+    <input-field type="password"><name>erpToken</name><label>ERP bearer token (optional for local simulator)</label><label lang="de-DE">ERP-Bearer-Token</label></input-field>
+  </card>
+</config>
