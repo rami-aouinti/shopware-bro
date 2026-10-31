@@ -20,3 +20,4 @@ framework:
             'TechPartsErpConnector\Application\Message\SyncSupplierCatalogMessage': async
             'TechPartsErpConnector\Application\Message\SyncInventorySnapshotMessage': async
             'TechPartsErpConnector\Application\Message\ProcessSupplierBatchMessage': async
+            'EnterpriseOrderIntegration\Application\Message\ExportOrderMessage': async
