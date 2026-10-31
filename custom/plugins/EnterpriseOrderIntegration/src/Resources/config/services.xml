@@ -2,25 +2,25 @@
 <container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
   <services>
     <defaults autowire="true" autoconfigure="true" public="false"/>
-    <service id="EnterpriseOrderIntegration\Subscriber\PaymentStateSubscriber">
+    <service id="EnterpriseOrderIntegration\\Core\\Content\\Flow\\Dispatching\\Action\\ExportOrderToErpAction">
       <argument type="service" id="messenger.default_bus"/>
       <argument type="service" id="order_transaction.repository"/>
-      <tag name="kernel.event_subscriber"/>
+      <tag name="flow.action" key="action.enterprise_order.export_to_erp" priority="600"/>
     </service>
-    <service id="EnterpriseOrderIntegration\MessageHandler\ExportOrderHandler">
-      <argument type="service" id="Doctrine\DBAL\Connection"/>
+    <service id="EnterpriseOrderIntegration\\MessageHandler\\ExportOrderHandler">
+      <argument type="service" id="Doctrine\\DBAL\\Connection"/>
       <argument type="service" id="order.repository"/>
-      <argument type="service" id="EnterpriseOrderIntegration\Service\ErpClient"/>
+      <argument type="service" id="EnterpriseOrderIntegration\\Service\\ErpClient"/>
       <argument type="service" id="logger"/>
       <tag name="messenger.message_handler"/>
     </service>
-    <service id="EnterpriseOrderIntegration\Service\ErpClient"/>
-    <service id="EnterpriseOrderIntegration\Command\OrderExportHealthCommand">
+    <service id="EnterpriseOrderIntegration\\Service\\ErpClient"/>
+    <service id="EnterpriseOrderIntegration\\Command\\OrderExportHealthCommand">
       <tag name="console.command"/>
     </service>
-    <service id="EnterpriseOrderIntegration\Command\OrderExportRetryCommand">
+    <service id="EnterpriseOrderIntegration\\Command\\OrderExportRetryCommand">
       <tag name="console.command"/>
     </service>
-    <service id="EnterpriseOrderIntegration\Controller\Administration\OrderExportController" public="true"><tag name="controller.service_arguments"/></service>
+    <service id="EnterpriseOrderIntegration\\Controller\\Administration\\OrderExportController" public="true"><tag name="controller.service_arguments"/></service>
   </services>
 </container>
