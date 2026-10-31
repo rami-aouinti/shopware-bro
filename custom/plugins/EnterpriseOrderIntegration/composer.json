@@ -4,7 +4,38 @@
   "type": "shopware-platform-plugin",
   "license": "proprietary",
   "version": "1.0.0",
-  "require": {"php": ">=8.3", "shopware/core": "~6.7.0"},
-  "autoload": {"psr-4": {"EnterpriseOrderIntegration\\": "src/"}},
-  "extra": {"shopware-plugin-class": "EnterpriseOrderIntegration\\EnterpriseOrderIntegration"}
+  "require": {
+    "php": ">=8.3",
+    "shopware/core": "~6.7.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "EnterpriseOrderIntegration\\": "src/"
+    }
+  },
+  "extra": {
+    "shopware-plugin-class": "EnterpriseOrderIntegration\\EnterpriseOrderIntegration",
+    "label": {
+      "en-GB": "Enterprise Order Integration",
+      "de-DE": "ERP-Auftragsintegration"
+    },
+    "description": {
+      "en-GB": "Exports paid Shopware orders to an ERP asynchronously with retry handling and monitoring.",
+      "de-DE": "Exportiert bezahlte Shopware-Bestellungen asynchron an ein ERP-System mit Wiederholungen und Monitoring."
+    },
+    "manufacturerLink": {
+      "en-GB": "https://github.com/rami-aouinti/shopware-bro",
+      "de-DE": "https://github.com/rami-aouinti/shopware-bro"
+    },
+    "supportLink": {
+      "en-GB": "https://github.com/rami-aouinti/shopware-bro/issues",
+      "de-DE": "https://github.com/rami-aouinti/shopware-bro/issues"
+    }
+  },
+  "authors": [
+    {
+      "name": "Rami Aouinti",
+      "role": "Developer"
+    }
+  ]
 }
