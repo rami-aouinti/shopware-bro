@@ -1,0 +1,58 @@
+# Enterprise Order Integration
+
+Shopware 6.7 plugin that asynchronously exports paid orders to an ERP API. This plugin is separate from TechPartsErpConnector.
+
+## Current capabilities
+
+- Reacts to a payment transaction entering the paid state and dispatches an asynchronous message.
+- Stores export status, attempt count, correlation ID, ERP reference, last error and retry timestamp.
+- Sends a compact order payload with bounded HTTP timeouts.
+- Prevents duplicate export records using a unique order ID and skips already-successful records.
+- Provides health and guarded manual-retry console commands.
+- Writes structured log context without logging tokens or full customer payloads.
+
+## Architecture
+
+Payment state transition -> PaymentStateSubscriber -> ExportOrderMessage -> ExportOrderHandler -> enterprise_order_export -> ErpClient -> ERP API.
+
+## Install
+
+Run in the PHP container from the Shopware project root:
+
+    bin/console plugin:refresh
+    bin/console plugin:install --activate EnterpriseOrderIntegration
+    bin/console cache:clear
+
+Configure the ERP API base URL in Extensions > My Extensions > Enterprise Order Integration. The endpoint expected by the client is POST /api/orders. The target host must be reachable from the PHP container.
+
+## Monitoring
+
+    bin/console erp:orders:health
+    bin/console erp:orders:retry <shopware-order-uuid>
+
+Follow application logs:
+
+    tail -f var/log/dev.log
+    grep -E 'ERP order export|Duplicate export' var/log/*.log
+    docker compose logs -f web
+
+If the Compose PHP service is not named web, use the service shown by docker compose ps.
+
+## Validation checklist
+
+    php -l custom/plugins/EnterpriseOrderIntegration/src/MessageHandler/ExportOrderHandler.php
+    vendor/bin/phpunit custom/plugins/EnterpriseOrderIntegration/tests
+    bin/console lint:container
+    bin/console cache:clear
+
+Run checks inside the project's PHP container. A branch is not considered tested until these commands have actually passed in the user's Shopware 6.7.15.1 environment.
+
+## Data protection
+
+Never commit real ERP credentials. Logs should contain identifiers, status codes, duration and exception class, but not bearer tokens, payment information, addresses or full customer payloads.
+
+See docs/monitoring-and-runbook.md and docs/test-plan.md.
+
+## Remaining production-hardening items
+
+The initial implementation still requires runtime verification against Shopware 6.7.15.1, an explicit asynchronous transport configuration, an ERP simulator, an Administration grid, integration tests, retry policy tests, and ERP-side idempotency support. Do not claim exactly-once delivery: network failures can happen after the ERP accepted a request.
