@@ -32,7 +32,7 @@ final class OrderExportDemoDataCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $orders = $this->connection->fetchFirstColumn(
-            'SELECT o.id FROM \`order\` o'
+            'SELECT o.id FROM ' . chr(96) . 'order' . chr(96) . ' o'
             . ' LEFT JOIN enterprise_order_export e ON e.order_id = o.id'
             . ' WHERE e.id IS NULL ORDER BY o.created_at DESC LIMIT 5',
         );
