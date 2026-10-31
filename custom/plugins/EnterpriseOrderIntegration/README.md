@@ -55,4 +55,4 @@ See docs/monitoring-and-runbook.md and docs/test-plan.md.
 
 ## Remaining production-hardening items
 
-The initial implementation still requires runtime verification against Shopware 6.7.15.1, an explicit asynchronous transport configuration, an ERP simulator, an Administration grid, integration tests, retry policy tests, and ERP-side idempotency support. Do not claim exactly-once delivery: network failures can happen after the ERP accepted a request.
+The initial implementation still requires runtime verification against Shopware 6.7.15.1, integration tests, retry policy tests, and ERP-side idempotency support. Do not claim exactly-once delivery: network failures can happen after the ERP accepted a request. See docs/ticket-map.md for the ticket-by-ticket status.
