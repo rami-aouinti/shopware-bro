@@ -9,6 +9,7 @@ use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Shopware\Core\Defaults;
 
 #[AsCommand(
     name: 'erp:orders:demo-data',
@@ -32,9 +33,17 @@ final class OrderExportDemoDataCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $orders = $this->connection->fetchFirstColumn(
-            'SELECT o.id FROM ' . chr(96) . 'order' . chr(96) . ' o'
+            'SELECT o.id FROM `order` o'
             . ' LEFT JOIN enterprise_order_export e ON e.order_id = o.id'
-            . ' WHERE e.id IS NULL ORDER BY o.created_at DESC LIMIT 5',
+            . ' WHERE e.id IS NULL'
+            . ' AND o.version_id = :liveVersion'
+            . ' ORDER BY o.created_at DESC LIMIT 5',
+            [
+                'liveVersion' => Uuid::fromHexToBytes(Defaults::LIVE_VERSION),
+            ],
+            [
+                'liveVersion' => ParameterType::BINARY,
+            ],
         );
 
         if ($orders === []) {

@@ -63,7 +63,7 @@ Component.register('enterprise-order-integration-list', {
                 toDate: this.toDate,
             };
 
-            client.get('/api/_action/enterprise-order-integration/exports', {
+            client.get('/_action/enterprise-order-integration/exports', {
                 headers: this.getHeaders(),
                 params,
             })
@@ -131,7 +131,7 @@ Component.register('enterprise-order-integration-list', {
 
             const client = Shopware.Application.getContainer('init').httpClient;
             client.post(
-                '/api/_action/enterprise-order-integration/exports/' + item.orderId + '/retry',
+                '/_action/enterprise-order-integration/exports/' + item.orderId + '/retry',
                 {},
                 { headers: this.getHeaders() },
             )
